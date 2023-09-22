@@ -46,7 +46,7 @@ public class mainC extends JFrame implements ActionListener{
 
 	public void mainMenu() {
 	   combo1.setBounds(100, 100, 75, 75);
-		
+		System.out.println("Testing Commit");
 		
 	}
 	
