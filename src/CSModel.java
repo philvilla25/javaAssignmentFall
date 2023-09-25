@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,6 +44,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 
 	String title = "Cellular Automata";
 	String logoImg = "logo.png";
+	String logoBanner = "banner.png";
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = {"English", "Français"};
     Color customColor = new Color(11, 171, 164);
@@ -142,69 +144,80 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	
 	
 	public void mainWindow() {
-		// settings for the frame
-		   JFrame frame = new JFrame();
-		   frame.setTitle(title);
-		   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		   Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		   frame.setSize(screenSize.width, screenSize.height);
-		   frame.setResizable(false);
-		   frame.setVisible(true);
-		   
-		 // Setting image icon for program
-		   ImageIcon gameIcon = new ImageIcon("banner.jpg");
-		   frame.setIconImage(gameIcon.getImage());
-		   frame.getContentPane().setBackground(new Color(128,128,128));
-		   
-		   JPanel content = new JPanel();
-		   content.setBackground(Color.WHITE);
-		   content.setLayout(new BorderLayout());
-		   
-		   JLabel label = new JLabel("This is the white content pane.");
-		   content.add(label, BorderLayout.CENTER);
-		   
-		  // buttom panel
-		  JPanel buttomPanel = new JPanel();
-		  
-		  JLabel switchLanguage = new JLabel("Switch Language:");
-		  buttomPanel.add(switchLanguage);
-		  
-		  JComboBox<String>languages = new JComboBox<String>(languageOption);
-	      languages.setEditable(false);
-	      languages.addItemListener(this);
-	      buttomPanel.add(languages);
-	      
-	      JLabel model = new JLabel("Model:");
-		  buttomPanel.add(model);
-		  JTextField modelText = new JTextField(10);
-		  buttomPanel.add(modelText);
-	      
-		  JLabel Iterations = new JLabel("Iterations:");
-		  buttomPanel.add(Iterations);
-		  JTextField iterationsText = new JTextField(5);
-		  buttomPanel.add(iterationsText);
-		  
-		  JLabel scroll = new JLabel("Scroll Continuously:");
-		  buttomPanel.add(scroll);
-		  JCheckBox checkBox1 = new JCheckBox();
-		  buttomPanel.add(checkBox1);
-		  
-		  //buttons
-		  JButton run = new JButton("RUN");
-		  JButton pause = new JButton("PAUSE");
-		  JButton stop = new JButton("STOP");
-		  buttomPanel.add(run);
-	      buttomPanel.add(pause);
-	      buttomPanel.add(stop);
-	      run.setBackground(customColor);
-		  pause.setBackground(customColor);
-		  stop.setBackground(customColor);
-			 
-	      //zoom in and zoom out buttons
-		  
-		 frame.add(content);
-	     frame.add(buttomPanel);
-	     frame.setVisible(true);
+		// Settings for the frame
+        JFrame frame = new JFrame();
+        frame.setTitle(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(1000, 800);
+        frame.setResizable(false);
+
+        // Setting image icon for program
+        ImageIcon gameIcon = new ImageIcon(logoImg);
+        frame.setIconImage(gameIcon.getImage());
+        frame.getContentPane().setBackground(new Color(128, 128, 128));
+
+        // Create a JPanel for the top panel
+        JPanel topPanel = new JPanel();
+        topPanel.setBackground(Color.WHITE);
+
+        // Place logoBanner in the top panel
+        ImageIcon banner = new ImageIcon(logoBanner);
+        JLabel bannerLabel = new JLabel(banner);
+        topPanel.add(bannerLabel);
+
+        // Create a JPanel for the bottom panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        JLabel switchLanguage = new JLabel("Switch Language:");
+        bottomPanel.add(switchLanguage);
+
+        JComboBox<String> languages = new JComboBox<>(languageOption);
+        languages.setEditable(false);
+        // languages.addItemListener(this); // Make sure to implement ItemListener
+        bottomPanel.add(languages);
+
+        JLabel model = new JLabel("Model:");
+        bottomPanel.add(model);
+        JTextField modelText = new JTextField(10);
+        bottomPanel.add(modelText);
+
+        JLabel iterations = new JLabel("Iterations:");
+        bottomPanel.add(iterations);
+        JTextField iterationsText = new JTextField(5);
+        bottomPanel.add(iterationsText);
+
+        JLabel scroll = new JLabel("Scroll Continuously:");
+        bottomPanel.add(scroll);
+        JCheckBox checkBox1 = new JCheckBox();
+        bottomPanel.add(checkBox1);
+
+        // Buttons
+        JButton run = new JButton("RUN");
+        JButton pause = new JButton("PAUSE");
+        JButton stop = new JButton("STOP");
+        bottomPanel.add(run);
+        bottomPanel.add(pause);
+        bottomPanel.add(stop);
+        run.setBackground(customColor);
+        pause.setBackground(customColor);
+        stop.setBackground(customColor);
+
+        // Create a JPanel for the center content
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set a black border
+
+        // Create a JPanel for the content using BorderLayout
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(topPanel, BorderLayout.NORTH);
+        content.add(centerPanel, BorderLayout.CENTER);
+        content.add(bottomPanel, BorderLayout.SOUTH);
+
+        // Add the content to the frame
+        frame.add(content, BorderLayout.CENTER);
+
+        frame.setVisible(true);
 	}
 	
 	@Override
