@@ -264,7 +264,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
         frame.setVisible(true);
 	}
 	
-	//blank grid
+	//blank grid option
 	public void blankGrid() {
 		for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
@@ -322,11 +322,44 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 			neighbour (R),so that we can evaluate the next generation (x+1)
 		 */
 		// for cells to be filled, you should add 1 and 0 and change colour
+		
+		// 8 bits represent different position of cells, and using models you can kind 
+		// determine if it is zero or 1
 		 modelNum = Integer.parseInt(modelText.getText());
+		
+		 // extracting model bit-by-bit
+		 int bit7 = (modelNum >> 7) & 1;
+		 int bit6 = (modelNum >> 6) & 1;
+		 int bit5 = (modelNum >> 5) & 1;
+		 int bit4 = (modelNum >> 4) & 1;
+		 int bit3 = (modelNum >> 3) & 1;
+		 int bit2 = (modelNum >> 2) & 1;
+		 int bit1 = (modelNum >> 1) & 1;
+		 int bit0 = modelNum & 1;
+		 
 		 for (int row = 0; row < numRows; row++) {
-	            for (int col = 0; col < numCols; col++) {
-	            	
-	            }
+	            for (int col = 0; col < numCols; col++) {	
+	            	// im not sure about these
+		            JLabel L = cells[row][col - 1];
+		            JLabel P = cells[row][col];  // determine previous
+		            JLabel R = cells[row][col + 1];
+		            
+
+					if (L.getBackground().equals(Color.WHITE) &&
+					    R.getBackground().equals(Color.WHITE) &&
+					    P.getBackground().equals(Color.WHITE)) {
+		
+							if (bit0 == 0) {
+								cells[row][col].setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								cells[row][col].setBackground(Color.BLACK);
+							}
+					}else if(L.getBackground().equals(Color.WHITE) &&
+						    R.getBackground().equals(Color.WHITE) &&
+						    P.getBackground().equals(Color.WHITE)) {
+						
+					}
+		 	  }
 		 }
 	}
 	
