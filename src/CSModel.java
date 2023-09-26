@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,6 +53,10 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	//String gameOf = "Game of Life";
 	// JComboBox<String> combo1 = new JComboBox<String>(strGames);
 	JButton execButton = new JButton("Execute");
+	private int numRows = 0;
+	private int numCols = 0;
+	JTextField rowsTextField, colsTextField ;
+	 JPanel centerPanel;
 	
 	//int game;
 	JPanel cards;
@@ -205,9 +211,9 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
         stop.setBackground(customColor);
 
         // Create a JPanel for the center content
-        JPanel centerPanel = new JPanel();
+        centerPanel = new JPanel();
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set a black border
-
+     
         // Create a JPanel for the content using BorderLayout
         JPanel content = new JPanel(new BorderLayout());
         content.add(topPanel, BorderLayout.NORTH);
@@ -216,9 +222,63 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 
         // Add the content to the frame
         frame.add(content, BorderLayout.CENTER);
+        
+        //Left Pannel
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        JButton blankGridButton =  new JButton("BLANK GRID");
+        blankGridButton.setBackground(customColor);
+        leftPanel.add(blankGridButton);
+       
+        leftPanel.add(new JLabel("ROWS: "));
+        rowsTextField = new JTextField(5);
+        leftPanel.add(rowsTextField);
+        leftPanel.add(new JLabel("COLUMNS: "));
+        colsTextField = new JTextField(5);
+        leftPanel.add(colsTextField);
+        
+        JButton createGridButton = new JButton("CREATE GRID");
+        createGridButton.setBackground(customColor);
+        leftPanel.add(createGridButton);
+        createGridButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createGrid();
+            }
+        });
+        content.add(leftPanel, BorderLayout.WEST);
+        
+        // grid content
 
         frame.setVisible(true);
 	}
+	
+	// create new grid
+	public void createGrid() {
+	    try {
+	        numRows = Integer.parseInt(rowsTextField.getText());
+	        numCols = Integer.parseInt(colsTextField.getText());
+	        // Create a grid layout for the panel
+	        centerPanel.setLayout(new GridLayout(numRows, numCols));
+
+	        // Create empty cells (e.g., JLabels with a white background) and add them to the grid
+	        for (int row = 0; row < numRows; row++) {
+	            for (int col = 0; col < numCols; col++) {
+	                JLabel cell = new JLabel();
+	                cell.setOpaque(true);
+	                cell.setBackground(Color.white);
+	                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set black border
+	                centerPanel.add(cell);
+	            }
+	        }
+	        // Repaint the panel to display the grid
+	        centerPanel.revalidate();
+	        centerPanel.repaint();
+	    } catch (NumberFormatException ex) {
+	        JOptionPane.showMessageDialog(this, "Please enter valid row and column numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
+
 	
 	@Override
 	 public void itemStateChanged(ItemEvent evt) {
