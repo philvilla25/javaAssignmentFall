@@ -112,6 +112,7 @@ public class mainGUI {
         bottomPanel.add(model);
          modelText = new JTextField(10);
         bottomPanel.add(modelText);
+        
 
         JLabel iterations = new JLabel("Iterations:");
         bottomPanel.add(iterations);
@@ -149,6 +150,9 @@ public class mainGUI {
         
      
         createGrid();
+        
+        int modelNum = Integer.parseInt(modelText.getText());
+        GridClass grid = new GridClass(centerPanel, modelNum, cells);
         
         // grid content
         frame.setVisible(true);
