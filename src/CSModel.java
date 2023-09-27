@@ -125,7 +125,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Call your method when the button is clicked
-		    	mainWindow();
+		    	mainGUI gui = new mainGUI();
+		    	gui.mainWindow();
 		    }
 		});
 	  
@@ -144,127 +145,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	}
 	
 	
-	public void mainWindow() {
-		// Settings for the frame
-		try {
-        JFrame frame = new JFrame();
-        frame.setTitle(title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(1000, 800);
-        frame.setResizable(false);
 
-        // Setting image icon for program
-        ImageIcon gameIcon = new ImageIcon(logoImg);
-        frame.setIconImage(gameIcon.getImage());
-        frame.getContentPane().setBackground(new Color(128, 128, 128));
-
-        // Create a JPanel for the top panel
-        JPanel topPanel = new JPanel();
-        topPanel.setBackground(Color.WHITE);
-
-        // Place logoBanner in the top panel
-        ImageIcon banner = new ImageIcon(logoBanner);
-        JLabel bannerLabel = new JLabel(banner);
-        topPanel.add(bannerLabel);
-
-        // Create a JPanel for the bottom panel
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel switchLanguage = new JLabel("Switch Language:");
-        bottomPanel.add(switchLanguage);
-
-        JComboBox<String> languages = new JComboBox<>(languageOption);
-        languages.setEditable(false);
-        // languages.addItemListener(this); // Make sure to implement ItemListener
-        bottomPanel.add(languages);
-
-        JLabel model = new JLabel("Model:");
-        bottomPanel.add(model);
-         modelText = new JTextField(10);
-        bottomPanel.add(modelText);
-
-        JLabel iterations = new JLabel("Iterations:");
-        bottomPanel.add(iterations);
-        JTextField iterationsText = new JTextField(5);
-        bottomPanel.add(iterationsText);
-
-        JLabel scroll = new JLabel("Scroll Continuously:");
-        bottomPanel.add(scroll);
-        JCheckBox checkBox1 = new JCheckBox();
-        bottomPanel.add(checkBox1);
-
-        // Buttons
-        JButton run = new JButton("RUN");
-        JButton pause = new JButton("PAUSE");
-        JButton stop = new JButton("STOP");
-        bottomPanel.add(run);
-        bottomPanel.add(pause);
-        bottomPanel.add(stop);
-        run.setBackground(customColor);
-        pause.setBackground(customColor);
-        stop.setBackground(customColor);
-
-        // Create a JPanel for the center content
-        centerPanel = new JPanel();
-        centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set a black border
-     
-        // Create a JPanel for the content using BorderLayout
-        JPanel content = new JPanel(new BorderLayout());
-        content.add(topPanel, BorderLayout.NORTH);
-        content.add(centerPanel, BorderLayout.CENTER);
-        content.add(bottomPanel, BorderLayout.SOUTH);
-
-        // Add the content to the frame
-        frame.add(content, BorderLayout.CENTER);
-        
-        //Left Pannel
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        JButton blankGridButton =  new JButton("BLANK GRID");
-        blankGridButton.setBackground(customColor);
-        leftPanel.add(blankGridButton);
-       
-        leftPanel.add(new JLabel("ROWS: "));
-        rowsTextField = new JTextField(5);
-        leftPanel.add(rowsTextField);
-        leftPanel.add(new JLabel("COLUMNS: "));
-        colsTextField = new JTextField(5);
-        leftPanel.add(colsTextField);
-        
-        JButton createGridButton = new JButton("CREATE GRID");
-        createGridButton.setBackground(customColor);
-        leftPanel.add(createGridButton);
-        GridClass grid = new GridClass(centerPanel);
-        createGridButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	 numRows = Integer.parseInt(rowsTextField.getText());
-                 numCols = Integer.parseInt(colsTextField.getText());
-            	
-                
-            	grid.createGrid(numRows, numCols);
-              
-            }
-        });
-        blankGridButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	grid.blankGrid();
-            }
-        });
-        content.add(leftPanel, BorderLayout.WEST);
-        
-        // grid content
-        frame.setVisible(true);
-		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Please enter valid row and column numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	
-
-	public void runSimulation() {
+	/**public void runSimulation() {
 		// option for continuously or scrolled
 		/*
 		 * for the model binary number enter, perform a calculation
@@ -276,7 +158,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		
 		// 8 bits represent different position of cells, and using models you can kind 
 		// determine if it is zero or 1
-		 modelNum = Integer.parseInt(modelText.getText());
+		 /**modelNum = Integer.parseInt(modelText.getText());
 		
 		 // extracting model bit-by-bit
 		 int bit7 = (modelNum >> 7) & 1;
@@ -312,7 +194,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 					}
 		 	  }
 		 }
-	}
+	}**/
 	
 	@Override
 	 public void itemStateChanged(ItemEvent evt) {
