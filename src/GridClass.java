@@ -51,14 +51,14 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 		
 		 // extracting model bit-by-bit
 		 int modelNum = Integer.parseInt(modelText.getText());
-		 int bit7 = (modelNum >> 7) & 1;
-		 int bit6 = (modelNum >> 6) & 1;
-		 int bit5 = (modelNum >> 5) & 1;
-		 int bit4 = (modelNum >> 4) & 1;
-		 int bit3 = (modelNum >> 3) & 1;
-		 int bit2 = (modelNum >> 2) & 1;
-		 int bit1 = (modelNum >> 1) & 1;
 		 int bit0 = modelNum & 1;
+		 int bit1 = (modelNum >> 1) & 1;
+		 int bit2 = (modelNum >> 2) & 1;
+		 int bit3 = (modelNum >> 3) & 1;
+		 int bit4 = (modelNum >> 4) & 1;
+		 int bit5 = (modelNum >> 5) & 1;
+		 int bit6 = (modelNum >> 6) & 1;
+		 int bit7 = (modelNum >> 7) & 1;
 		 
 		  JLabel Left = null;
           JLabel Previous;  // determine previous
