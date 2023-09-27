@@ -80,7 +80,7 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 				         Right = cells[row][col + 1];
 				         Next = cells[row + 1][col];   
 	                }else {
-	                // normal ones
+	                // normal ones (everything else)
 			            Left = cells[row][col - 1];
 			            Previous = cells[row][col]; 
 			            Right = cells[row][col + 1];
@@ -102,9 +102,9 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 						    Previous.getBackground().equals(Color.WHITE)&&
 							Right.getBackground().equals(Color.BLACK)){
 							
-							if (bit0 == 0) {
+							if (bit1 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit1 == 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 					// case 010
@@ -112,9 +112,19 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 							Previous.getBackground().equals(Color.BLACK) &&
 						    Right.getBackground().equals(Color.WHITE)) {
 							
-							if (bit0 == 0) {
+							if (bit2 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit2 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+					//case 011
+					}else if(Left.getBackground().equals(Color.WHITE) &&
+							Previous.getBackground().equals(Color.BLACK) &&
+						    Right.getBackground().equals(Color.BLACK)) {
+							
+							if (bit3 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit3 == 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 					// case 100
@@ -122,9 +132,9 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 						    Previous.getBackground().equals(Color.WHITE) &&
 						    Right.getBackground().equals(Color.WHITE)) {
 							
-							if (bit0 == 0) {
+							if (bit3 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit3 == 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 				   // case 101
@@ -132,9 +142,9 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 						    Previous.getBackground().equals(Color.WHITE) &&
 						    Right.getBackground().equals(Color.BLACK)) {
 							
-							if (bit0 == 0) {
+							if (bit5 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit5 == 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 					// case 110
@@ -142,9 +152,9 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 						    Previous.getBackground().equals(Color.BLACK) &&
 						    Right.getBackground().equals(Color.WHITE)) {
 							
-							if (bit0 == 0) {
+							if (bit6 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit6== 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 					// case 111
@@ -152,9 +162,9 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 						    Previous.getBackground().equals(Color.BLACK) &&
 						    Right.getBackground().equals(Color.BLACK)) {
 							
-							if (bit0 == 0) {
+							if (bit7 == 0) {
 								Next.setBackground(Color.WHITE);
-							}else if(bit0 == 1 ) {
+							}else if(bit7 == 1 ) {
 								Next.setBackground(Color.BLACK);
 							}
 					}
