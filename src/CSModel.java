@@ -52,8 +52,6 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = {"English", "Français"};
     Color customColor = new Color(11, 171, 164);
-	//String gameOf = "Game of Life";
-	// JComboBox<String> combo1 = new JComboBox<String>(strGames);
 	JButton execButton = new JButton("Execute");
 	private int numRows = 0;
 	private int numCols = 0;
@@ -62,24 +60,16 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	JTextField rowsTextField, colsTextField ;
 	JPanel centerPanel;
 	JTextField modelText;
-	
-	//int game;
 	JPanel cards;
-	/*
-	 * Top panel
-	JPanel topPanel = new JPanel();*/
-	
-	/*/**
-	 * Main panel
-	JPanel mainPanel = new JPanel();*/
 
-	
 	
 	/**
 	 * Default constructor
 	 */
 	public CSModel() {
+		
 	}
+
 
 	public void mainMenu() {
 		// settings for the frame
@@ -156,6 +146,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	
 	public void mainWindow() {
 		// Settings for the frame
+		try {
         JFrame frame = new JFrame();
         frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -245,73 +236,33 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
         JButton createGridButton = new JButton("CREATE GRID");
         createGridButton.setBackground(customColor);
         leftPanel.add(createGridButton);
+        GridClass grid = new GridClass(centerPanel);
         createGridButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createGrid();
+            	 numRows = Integer.parseInt(rowsTextField.getText());
+                 numCols = Integer.parseInt(colsTextField.getText());
+            	
+                
+            	grid.createGrid(numRows, numCols);
+              
             }
         });
         blankGridButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	blankGrid();
+            	grid.blankGrid();
             }
         });
         content.add(leftPanel, BorderLayout.WEST);
         
         // grid content
-
         frame.setVisible(true);
-	}
-	
-	//blank grid option
-	public void blankGrid() {
-		for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
-            	 cells[row][col].setBackground(Color.WHITE);
-            }
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Please enter valid row and column numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	// create new grid
-	public void createGrid() {
-	    try {
-	        numRows = Integer.parseInt(rowsTextField.getText());
-	        numCols = Integer.parseInt(colsTextField.getText());
-	        // Create a grid layout for the panel
-	        centerPanel.setLayout(new GridLayout(numRows, numCols));
-	        cells = new JLabel[numRows][numCols];
-	        // Create empty cells (e.g., JLabels with a white background) and add them to the grid
-	        for (int row = 0; row < numRows; row++) {
-	            for (int col = 0; col < numCols; col++) {
-	                JLabel cell = new JLabel();
-	                cell.setOpaque(true);
-	                cell.setBackground(Color.white);
-	                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set black border
-	                centerPanel.add(cell);
-	                
-	                cells[row][col] = cell;
-	                
-	                cell.addMouseListener(new MouseAdapter() {
-	                    @Override
-	                    public void mouseClicked(MouseEvent e) {
-	                        // Toggle the cell's color when clicked
-	                        if (cell.getBackground() == Color.WHITE) {
-	                            cell.setBackground(Color.BLACK);
-	                        } else {
-	                            cell.setBackground(Color.WHITE);
-	                        }
-	                    }
-	                });
-	            }
-	        }
-	        // Repaint the panel to display the grid
-	        centerPanel.revalidate();
-	        centerPanel.repaint();
-	    } catch (NumberFormatException ex) {
-	        JOptionPane.showMessageDialog(this, "Please enter valid row and column numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-	    }
-	}
 
 	public void runSimulation() {
 		// option for continuously or scrolled
