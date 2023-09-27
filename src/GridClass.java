@@ -26,14 +26,12 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 	private JLabel[][] cells;
 	private static final int NUM_ROWS = 50;
 	private static final int NUM_COLUMNS = 50;
-	private int modelNum;
-	private JPanel centerPanel;
+	private JTextField modelText;
 	/**
 	 * Default Constructor
 	 */
-	public GridClass(JPanel centerPanel,int modelNum, JLabel[][] cells) {
-		this.centerPanel = centerPanel;
-		this.modelNum = modelNum;
+	public GridClass(JTextField modelText, JLabel[][] cells) {
+		this.modelText = modelText;
 		this.cells = cells;
 	}
 	
@@ -52,6 +50,7 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 		// determine if it is zero or 1
 		
 		 // extracting model bit-by-bit
+		 int modelNum = Integer.parseInt(modelText.getText());
 		 int bit7 = (modelNum >> 7) & 1;
 		 int bit6 = (modelNum >> 6) & 1;
 		 int bit5 = (modelNum >> 5) & 1;
@@ -61,32 +60,107 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 		 int bit1 = (modelNum >> 1) & 1;
 		 int bit0 = modelNum & 1;
 		 
-		 for (int row = 0; row <  NUM_ROWS; row++) {
-	            for (int col = 0; col < NUM_COLUMNS; col++) {	
-	            	// im not sure about these
-		            JLabel L = cells[row][col - 1];
-		            JLabel P = cells[row][col];  // determine previous
-		            JLabel R = cells[row][col + 1];
-		            
+		  JLabel Left = null;
+          JLabel Previous;  // determine previous
+          JLabel Right;
+          JLabel Next;
+		 
+		 for (int row = 1; row <  NUM_ROWS -1; row++) {
+	            for (int col = 1; col< NUM_COLUMNS -1; col++) {	
+	            	
+	            	// this is for the middle of the first row, the one that is meant to be black
+	            	if (row == 0 && col == NUM_COLUMNS / 2) {
+	            		  Left = cells[row][col - 1];
+				          Previous = cells[row][col]; 
+				          Right = cells[row][col + 1];
+				          Next = cells[row + 1][col];
+				     // by the edges
+	                } else if (col == 0 || col == NUM_COLUMNS - 1) {
+	                	 Previous = cells[row][col]; 
+				         Right = cells[row][col + 1];
+				         Next = cells[row + 1][col];   
+	                }else {
+	                // normal ones
+			            Left = cells[row][col - 1];
+			            Previous = cells[row][col]; 
+			            Right = cells[row][col + 1];
+			            Next = cells[row + 1][col];
+	                }
 
-					if (L.getBackground().equals(Color.WHITE) &&
-					    R.getBackground().equals(Color.WHITE) &&
-					    P.getBackground().equals(Color.WHITE)) {
+	            	//case 000
+					if (Left.getBackground().equals(Color.WHITE) &&
+					    Previous.getBackground().equals(Color.WHITE) &&
+					    Right.getBackground().equals(Color.WHITE)) {
 		
 							if (bit0 == 0) {
-								cells[row][col].setBackground(Color.WHITE);
+								Next.setBackground(Color.WHITE);
 							}else if(bit0 == 1 ) {
-								cells[row][col].setBackground(Color.BLACK);
+								Next.setBackground(Color.BLACK);
 							}
-					}else if(L.getBackground().equals(Color.WHITE) &&
-						    R.getBackground().equals(Color.WHITE) &&
-						    P.getBackground().equals(Color.WHITE)) {
-						
+					// case 001		
+					}else if(Left.getBackground().equals(Color.WHITE) &&
+						    Previous.getBackground().equals(Color.WHITE)&&
+							Right.getBackground().equals(Color.BLACK)){
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+					// case 010
+					}else if(Left.getBackground().equals(Color.WHITE) &&
+							Previous.getBackground().equals(Color.BLACK) &&
+						    Right.getBackground().equals(Color.WHITE)) {
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+					// case 100
+					}else if(Left.getBackground().equals(Color.BLACK) &&
+						    Previous.getBackground().equals(Color.WHITE) &&
+						    Right.getBackground().equals(Color.WHITE)) {
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+				   // case 101
+					}else if(Left.getBackground().equals(Color.BLACK) &&
+						    Previous.getBackground().equals(Color.WHITE) &&
+						    Right.getBackground().equals(Color.BLACK)) {
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+					// case 110
+					}else if(Left.getBackground().equals(Color.BLACK) &&
+						    Previous.getBackground().equals(Color.BLACK) &&
+						    Right.getBackground().equals(Color.WHITE)) {
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
+					// case 111
+					}else if(Left.getBackground().equals(Color.BLACK) &&
+						    Previous.getBackground().equals(Color.BLACK) &&
+						    Right.getBackground().equals(Color.BLACK)) {
+							
+							if (bit0 == 0) {
+								Next.setBackground(Color.WHITE);
+							}else if(bit0 == 1 ) {
+								Next.setBackground(Color.BLACK);
+							}
 					}
 		 	  }
 		 }
 	}
-	
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {

@@ -75,7 +75,6 @@ public class mainGUI {
 	
 	public void mainWindow() {
 		// Settings for the frame
-		try {
         frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -126,6 +125,14 @@ public class mainGUI {
 
         // Buttons
         JButton run = new JButton("RUN");
+        run.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             GridClass grid = new GridClass(modelText, cells);
+             grid.runSimulation();
+            }
+        });
+
         JButton pause = new JButton("PAUSE");
         JButton stop = new JButton("STOP");
         bottomPanel.add(run);
@@ -150,14 +157,9 @@ public class mainGUI {
         
      
         createGrid();
-        
-        int modelNum = Integer.parseInt(modelText.getText());
-        GridClass grid = new GridClass(centerPanel, modelNum, cells);
+       
         
         // grid content
         frame.setVisible(true);
-		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(frame, "Please enter valid row and column numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-		}
 	}
 }
