@@ -1,18 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -77,7 +73,6 @@ public class mainGUI {
 		// Settings for the frame
         frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(1000, 800);
         frame.setResizable(false);
 
@@ -109,11 +104,11 @@ public class mainGUI {
 
         JLabel model = new JLabel("Model:");
         bottomPanel.add(model);
-         modelText = new JTextField(10);
+        modelText = new JTextField(10);
         bottomPanel.add(modelText);
         
 
-        JLabel iterations = new JLabel("Iterations:");
+       /* JLabel iterations = new JLabel("Iterations:");
         bottomPanel.add(iterations);
         JTextField iterationsText = new JTextField(5);
         bottomPanel.add(iterationsText);
@@ -121,15 +116,20 @@ public class mainGUI {
         JLabel scroll = new JLabel("Scroll Continuously:");
         bottomPanel.add(scroll);
         JCheckBox checkBox1 = new JCheckBox();
-        bottomPanel.add(checkBox1);
+        bottomPanel.add(checkBox1);*/
 
         // Buttons
         JButton run = new JButton("RUN");
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-             GridClass grid = new GridClass(modelText, cells);
-             grid.runSimulation();
+             boolean valid = isValidBinary(modelText.getText());
+             if(valid) {
+            	 GridClass grid = new GridClass(modelText, cells);
+                 grid.runSimulation(); 
+             }else {
+            	 JOptionPane.showMessageDialog(frame, "Please enter a valid 8-bit binary number");
+             }
             }
         });
 
@@ -161,5 +161,19 @@ public class mainGUI {
         
         // grid content
         frame.setVisible(true);
+	}
+	
+	public boolean isValidBinary(String modelInput) {
+		if (modelInput.length() != 8) {
+	        return false;
+		}
+	    for (int i = 0; i < modelInput.length(); i++) {
+	        char c = modelInput.charAt(i);
+	        
+	        if (c != '0' && c != '1') { // Check if each character is '0' or '1'
+	            return false;
+	        }
+	    }
+	    return true;
 	}
 }
