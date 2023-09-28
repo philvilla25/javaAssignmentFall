@@ -6,9 +6,13 @@ import java.awt.event.ItemListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+
 
 import javax.swing.JFrame;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,39 +54,52 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	   frame.setTitle(title);
 	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   frame.setResizable(false);
-	   frame.setSize(400,200);
+	   frame.setSize(400,250);
 	   frame.setVisible(true);
 	   
 	   // Setting image icon for program
 	   ImageIcon gameIcon = new ImageIcon(logoImg);
 	   frame.setIconImage(gameIcon.getImage());
-	   frame.setBackground(new Color(217,217,217));
-	 
 	  
-	   JPanel comboBoxPane = new JPanel(); //use Flow Layout
+	   JPanel menu = new JPanel(); //use Flow Layout
+	   JPanel subMenu = new JPanel(); // use flow layout
+	   JPanel options = new JPanel(); // use box layout
+	   options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
+	   
+	   //changing colors of panel
+	   menu.setBackground(new Color(217,217,217));
+	   subMenu.setBackground(new Color(217,217,217));
+	   options.setBackground(new Color(217,217,217));
+	   
 	   
 	   // content image
 	   ImageIcon contentImage = new ImageIcon(logoImg);
 	   JLabel imageLabel = new JLabel(contentImage);
-	   comboBoxPane.add(imageLabel);
+	   subMenu.add(imageLabel);
+	   
+	    // "HOME" text
+       JLabel home = new JLabel("HOME");
+       home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
+       home.setHorizontalAlignment(JLabel.CENTER); //supposed to make text center aligned
+       options.add(home);
 	   
 	   // settings for combo box
-	   comboBoxPane.setSize(200,200);
        JComboBox<String>games = new JComboBox<String>(strGames);
        games.setEditable(false);
        games.addItemListener(this);
-       comboBoxPane.add(games);
+       options.add(games);
        
 	   
 	   //buttons
        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+       buttonPanel.setBackground(new Color(217,217,217));
 	   JButton start = new JButton("START");
 	   JButton help = new JButton("HELP");
 	   buttonPanel.add(start);
        buttonPanel.add(help);
        start.setBackground(customColor);
 	   help.setBackground(customColor);
-	   comboBoxPane.add(buttonPanel);
+	   options.add(buttonPanel);
 	   
 	   help.addActionListener(new ActionListener() {
 		    @Override
@@ -104,12 +121,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		 			mainGUI gui = new mainGUI();
 		 			gui.mainWindow();
 		        } else if ("Game Of Life".equals(selectedProgram)) {
-		            // Execute program 2
-		            //executeProgram2();
 		        	 programNotAvailable();
 		        } else if ("Turing Machine".equals(selectedProgram)) {
-		            // Execute program 3
-		            //executeProgram3();
 		        	 programNotAvailable();
 		        }
 		        
@@ -120,14 +133,18 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	   
 	   // settings for language box
        JComboBox<String>languages = new JComboBox<String>(languageOption);
+       languages.setPreferredSize(new Dimension(150, 30));
        languages.setEditable(false);
        languages.addItemListener(this);
-       comboBoxPane.add(languages); 
        languages.setBackground(Color.BLACK);
        languages.setForeground(customColor);
        
+       subMenu.add(options); 
+       menu.add(subMenu);
+       menu.add(languages);
+       
        //adding panel to frame
-       frame.add(comboBoxPane, BorderLayout.CENTER);
+       frame.add(menu, BorderLayout.CENTER);
        frame.setVisible(true);
 	}
 	
