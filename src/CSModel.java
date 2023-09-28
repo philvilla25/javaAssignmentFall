@@ -3,47 +3,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import layoutPackage.cardLayout;
 
 /**
  * 
  */
+@SuppressWarnings("serial")
 public class CSModel extends JFrame implements ActionListener, ItemListener{
 
 	String title = "Cellular Automata";
@@ -52,11 +29,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = {"English", "Français"};
     Color customColor = new Color(11, 171, 164);
-	JButton execButton = new JButton("Execute");
-	private int numRows = 0;
-	private int numCols = 0;
-	private int modelNum = 0;
-	private JLabel[][] cells; 
+	JButton execButton = new JButton("Execute");; 
 	JTextField rowsTextField, colsTextField ;
 	JPanel centerPanel;
 	JTextField modelText;
@@ -124,9 +97,23 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	   start.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        // Call your method when the button is clicked
-		    	mainGUI gui = new mainGUI();
-		    	gui.mainWindow();
+		    	 String selectedProgram = (String) games.getSelectedItem();
+
+		        // Call proper program when selected
+		        if ("Cellular Automata".equals(selectedProgram)) {
+		 			mainGUI gui = new mainGUI();
+		 			gui.mainWindow();
+		        } else if ("Game Of Life".equals(selectedProgram)) {
+		            // Execute program 2
+		            //executeProgram2();
+		        	 programNotAvailable();
+		        } else if ("Turing Machine".equals(selectedProgram)) {
+		            // Execute program 3
+		            //executeProgram3();
+		        	 programNotAvailable();
+		        }
+		        
+		   
 		    }
 		});
 	  
@@ -144,15 +131,13 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
        frame.setVisible(true);
 	}
 	
-	
-	@Override
-	 public void itemStateChanged(ItemEvent evt) {
-        CardLayout cl = (CardLayout)(cards.getLayout());
-        cl.show(cards, (String)evt.getItem());
-    }
      
+	public void programNotAvailable() {
+	    JOptionPane.showMessageDialog(this, "Program is not available right now. Please check back later.", "Program Unavailable", JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 	/**
+	 * Main Method
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -163,6 +148,12 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
