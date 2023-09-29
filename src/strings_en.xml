@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <entry>
+        <key>home</key>
+        <value>HOME</value>
+    </entry>
+    <entry>
+        <key>start</key>
+        <value>START</value>
+    </entry>
+    <entry>
+        <key>help</key>
+        <value>HELP</value>
+    </entry>
+    <entry>
+        <key>run</key>
+        <value>RUN</value>
+    </entry>
+    <entry>
+        <key>pause</key>
+        <value>PAUSE</value>
+    </entry>
+      <entry>
+        <key>stop</key>
+        <value>STOP</value>
+    </entry>
+    <entry>
+        <key>messageHelp</key>
+        <value>
+	This program allows you to choose from three options:
+	1. Cellular Automata
+	2. Game of Life
+	3. Turing Machine
+	Choose the program you and then click the start button.
+	</value>
+    </entry>
+    
+    <!-- Add more key-value pairs for other localized strings as needed -->
+</resources>

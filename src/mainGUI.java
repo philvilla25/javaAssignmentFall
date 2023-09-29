@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,6 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.Document;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class mainGUI {
 
@@ -32,8 +39,10 @@ public class mainGUI {
 	JPanel centerPanel;
 	JTextField modelText;
 	JPanel cards;
+	JButton run, pause, stop;
 	JFrame frame = new JFrame();
-
+	private static org.w3c.dom.Document currentXMLDocument;  
+	private static String currentLanguage = "en"; 
 	
 	
 	public void createGrid() {
@@ -99,9 +108,31 @@ public class mainGUI {
 
         JComboBox<String> languages = new JComboBox<>(languageOption);
         languages.setEditable(false);
+        languages.addActionListener(new ActionListener() {
+
+			
+			 @Override
+	           public void actionPerformed(ActionEvent e) {
+	               String selectedLanguage = (String) languages.getSelectedItem();
+	               switch (selectedLanguage) {
+	                   case "English":
+	                       currentLanguage = "en";
+	                       break;
+	                   case "Français":
+	                       currentLanguage = "fr";
+	                       break;
+	               }
+	               loadXMLResource(currentLanguage);
+
+	               // Update the UI components
+	               updateUIComponents();
+	           }
+        	
+        });
         // languages.addItemListener(this); // Make sure to implement ItemListener
         bottomPanel.add(languages);
-
+        
+        
         JLabel model = new JLabel("Model:");
         bottomPanel.add(model);
         modelText = new JTextField(10);
@@ -119,7 +150,7 @@ public class mainGUI {
         bottomPanel.add(checkBox1);*/
 
         // Buttons
-        JButton run = new JButton("RUN");
+        run = new JButton("RUN");
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,8 +164,8 @@ public class mainGUI {
             }
         });
 
-        JButton pause = new JButton("PAUSE");
-        JButton stop = new JButton("STOP");
+        pause = new JButton("PAUSE");
+        stop = new JButton("STOP");
         bottomPanel.add(run);
         bottomPanel.add(pause);
         bottomPanel.add(stop);
@@ -161,6 +192,58 @@ public class mainGUI {
         
         // grid content
         frame.setVisible(true);
+	}
+	
+	 private void updateUIComponents() {
+	        // Update UI components with localized strings
+	        run.setText(getLocalizedString("run"));
+	        stop.setText(getLocalizedString("stop"));
+	        pause.setText(getLocalizedString("pause"));
+	        // ... (update other UI components as needed)
+	    }
+	
+	
+	private static void loadXMLResource(String language) {
+	    try {
+	        ClassLoader classLoader = CSModel.class.getClassLoader(); // Replace CSModel with your actual class name
+	        InputStream inputStream = classLoader.getResourceAsStream("strings_" + language + ".xml");
+
+	        if (inputStream != null) {
+	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	            DocumentBuilder builder = factory.newDocumentBuilder();
+	            currentXMLDocument = builder.parse(inputStream);
+	            currentXMLDocument.getDocumentElement().normalize();
+	        } else {
+	            System.err.println("XML resource not found for language: " + language);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+ 
+ private static String getLocalizedString(String key) {
+	    if (currentXMLDocument == null) {
+	        return "XML document not loaded";
+	    }
+
+	    NodeList entryNodes = currentXMLDocument.getElementsByTagName("entry");
+
+	    for (int i = 0; i < entryNodes.getLength(); i++) {
+	        Element entryElement = (Element) entryNodes.item(i);
+
+	        Element keyElement = (Element) entryElement.getElementsByTagName("key").item(0);
+	        String keyValue = keyElement.getTextContent().trim();
+	        System.out.println("Tuara"+ keyValue);
+	        if (keyValue.equals(key)) {
+	        	
+	            Element valueElement = (Element) entryElement.getElementsByTagName("value").item(0);
+	            
+	            System.out.println("diara" + valueElement.getTextContent().trim());
+	        	return valueElement.getTextContent().trim();
+	        }
+	    }
+
+	    return "Key not found";
 	}
 	
 	public boolean isValidBinary(String modelInput) {

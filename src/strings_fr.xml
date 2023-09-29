@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <entry>
+        <key>home</key>
+        <value>MAISON</value>
+    </entry>
+    <entry>
+        <key>start</key>
+        <value>COMMENCER</value>
+    </entry>
+    <entry>
+        <key>help</key>
+        <value>AIDE</value>
+    </entry>
+    <entry>
+        <key>run</key>
+        <value>COURIR</value>
+    </entry>
+    <entry>
+        <key>pause</key>
+        <value>PAUSE</value>
+    </entry>
+    <entry>
+        <key>stop</key>
+        <value>ARRÊT</value>
+    </entry>
+    <entry>
+        <key>messageHelp</key>
+        <value>
+		Ce programme vous permet de choisir parmi trois options :
+		1. Automates cellulaires
+		2. Jeu de la vie
+		3. Machine de Turing
+		Choisissez le programme que vous souhaitez, puis cliquez sur le bouton Démarrer.	
+			</value>
+    </entry>
+    <!-- Add more key-value pairs for other localized strings as needed -->
+</resources>

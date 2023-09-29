@@ -3,14 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
-
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.io.InputStream;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.*;
 
 /**
  * 
@@ -34,17 +35,21 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	String languageOption[] = {"English", "Français"};
     Color customColor = new Color(11, 171, 164);
 	JButton execButton = new JButton("Execute");; 
+	JButton start;
+	JButton help;
+	JLabel home;
 	JTextField rowsTextField, colsTextField ;
 	JPanel centerPanel;
 	JTextField modelText;
 	JPanel cards;
-
+	private static String currentLanguage = "en"; // Default language
+	private static org.w3c.dom.Document currentXMLDocument; 
 	
 	/**
 	 * Default constructor
 	 */
 	public CSModel() {
-		
+		 loadXMLResource(currentLanguage);	
 	}
 
 
@@ -78,7 +83,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	   subMenu.add(imageLabel);
 	   
 	    // "HOME" text
-       JLabel home = new JLabel("HOME");
+       home = new JLabel("HOME");
        home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
        home.setHorizontalAlignment(JLabel.CENTER); //supposed to make text center aligned
        options.add(home);
@@ -93,8 +98,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 	   //buttons
        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
        buttonPanel.setBackground(new Color(217,217,217));
-	   JButton start = new JButton("START");
-	   JButton help = new JButton("HELP");
+	   start = new JButton("START");
+	   help = new JButton("HELP");
 	   buttonPanel.add(start);
        buttonPanel.add(help);
        start.setBackground(customColor);
@@ -105,8 +110,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Call your method when the button is clicked
-		    	String helpMessage = "This program allows you to choose from three options:\nCellular Automata\nGame of Life\nTuring Machine.\n"
-		    			+ "Choose the program you and then click the start button";
+		    	
+		    	String helpMessage = getLocalizedString("messageHelp");
 	           JOptionPane.showMessageDialog(frame, helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);
 		    }
 		});
@@ -126,7 +131,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		        	 programNotAvailable();
 		        }
 		        
-		   
+		        updateUIComponents();
 		    }
 		});
 	  
@@ -138,7 +143,24 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
        languages.addItemListener(this);
        languages.setBackground(Color.BLACK);
        languages.setForeground(customColor);
-       
+       languages.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               String selectedLanguage = (String) languages.getSelectedItem();
+               switch (selectedLanguage) {
+                   case "English":
+                       currentLanguage = "en";
+                       break;
+                   case "Français":
+                       currentLanguage = "fr";
+                       break;
+               }
+               loadXMLResource(currentLanguage);
+
+               // Update the UI components
+               updateUIComponents();
+           }
+       });
        subMenu.add(options); 
        menu.add(subMenu);
        menu.add(languages);
@@ -163,6 +185,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		runMenu.mainMenu();
 		}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -174,5 +197,53 @@ public class CSModel extends JFrame implements ActionListener, ItemListener{
 		// TODO Auto-generated method stub
 		
 	}
+	 private void updateUIComponents() {
+	        // Update UI components with localized strings
+	        home.setText(getLocalizedString("home"));
+	        start.setText(getLocalizedString("start"));
+	        help.setText(getLocalizedString("help"));
+	        // ... (update other UI components as needed)
+	    }
+	
+	 private static void loadXMLResource(String language) {
+		    try {
+		        ClassLoader classLoader = CSModel.class.getClassLoader(); // Replace CSModel with your actual class name
+		        InputStream inputStream = classLoader.getResourceAsStream("strings_" + language + ".xml");
+
+		        if (inputStream != null) {
+		            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		            DocumentBuilder builder = factory.newDocumentBuilder();
+		            currentXMLDocument = builder.parse(inputStream);
+		            currentXMLDocument.getDocumentElement().normalize();
+		        } else {
+		            System.err.println("XML resource not found for language: " + language);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		}
+	 
+	 private static String getLocalizedString(String key) {
+		    if (currentXMLDocument == null) {
+		        return "XML document not loaded";
+		    }
+
+		    NodeList entryNodes = currentXMLDocument.getElementsByTagName("entry");
+
+		    for (int i = 0; i < entryNodes.getLength(); i++) {
+		        Element entryElement = (Element) entryNodes.item(i);
+
+		        Element keyElement = (Element) entryElement.getElementsByTagName("key").item(0);
+		        String keyValue = keyElement.getTextContent().trim();
+		        if (keyValue.equals(key)) {
+		        	
+		            Element valueElement = (Element) entryElement.getElementsByTagName("value").item(0);    
+		        	return valueElement.getTextContent().trim();
+		        }
+		    }
+
+		    return "Key not found";
+		}
+
 	
 }
