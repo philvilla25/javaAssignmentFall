@@ -30,7 +30,7 @@ public class mainGUI {
 	String logoBanner = "banner.png";
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = {"English", "Français"};
-    Color customColor = new Color(11, 171, 164);
+    Color customColor = new Color(199,21,133);
 	JButton execButton = new JButton("Execute");
 	private static final int NUM_ROWS = 50;
 	private static final int NUM_COLUMNS = 50;
@@ -107,6 +107,7 @@ public class mainGUI {
         bottomPanel.add(switchLanguage);
 
         JComboBox<String> languages = new JComboBox<>(languageOption);
+        languages.setBackground(customColor);
         languages.setEditable(false);
         languages.addActionListener(new ActionListener() {
 
@@ -138,17 +139,6 @@ public class mainGUI {
         modelText = new JTextField(10);
         bottomPanel.add(modelText);
         
-
-       /* JLabel iterations = new JLabel("Iterations:");
-        bottomPanel.add(iterations);
-        JTextField iterationsText = new JTextField(5);
-        bottomPanel.add(iterationsText);
-
-        JLabel scroll = new JLabel("Scroll Continuously:");
-        bottomPanel.add(scroll);
-        JCheckBox checkBox1 = new JCheckBox();
-        bottomPanel.add(checkBox1);*/
-
         // Buttons
         run = new JButton("RUN");
         run.addActionListener(new ActionListener() {
@@ -163,7 +153,7 @@ public class mainGUI {
              }
             }
         });
-
+        
         pause = new JButton("PAUSE");
         stop = new JButton("STOP");
         bottomPanel.add(run);
@@ -232,13 +222,10 @@ public class mainGUI {
 	        Element entryElement = (Element) entryNodes.item(i);
 
 	        Element keyElement = (Element) entryElement.getElementsByTagName("key").item(0);
-	        String keyValue = keyElement.getTextContent().trim();
-	        System.out.println("Tuara"+ keyValue);
+	        String keyValue = keyElement.getTextContent().trim();       
 	        if (keyValue.equals(key)) {
 	        	
-	            Element valueElement = (Element) entryElement.getElementsByTagName("value").item(0);
-	            
-	            System.out.println("diara" + valueElement.getTextContent().trim());
+	            Element valueElement = (Element) entryElement.getElementsByTagName("value").item(0); 
 	        	return valueElement.getTextContent().trim();
 	        }
 	    }
