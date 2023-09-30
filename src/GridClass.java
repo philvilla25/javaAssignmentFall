@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -35,7 +32,10 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 		this.cells = cells;
 	}
 	
-
+    /**
+     * Description: this is the method that generates cellular automata on a 30 by 30 matrice
+     * @return void
+     */
 	public void runSimulation() {
 	    // Extracting the model bit-by-bit
 	    int modelNum = Integer.parseInt(modelText.getText()); // Get the binary model number as an integer
@@ -157,13 +157,22 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 	    }
 	}
 
-	
+	/**
+	 * Description: A method that listens to item's state change
+	 * @param ItemEvent
+	 * @return void
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Description: A method that listens to action events
+	 * @param ActionEvent
+	 * @return void
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
