@@ -44,6 +44,7 @@ public class mainGUI {
 	private static org.w3c.dom.Document currentXMLDocument;  
 	private static String currentLanguage = "en"; 
 	
+
 	/**
 	 * Creates and initializes the grid layout for the panel with empty cells.
 	 */
@@ -149,12 +150,12 @@ public class mainGUI {
 	    run.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            boolean valid = isValidBinary(modelText.getText());
+	            boolean valid = isValidDecimal(modelText.getText());
 	            if (valid) {
 	                GridClass grid = new GridClass(modelText, cells);
 	                grid.runSimulation();
 	            } else {
-	                JOptionPane.showMessageDialog(frame, "Please enter a valid 8-bit binary number");
+	                JOptionPane.showMessageDialog(frame, "Please enter a valid decimal betwen 0 and 255");
 	            }
 	        }
 	    });
@@ -286,24 +287,19 @@ public class mainGUI {
 	 * @param modelInput The input string to validate.
 	 * @return True if the input is a valid 8-bit binary number, false otherwise.
 	 */
-	public boolean isValidBinary(String modelInput) {
-	    // Check if the input string length is not equal to 8
-	    if (modelInput.length() != 8) {
-	        return false;
-	    }
+	public boolean isValidDecimal(String modelInput) {
+	    try {
+	        int decimalValue = Integer.parseInt(modelInput);
 
-	    // Iterate through each character in the input string
-	    for (int i = 0; i < modelInput.length(); i++) {
-	        // Get the current character
-	        char c = modelInput.charAt(i);
-
-	        // Check if the character is not '0' or '1'
-	        if (c != '0' && c != '1') {
-	            return false;
+	        // Check if the decimal value is within the range [0, 255]
+	        if (decimalValue >= 0 && decimalValue <= 255) {
+	            return true; // Valid decimal value
+	        } else {
+	            return false; // Out of range
 	        }
+	    } catch (NumberFormatException e) {
+	        return false; // Not a valid integer
 	    }
-
-	    // If all characters are '0' or '1' and the length is 8, return true (valid binary)
-	    return true;
 	}
+
 }
