@@ -100,7 +100,7 @@ public class mainGUI {
 
 	    // Create a JPanel for the top panel
 	    JPanel topPanel = new JPanel();
-	    topPanel.setBackground(Color.WHITE);
+	    topPanel.setBackground(Color.BLACK);
 
 	    // Place logoBanner in the top panel
 	    ImageIcon banner = new ImageIcon(logoBanner);
@@ -110,6 +110,8 @@ public class mainGUI {
 	    // Create a JPanel for the bottom panel
 	    JPanel bottomPanel = new JPanel();
 	    bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    bottomPanel.setBackground(Color.BLACK);
+	    bottomPanel.setForeground(Color.white);
 
 	    JLabel switchLanguage = new JLabel("Switch Language:");
 	    bottomPanel.add(switchLanguage);
@@ -169,7 +171,7 @@ public class mainGUI {
 	    // Create a JPanel for the center content
 	    centerPanel = new JPanel();
 	    centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Set a black border
-
+	    centerPanel.setBackground(Color.black);
 	    // Create a JPanel for the content using BorderLayout
 	    JPanel content = new JPanel(new BorderLayout());
 	    content.add(topPanel, BorderLayout.NORTH);
