@@ -1,5 +1,11 @@
 :: ---------------------------------------------------------------------
 :: JAP COURSE - SCRIPT
+::
+:: Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+:: Student Number: 041075624 and 041063813
+:: CST8221 A12
+:: Date: 2nd October, 2023.
+::
 :: SCRIPT CST8221 - Fall 2023
 :: ---------------------------------------------------------------------
 :: Begin of Script (A13 - F23)

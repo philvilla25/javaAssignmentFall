@@ -16,33 +16,37 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
 /**
- * 
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A12
+ * Date: 2nd October, 2023.
  */
 @SuppressWarnings("serial")
 public class CSModel extends JFrame implements ActionListener, ItemListener {
 
-	String title = "Cellular Automata";
-	String logoImg = "../resources/logo.png";
-	String logoBanner = "banner.png";
-	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
-	String languageOption[] = { "English", "Français" };
-	Color customColor = new Color(11, 171, 164);
-	JButton execButton = new JButton("Execute");;
-	JButton start;
-	JButton help;
-	JLabel home;
-	JTextField rowsTextField, colsTextField;
-	JPanel centerPanel;
-	JTextField modelText;
-	JPanel cards;
+	/** Name of project **/
+	private String title = "Cellular Automata";
+	/** Name of logo image **/
+	private String logoImg = "../resources/logo.png";
+	/** Name of games **/
+	private String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
+	/** Language options **/
+	private String languageOption[] = { "English", "Français" };
+	/** Colour **/
+	private Color customColor = new Color(11, 171, 164);
+	/** Buttons **/
+	private JButton start, help;
+	/** home button **/
+	private JLabel home;
+	/** default langauge **/
 	private static String currentLanguage = "en"; // Default language
+	/** XML **/
 	private static org.w3c.dom.Document currentXMLDocument;
 
 	/**
@@ -56,7 +60,6 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	 * Description: method that generates
 	 * the main menu pop up where user can choose between applications
 	 * and start the application chosen
-	 * @return void
 	 */
 	public void mainMenu() {
 	    // Create a new JFrame for the main menu
@@ -307,7 +310,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	/**
 	 * Description: main method where this program starts
 	 * 
-	 * @param args
+	 * @param args String arguement
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

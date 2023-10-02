@@ -1,28 +1,30 @@
 
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A12
+ * Date: 2nd October, 2023.
+ */
 /**
  * Class the creates Grid lines on the Center Panel of the Main window Frame
  */
 public class GridClass extends JFrame implements ActionListener, ItemListener{
-
+	/** cells for grid **/
 	private JLabel[][] cells;
+	/** number or rows **/
 	private static final int NUM_ROWS = 50;
+	/** number or columns **/
 	private static final int NUM_COLUMNS = 50;
+	/** text field for number **/
 	private JTextField modelText;
 	/**
 	 * Default Constructor

@@ -16,13 +16,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+/**
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A12
+ * Date: 2nd October, 2023.
+ */
 public class mainGUI {
 
 	String title = "Cellular Automata";
@@ -115,7 +120,9 @@ public class mainGUI {
 	    bottomPanel.setForeground(Color.white);
 
 	    JLabel switchLanguage = new JLabel("Switch Language:");
+	    switchLanguage .setForeground(Color.WHITE);
 	    bottomPanel.add(switchLanguage);
+	   
 
 	    JComboBox<String> languages = new JComboBox<>(languageOption);
 	    languages.setBackground(customColor);
@@ -141,6 +148,7 @@ public class mainGUI {
 	    bottomPanel.add(languages);
 
 	    JLabel model = new JLabel("Model:");
+	    model.setForeground(Color.WHITE);
 	    bottomPanel.add(model);
 	    modelText = new JTextField(10);
 	    bottomPanel.add(modelText);
@@ -160,14 +168,14 @@ public class mainGUI {
 	        }
 	    });
 
-	    pause = new JButton("PAUSE");
-	    stop = new JButton("STOP");
+	    /*pause = new JButton("PAUSE");
+	    stop = new JButton("STOP");*/
 	    bottomPanel.add(run);
-	    bottomPanel.add(pause);
-	    bottomPanel.add(stop);
 	    run.setBackground(customColor);
+	    /*bottomPanel.add(pause);
+	    bottomPanel.add(stop);
 	    pause.setBackground(customColor);
-	    stop.setBackground(customColor);
+	    stop.setBackground(customColor);*/
 
 	    // Create a JPanel for the center content
 	    centerPanel = new JPanel();
