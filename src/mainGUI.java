@@ -26,8 +26,8 @@ import org.w3c.dom.NodeList;
 public class mainGUI {
 
 	String title = "Cellular Automata";
-	String logoImg = "logo.png";
-	String logoBanner = "banner.png";
+	String logoImg = "../resources/logo.png";
+	String logoBanner = "../resources/banner.png";
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = {"English", "Français"};
     Color customColor = new Color(199,21,133);

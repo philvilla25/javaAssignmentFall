@@ -1,0 +1,4 @@
+src\GridClass.java:21: warning: [serial] serializable class GridClass has no definition of serialVersionUID
+public class GridClass extends JFrame implements ActionListener, ItemListener{
+       ^
+1 warning

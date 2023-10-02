@@ -29,7 +29,7 @@ import org.w3c.dom.*;
 public class CSModel extends JFrame implements ActionListener, ItemListener {
 
 	String title = "Cellular Automata";
-	String logoImg = "logo.png";
+	String logoImg = "../resources/logo.png";
 	String logoBanner = "banner.png";
 	String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	String languageOption[] = { "English", "Français" };
@@ -131,6 +131,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	            if ("Cellular Automata".equals(selectedProgram)) {
 	                mainGUI gui = new mainGUI();
 	                gui.mainWindow();
+	                frame.dispose();
 	            } else if ("Game Of Life".equals(selectedProgram)) {
 	                programNotAvailable();
 	            } else if ("Turing Machine".equals(selectedProgram)) {

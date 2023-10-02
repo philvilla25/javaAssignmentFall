@@ -9,20 +9,22 @@ CLS
 
 :: LOCAL VARIABLES ....................................................
 
-SET LIBDIR=/SOFT/copy/dev/java/JavaFX15/lib/
+::SET LIBDIR=openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib
 SET SRCDIR=src
 SET BINDIR=bin
 SET BINERR=jap-javac.err
 SET JARNAME=jap.jar
 SET JAROUT=jap-jar.out
 SET JARERR=jap-jar.err
-SET DOCDIR=doc
+SET DOCDIR=src/doc
 SET DOCPACK=cs
 SET PACKAGE=cs
 SET DOCERR=jap-javadoc.err
-SET MAINCLASSSRC=src/CSModel.java
+SET MAINCLASSSRC1=src/CSModel.java
+SET MAINCLASSSRC2=src/mainGUI.java
+SET MAINCLASSSRC3=src/GridClass.java
 SET MAINCLASSBIN=CSModel
-SET IMAGES=images
+::SET IMAGES=src
 SET RESOURCES=resources
 
 @echo off
@@ -56,16 +58,18 @@ ECHO "[LABS SCRIPT ---------------------]"
 ECHO "0. Preconfiguring ................."
 :: mkdir "%BINDIR%/%RESOURCES%"
 :: xcopy "%SRCDIR%/%RESOURCES%" "%BINDIR%/%RESOURCES%" /Y
-:: mkdir "%BINDIR%/%IMAGES%"
-:: xcopy "%SRCDIR%/%IMAGES%" "%BINDIR%/%IMAGES%" /Y
+::mkdir "%BINDIR%/%IMAGES%"
+::xcopy "%SRCDIR%/%IMAGES%" "%BINDIR%/%IMAGES%" /Y
+
 mkdir "%BINDIR%"
 mkdir "%BINDIR%\%PACKAGE%"
-copy "%SRCDIR%\%PACKAGE%\*.png" "%BINDIR%\%PACKAGE%"
-copy "%SRCDIR%\%PACKAGE%\*.gif" "%BINDIR%\%PACKAGE%"
+copy "%RESOURCES%\*.png" "%BINDIR%\%RESOURCES%"
+copy "%RESOURCES%\*.gif"  "%BINDIR%\%RECOURCES%"
+
 
 ECHO "1. Compiling ......................"
 ::javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
-javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% -d %BINDIR% 2> %BINERR%
 
 :: ECHO "Running (outside JAR) ........................."
 :: start java -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*" CST8221.Main
@@ -79,6 +83,7 @@ ECHO "3. Creating Javadoc ..............."
 cd ..
 ::javadoc -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*;/SOFT/COPY/dev/LIBS/jar/javax.servlet.jar" --module-path "C:\SOFT\COPY\dev\LIBS\javafx\lib" --add-modules javafx.controls -d doc -sourcepath src -subpackages CST8221 2> labs-javadoc.err
 javadoc -cp ".;%BINDIR%;../%LIBDIR%" --module-path "%LIBDIR%" -d %DOCDIR% -sourcepath %SRCDIR% -subpackages %DOCPACK% 2> %DOCERR%
+
 
 ECHO "4. Running Jar ...................."
 cd bin
