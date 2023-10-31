@@ -1,8 +1,12 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,6 +38,7 @@ public class GameController implements ActionListener {
 	     this.GameView.getExecGOL().addActionListener(this);
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getHomeGOL().addActionListener(this);
+	     handleCells();
 	}
 	
 	// this is different from uml in A21
@@ -45,7 +50,7 @@ public class GameController implements ActionListener {
             gui.mainWindow();
             GameView.getSplashFrame().dispose();
         } else if ("Game Of Life".equals(selectedProgram)) {
-            GameView.GameOfLife();
+            GameView.GameOfLife(GameModel.getCells());
             GameView.getSplashFrame().dispose();
         } else if ("Turing Machine".equals(selectedProgram)) {
             programNotAvailable();
@@ -55,7 +60,7 @@ public class GameController implements ActionListener {
         updateUIComponents();	
 	}
 
-	// help message cdoes not show what its meant to?
+	// help message does not show what its meant to?
 	public void handleHelpClick() {
 		 String helpMessage = getLocalizedString("messageHelp");
          JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
@@ -87,6 +92,25 @@ public class GameController implements ActionListener {
 	public void handleHomeButton() {
 		GameView.SplashScreen();
 	}
+
+	
+	public void handleCells() {
+	    JLabel[][] cells = GameModel.getCells();
+	    for (int row = 0; row < cells.length; row++) {
+	        for (int col = 0; col < cells[0].length; col++) {
+	            final int currentRow = row;
+	            final int currentCol = col;
+	            JLabel cell = cells[currentRow][currentCol];
+	            cell.addMouseListener(new MouseAdapter() {
+	                @Override
+	                public void mouseClicked(MouseEvent e) {
+	                    GameModel.toggleCellState(currentRow, currentCol);
+	                    cell.repaint(); 
+	                }
+	            });
+	        }
+	    }
+	}
 	
 	// fill in the blanks for these and create the appropriate methods
 	@Override
@@ -117,6 +141,7 @@ public class GameController implements ActionListener {
 			
 		}
 	}
+	
 	
 	public void programNotAvailable() {
 	    // Show a message dialog with program unavailable message

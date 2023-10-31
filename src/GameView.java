@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -24,7 +22,7 @@ public class GameView {
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
-	private String GameOfLifeBanner = "../resources/Game of Life Banner.pngs";
+	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
 	private Color cyan = new Color(217, 217, 217);
@@ -47,6 +45,7 @@ public class GameView {
 	private JTextField stepText,  modelText;
 	private JCheckBox multicolorText ;
 	private JPanel centerPanel;
+	private JLabel[][] cells;
 	
 	public GameView() {}
 	
@@ -119,7 +118,7 @@ public class GameView {
 	
 	}
 	
-	public void GameOfLife() {
+	public void GameOfLife(JLabel[][] cells) {
 	    // Settings for the frame
 		GameOfLifeFrame = new JFrame();
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
@@ -131,7 +130,7 @@ public class GameView {
 	    GameOfLifeFrame.getContentPane().setBackground(green);
 	    
 	    // Create a JPanel for the top panel
-	    JPanel topPanel = new JPanel();
+	    JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	    topPanel.setBackground(Color.BLACK);
 
 	    // Place logoBanner in the top panel
@@ -190,28 +189,33 @@ public class GameView {
 	    stopGOL.setBackground(purple);
 	    bottomPanel.add(stopGOL);
 	    
-	    // Left Panel
+	    // Left and Button Panel
 	    JPanel leftPanel = new JPanel();
-	    //leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+	    JPanel buttonPanel = new JPanel();
+	    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); 
+	    
 	    //HOME Button
 	    homeGOL = new JButton("HOME");
 	    homeGOL.setBackground(purple);
-	    leftPanel.add(homeGOL);
+	    buttonPanel.add(homeGOL);
 	  
 	    //HELP Button
 	    helpGOL = new JButton("HELP");
 	    helpGOL.setBackground(purple);
-	    leftPanel.add(helpGOL);
+	    buttonPanel.add(helpGOL);
 	    
 	    //Language Button
 	    JComboBox<String> languageChoice = new JComboBox<>(languageOption);
 	    languageChoice.setBackground(purple);
-	    leftPanel.add(languageChoice);
+	    buttonPanel.add(languageChoice);
 	    
+	    leftPanel.add(buttonPanel);
+	    buttonPanel.setBackground(green);
 	    leftPanel.setBackground(green);
 	    
 	    //Center Panel
-	    centerPanel = displayGrid();
+	    centerPanel = displayGrid(cells);
+	    centerPanel.setBackground(green);
 	    GameOfLifeFrame.add(centerPanel);
 	    
 	    // Add topPanel and bottomPanel to the frame's content pane
@@ -310,5 +314,9 @@ public class GameView {
 
 	public JButton getManualButton() {
 		return manual;
+	}
+
+	public JLabel[][] getCells() {
+		return cells;
 	}
 }
