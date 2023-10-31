@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;
-    /** default langauge **/
+    /** default language **/
 	private static String currentLanguage = "en"; // Default language
 	/** XML **/
 	private static org.w3c.dom.Document currentXMLDocument;
@@ -23,6 +23,17 @@ public class GameController implements ActionListener {
 	     this.GameView = GameView;
 	     this.GameView.getStartButton().addActionListener(this);
 	     this.GameView.getHelpButton().addActionListener(this);
+	     this.GameView.getLanguages().addActionListener(this);
+	     this.GameView.getManualButton().addActionListener(this);
+	     this.GameView.getRandomButton().addActionListener(this);
+	     this.GameView.getModelText().addActionListener(this);
+	     this.GameView.getMulticolorText().addActionListener(this);
+	     this.GameView.getColorInput().addActionListener(this);
+	     this.GameView.getStartGOL().addActionListener(this);
+	     this.GameView.getStepText().addActionListener(this);
+	     this.GameView.getExecGOL().addActionListener(this);
+	     this.GameView.getStopGOL().addActionListener(this);
+	     this.GameView.getHomeGOL().addActionListener(this);
 	}
 	
 	// this is different from uml in A21
@@ -32,9 +43,10 @@ public class GameController implements ActionListener {
         if ("Cellular Automata".equals(selectedProgram)) {
             mainGUI gui = new mainGUI();
             gui.mainWindow();
-            GameView.getFrame().dispose();
+            GameView.getSplashFrame().dispose();
         } else if ("Game Of Life".equals(selectedProgram)) {
-            programNotAvailable();
+            GameView.GameOfLife();
+            GameView.getSplashFrame().dispose();
         } else if ("Turing Machine".equals(selectedProgram)) {
             programNotAvailable();
         }
@@ -43,24 +55,73 @@ public class GameController implements ActionListener {
         updateUIComponents();	
 	}
 
+	// help message cdoes not show what its meant to?
 	public void handleHelpClick() {
 		 String helpMessage = getLocalizedString("messageHelp");
-         JOptionPane.showMessageDialog(GameView.getFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
+         JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
 	}
 	
+	public void handleChangeLang() {
+		 String selectedLanguage = (String) GameView.getLanguages().getSelectedItem();
+         switch (selectedLanguage) {
+             case "English":
+                 currentLanguage = "en";
+                 break;
+             case "Français":
+                 currentLanguage = "fr";
+                 break;
+         }
+         loadXMLResource(currentLanguage);
+         // Update the UI components
+         updateUIComponents();	
+	}
+	
+	public void handleRandomManual(ActionEvent e) {
+		if (e.getSource() == GameView.getRandomButton()) {
+			// handle random
+		}else if (e.getSource() == GameView.getManualButton()) {
+			// handle manual	
+		}
+	}
+	
+	public void handleHomeButton() {
+		GameView.SplashScreen();
+	}
+	
+	// fill in the blanks for these and create the appropriate methods
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == GameView.getStartButton()) {
 			handleStartClick();
 		}else if (e.getSource() == GameView.getHelpButton()) {
 			handleHelpClick();
+		}else if (e.getSource() == GameView.getLanguages()) {
+			handleChangeLang();
+		}else if (e.getSource() == GameView.getRandomButton() || e.getSource() == GameView.getManualButton() ) {
+			handleRandomManual(e);
+		}else if (e.getSource() == GameView.getHomeGOL()) {
+			handleHomeButton();
+		}else if (e.getSource() == GameView.getModelText()) {
+			
+		}else if (e.getSource() == GameView.getMulticolorText()) {
+			
+		}else if (e.getSource() == GameView.getColorInput()) {
+			
+		}else if (e.getSource() == GameView.getStartGOL()) {
+			
+		}else if (e.getSource() == GameView.getStepText()) {
+				
+		}else if (e.getSource() == GameView.getExecGOL()) {
+			
+		}else if (e.getSource() == GameView.getStopGOL()){
+			
 		}
 	}
 	
 	public void programNotAvailable() {
 	    // Show a message dialog with program unavailable message
 	    JOptionPane.showMessageDialog(
-	            GameView.getFrame(),
+	            GameView.getSplashFrame(),
 	            "Program is not available right now. Please check back later.",
 	            "Program Unavailable",
 	            JOptionPane.INFORMATION_MESSAGE
@@ -113,6 +174,42 @@ public class GameController implements ActionListener {
 
 	    // If the key is not found, return a default message
 	    return "Key not found";
+	}
+	
+	/**
+	 * Loads an XML resource file for a specific language and parses it into an XML document.
+	 *
+	 * @param language The language code for which to load the XML resource.
+	 */
+	private static void loadXMLResource(String language) {
+	    try {
+	        // Get the class loader for the CSModel class
+	        ClassLoader classLoader = CSModel.class.getClassLoader(); // Replace CSModel with your actual class name
+
+	        // Construct the file name for the XML resource based on the selected language
+	        String xmlFileName = "strings_" + language + ".xml";
+
+	        // Try to open the XML resource file as an input stream
+	        InputStream inputStream = classLoader.getResourceAsStream(xmlFileName);
+
+	        if (inputStream != null) {
+	            // Create a DocumentBuilderFactory and DocumentBuilder for XML parsing
+	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	            DocumentBuilder builder = factory.newDocumentBuilder();
+
+	            // Parse the XML data into a Document object
+	            currentXMLDocument = builder.parse(inputStream);
+
+	            // Normalize the XML document's structure
+	            currentXMLDocument.getDocumentElement().normalize();
+	        } else {
+	            // Print an error message if the XML resource file is not found
+	            System.err.println("XML resource not found for language: " + language);
+	        }
+	    } catch (Exception e) {
+	        // Handle any exceptions that may occur during XML loading and parsing
+	        e.printStackTrace();
+	    }
 	}
 
 

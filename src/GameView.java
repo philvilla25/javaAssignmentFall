@@ -1,48 +1,68 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class GameView {
 	/** Name of project **/
 	private String title = "Cellular Automata";
+	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
+	private String GameOfLifeBanner = "../resources/Game of Life Banner.pngs";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
 	private Color cyan = new Color(217, 217, 217);
+	private Color green = new Color(12, 106, 71);
+	private Color violet = new Color(238, 229, 240);
+	private Color purple = new Color(240, 193, 250);
 	/** Home Button **/
 	private JLabel home;
 	/** Name of games **/
 	private String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	private JComboBox<String> games;
 	/** Buttons **/
-	private JButton start, help;
-	private  JFrame frame;
+	private JButton start, help, random, manual, colorInput, startGOL, stopGOL, execGOL, homeGOL, helpGOL;
+	private JFrame splashFrame;
+	private JFrame GameOfLifeFrame;
+	private JComboBox<String> languages;
+	/** Language options **/
+	private String languageOption[] = { "English", "Français" };
+	private String numberOfExecs;
+	private JTextField stepText,  modelText;
+	private JCheckBox multicolorText ;
+	private JPanel centerPanel;
+	
+	public GameView() {}
 	
 	/** Default Constructor **/
-	public GameView() {
+	public void SplashScreen() {
 	    // Create a new JFrame for the main menu
-	    frame = new JFrame();
-	    frame.setTitle(title);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setResizable(false);
-	    frame.setSize(400, 250);
-	    frame.setVisible(true);
+		splashFrame = new JFrame();
+		splashFrame.setTitle(title);
+		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		splashFrame.setResizable(false);
+		splashFrame.setSize(400, 250);
+		splashFrame.setVisible(true);
 	    
 	    // Set the image icon for the program
 	    ImageIcon gameIcon = new ImageIcon(logoImg);
-	    frame.setIconImage(gameIcon.getImage());
+	    splashFrame.setIconImage(gameIcon.getImage());
 
 	    // Create panels for the main menu
 	    JPanel menu = new JPanel(); // Use Flow Layout
@@ -83,21 +103,194 @@ public class GameView {
 	    help.setBackground(customColor);
 	    options.add(buttonPanel);
 	    
-	    //start.addActionListener(GameController);
+	    // Create a combo box for selecting languages
+	    languages = new JComboBox<String>(languageOption);
+	    languages.setPreferredSize(new Dimension(150, 30));
+	    languages.setEditable(false);
+	    languages.setBackground(Color.BLACK);
+	    languages.setForeground(customColor);
+	    subMenu.add(options);
+	    menu.add(subMenu);
+	    menu.add(languages);
+
+	    // Add the menu panel to the frame
+	    splashFrame.add(menu, BorderLayout.CENTER);
+	    splashFrame.setVisible(true);
 	
 	}
 	
-    public JFrame getFrame() {
-		return frame;
+	public void GameOfLife() {
+	    // Settings for the frame
+		GameOfLifeFrame = new JFrame();
+		GameOfLifeFrame.setTitle(GameOfLifeTitle);
+		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GameOfLifeFrame.setSize(1000, 800);
+		GameOfLifeFrame.setResizable(false);
+
+	    // Setting image icon for the program
+	    GameOfLifeFrame.getContentPane().setBackground(green);
+	    
+	    // Create a JPanel for the top panel
+	    JPanel topPanel = new JPanel();
+	    topPanel.setBackground(Color.BLACK);
+
+	    // Place logoBanner in the top panel
+	    ImageIcon banner = new ImageIcon(GameOfLifeBanner);
+	    JLabel bannerLabel = new JLabel(banner);
+	    topPanel.add(bannerLabel);
+	    
+	    // Create a JPanel for the bottom panel
+	    JPanel bottomPanel = new JPanel();
+	    bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    bottomPanel.setBackground(green);
+
+	    // random and manual buttons
+	    random = new JButton("RANDOM");
+	    manual = new JButton("MANUAL");
+	    random.setBackground(violet);
+	    manual.setBackground(violet);
+	    bottomPanel.add(random);
+	    bottomPanel.add(manual);
+	     
+	    // model and multicolor inputs
+	    JLabel model= new JLabel("MODEL:");
+	    bottomPanel.add(model);
+	    modelText = new JTextField(10);
+	    bottomPanel.add(modelText);
+	   
+	    JLabel multicolor = new JLabel("MULTICOLOR:");
+	    multicolorText = new JCheckBox();
+	    bottomPanel.add(multicolor);
+	    multicolorText.setBackground(green);
+	    bottomPanel.add(multicolorText);
+	    
+	    // Color input
+	    colorInput = new JButton("COLOR");
+	    colorInput.setBackground(violet);
+	    bottomPanel.add(colorInput);
+	    
+	    // START input
+	    startGOL = new JButton("START");
+	    startGOL.setBackground(purple);
+	    bottomPanel.add(startGOL);
+	    
+	    // step inputs
+	    JLabel steps = new JLabel("STEPS:");
+	    bottomPanel.add(steps);
+	    stepText = new JTextField(10);
+	    bottomPanel.add(stepText);
+	    
+	    // EXEC button
+	    execGOL = new JButton("EXEC: " + numberOfExecs);
+	    execGOL.setBackground(purple);
+	    bottomPanel.add(execGOL);
+	    
+	    // STOP input
+	    stopGOL = new JButton("STOP");
+	    stopGOL.setBackground(purple);
+	    bottomPanel.add(stopGOL);
+	    
+	    // Left Panel
+	    JPanel leftPanel = new JPanel();
+	    //leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+	    //HOME Button
+	    homeGOL = new JButton("HOME");
+	    homeGOL.setBackground(purple);
+	    leftPanel.add(homeGOL);
+	  
+	    //HELP Button
+	    helpGOL = new JButton("HELP");
+	    helpGOL.setBackground(purple);
+	    leftPanel.add(helpGOL);
+	    
+	    //Language Button
+	    JComboBox<String> languageChoice = new JComboBox<>(languageOption);
+	    languageChoice.setBackground(purple);
+	    leftPanel.add(languageChoice);
+	    
+	    leftPanel.setBackground(green);
+	    
+	    //Center Panel
+	    centerPanel = displayGrid();
+	    GameOfLifeFrame.add(centerPanel);
+	    
+	    // Add topPanel and bottomPanel to the frame's content pane
+	    GameOfLifeFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
+	    GameOfLifeFrame.getContentPane().add(leftPanel, BorderLayout.WEST);
+	    GameOfLifeFrame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+
+	    // Make the frame visible
+	    GameOfLifeFrame.setVisible(true);
+	}
+	
+	public JPanel displayGrid(JLabel[][] cells) {
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));
+		
+	        for (JLabel[] row : cells) {
+	            for (JLabel label : row) {
+	                centerPanel.add(label);
+	            }
+	        }
+	    return centerPanel;  
+	}      
+	  
+	
+    public JButton getHomeGOL() {
+		return homeGOL;
+	}
+
+	public JButton getHelpGOL() {
+		return helpGOL;
+	}
+
+	public JButton getColorInput() {
+		return colorInput;
+	}
+
+	public JTextField getModelText() {
+		return modelText;
+	}
+
+	public JCheckBox getMulticolorText() {
+		return multicolorText;
+	}
+
+	public JTextField getStepText() {
+		return stepText;
+	}
+
+	public void setStepText(JTextField stepText) {
+		this.stepText = stepText;
+	}
+
+	public JButton getExecGOL() {
+		return execGOL;
+	}
+
+	public JButton getStart() {
+		return start;
+	}
+
+	public JButton getStartGOL() {
+		return startGOL;
+	}
+
+	public JButton getStopGOL() {
+		return stopGOL;
+	}
+
+	public JFrame getSplashFrame() {
+		return splashFrame;
 	}
 
 	public JComboBox<String> getGamesComboBox() {
-	        return games;
-	    }
+	    return games;
+	}
 	   
-	   public JButton getStartButton() {
-	        return start;
-	    }
+	public JButton getStartButton() {
+	    return start;
+	}
 
 	public JButton getHelpButton() {
 		return help;
@@ -107,4 +300,15 @@ public class GameView {
 		return home;
 	}
 
+	public JComboBox<String> getLanguages() {
+		return languages;
+	}
+
+	public JButton getRandomButton() {
+		return random;
+	}
+
+	public JButton getManualButton() {
+		return manual;
+	}
 }
