@@ -22,6 +22,7 @@ public class GameView {
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
+	private ImageIcon gameIcon, banner ;
 	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
@@ -38,207 +39,48 @@ public class GameView {
 	private JButton start, help, random, manual, colorInput, startGOL, stopGOL, execGOL, homeGOL, helpGOL;
 	private JFrame splashFrame;
 	private JFrame GameOfLifeFrame;
-	private JComboBox<String> languages;
-	/** Language options **/
-	private String languageOption[] = { "English", "Français" };
-	private String numberOfExecs;
 	private JTextField stepText,  modelText;
 	private JCheckBox multicolorText ;
 	private JPanel centerPanel;
 	private JLabel[][] cells;
+	private JLabel model, steps;
+	private JComboBox<String> languages;
+	/** Language options **/
+	private String languageOption[] = { "English", "Français" };
+	private String numberOfExecs;
 	
-	public GameView() {}
 	
-	/** Default Constructor **/
-	public void SplashScreen() {
-	    // Create a new JFrame for the main menu
-		splashFrame = new JFrame();
-		splashFrame.setTitle(title);
-		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		splashFrame.setResizable(false);
-		splashFrame.setSize(400, 250);
-		splashFrame.setVisible(true);
-	    
-	    // Set the image icon for the program
-	    ImageIcon gameIcon = new ImageIcon(logoImg);
-	    splashFrame.setIconImage(gameIcon.getImage());
-
-	    // Create panels for the main menu
-	    JPanel menu = new JPanel(); // Use Flow Layout
-	    JPanel subMenu = new JPanel(); // Use flow layout
-	    JPanel options = new JPanel(); // Use box layout
-	    options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
-	    
-	    // Set background colors for panels
-	    menu.setBackground(cyan);
-	    subMenu.setBackground(cyan);
-	    options.setBackground(cyan);
-
-	    // Create a content image label
-	    ImageIcon contentImage = new ImageIcon(logoImg);
-	    JLabel imageLabel = new JLabel(contentImage);
-	    subMenu.add(imageLabel);
-	    
-	    // Create a label for "HOME" text
-	    home = new JLabel("HOME");
-	    home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
-	    home.setHorizontalAlignment(JLabel.CENTER); // Center align text
-	    options.add(home);
-
-	    // Create a combo box for selecting games
-	    games = new JComboBox<String>(strGames);
-	    games.setEditable(false);
-	    options.add(games);
-	    options.add(games);
-
-	    // Create buttons panel
-	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    buttonPanel.setBackground(new Color(217, 217, 217));
-	    start = new JButton("START");
+	public GameView() {
+		//splash screen buttons
+		games = new JComboBox<String>(strGames);
+		home = new JLabel("HOME");
+		start = new JButton("START");
+		help = new JButton("HELP");
+		 
+		// game of life buttons
+		languages = new JComboBox<String>(languageOption);
+		start = new JButton("START");
 	    help = new JButton("HELP");
-	    buttonPanel.add(start);
-	    buttonPanel.add(help);
-	    start.setBackground(customColor);
-	    help.setBackground(customColor);
-	    options.add(buttonPanel);
-	    
-	    // Create a combo box for selecting languages
-	    languages = new JComboBox<String>(languageOption);
-	    languages.setPreferredSize(new Dimension(150, 30));
-	    languages.setEditable(false);
-	    languages.setBackground(Color.BLACK);
-	    languages.setForeground(customColor);
-	    subMenu.add(options);
-	    menu.add(subMenu);
-	    menu.add(languages);
-
-	    // Add the menu panel to the frame
-	    splashFrame.add(menu, BorderLayout.CENTER);
-	    splashFrame.setVisible(true);
-	
-	}
-	
-	public void GameOfLife(JLabel[][] cells) {
-	    // Settings for the frame
-		GameOfLifeFrame = new JFrame();
-		GameOfLifeFrame.setTitle(GameOfLifeTitle);
-		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GameOfLifeFrame.setSize(1000, 800);
-		GameOfLifeFrame.setResizable(false);
-
-	    // Setting image icon for the program
-	    GameOfLifeFrame.getContentPane().setBackground(green);
-	    
-	    // Create a JPanel for the top panel
-	    JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-	    topPanel.setBackground(Color.BLACK);
-
-	    // Place logoBanner in the top panel
-	    ImageIcon banner = new ImageIcon(GameOfLifeBanner);
-	    JLabel bannerLabel = new JLabel(banner);
-	    topPanel.add(bannerLabel);
-	    
-	    // Create a JPanel for the bottom panel
-	    JPanel bottomPanel = new JPanel();
-	    bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	    bottomPanel.setBackground(green);
-
-	    // random and manual buttons
 	    random = new JButton("RANDOM");
 	    manual = new JButton("MANUAL");
-	    random.setBackground(violet);
-	    manual.setBackground(violet);
-	    bottomPanel.add(random);
-	    bottomPanel.add(manual);
-	     
-	    // model and multicolor inputs
-	    JLabel model= new JLabel("MODEL:");
-	    bottomPanel.add(model);
-	    modelText = new JTextField(10);
-	    bottomPanel.add(modelText);
-	   
-	    JLabel multicolor = new JLabel("MULTICOLOR:");
-	    multicolorText = new JCheckBox();
-	    bottomPanel.add(multicolor);
-	    multicolorText.setBackground(green);
-	    bottomPanel.add(multicolorText);
-	    
-	    // Color input
 	    colorInput = new JButton("COLOR");
-	    colorInput.setBackground(violet);
-	    bottomPanel.add(colorInput);
-	    
-	    // START input
 	    startGOL = new JButton("START");
-	    startGOL.setBackground(purple);
-	    bottomPanel.add(startGOL);
-	    
-	    // step inputs
-	    JLabel steps = new JLabel("STEPS:");
-	    bottomPanel.add(steps);
-	    stepText = new JTextField(10);
-	    bottomPanel.add(stepText);
-	    
-	    // EXEC button
-	    execGOL = new JButton("EXEC: " + numberOfExecs);
-	    execGOL.setBackground(purple);
-	    bottomPanel.add(execGOL);
-	    
-	    // STOP input
 	    stopGOL = new JButton("STOP");
-	    stopGOL.setBackground(purple);
-	    bottomPanel.add(stopGOL);
-	    
-	    // Left and Button Panel
-	    JPanel leftPanel = new JPanel();
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); 
-	    
-	    //HOME Button
+	    execGOL = new JButton("EXEC: " + numberOfExecs);
 	    homeGOL = new JButton("HOME");
-	    homeGOL.setBackground(purple);
-	    buttonPanel.add(homeGOL);
-	  
-	    //HELP Button
 	    helpGOL = new JButton("HELP");
-	    helpGOL.setBackground(purple);
-	    buttonPanel.add(helpGOL);
+	    model= new JLabel("MODEL:");
+	    modelText = new JTextField(10);
+	    multicolorText = new JCheckBox();
+	    steps = new JLabel("STEPS:");
+	    stepText = new JTextField(10);
 	    
-	    //Language Button
-	    JComboBox<String> languageChoice = new JComboBox<>(languageOption);
-	    languageChoice.setBackground(purple);
-	    buttonPanel.add(languageChoice);
-	    
-	    leftPanel.add(buttonPanel);
-	    buttonPanel.setBackground(green);
-	    leftPanel.setBackground(green);
-	    
-	    //Center Panel
-	    centerPanel = displayGrid(cells);
-	    centerPanel.setBackground(green);
-	    GameOfLifeFrame.add(centerPanel);
-	    
-	    // Add topPanel and bottomPanel to the frame's content pane
-	    GameOfLifeFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
-	    GameOfLifeFrame.getContentPane().add(leftPanel, BorderLayout.WEST);
-	    GameOfLifeFrame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
-
-	    // Make the frame visible
-	    GameOfLifeFrame.setVisible(true);
+	    //frames
+	    splashFrame = new JFrame();
+		GameOfLifeFrame = new JFrame();
+	    gameIcon = new ImageIcon(logoImg);
+	    banner = new ImageIcon(GameOfLifeBanner);
 	}
-	
-	public JPanel displayGrid(JLabel[][] cells) {
-		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));
-		
-	        for (JLabel[] row : cells) {
-	            for (JLabel label : row) {
-	                centerPanel.add(label);
-	            }
-	        }
-	    return centerPanel;  
-	}      
-	  
 	
     public JButton getHomeGOL() {
 		return homeGOL;
@@ -319,4 +161,173 @@ public class GameView {
 	public JLabel[][] getCells() {
 		return cells;
 	}
+	
+	/** Default Constructor **/
+	public void SplashScreen() {
+	    // Create a new JFrame for the main menu
+		splashFrame.setTitle(title);
+		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		splashFrame.setResizable(false);
+		splashFrame.setSize(400, 250);
+		splashFrame.setVisible(true);
+	    
+	    // Set the image icon for the program
+	    splashFrame.setIconImage(gameIcon.getImage());
+
+	    // Create panels for the main menu
+	    JPanel menu = new JPanel(); // Use Flow Layout
+	    JPanel subMenu = new JPanel(); // Use flow layout
+	    JPanel options = new JPanel(); // Use box layout
+	    options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
+	    
+	    // Set background colors for panels
+	    menu.setBackground(cyan);
+	    subMenu.setBackground(cyan);
+	    options.setBackground(cyan);
+
+	    // Create a content image label
+	    ImageIcon contentImage = new ImageIcon(logoImg);
+	    JLabel imageLabel = new JLabel(contentImage);
+	    subMenu.add(imageLabel);
+	    
+	    // Create a label for "HOME" text
+	    home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
+	    home.setHorizontalAlignment(JLabel.CENTER); // Center align text
+	    options.add(home);
+
+	    // Create a combo box for selecting games
+	    games.setEditable(false);
+	    options.add(games);
+	    options.add(games);
+
+	    // Create buttons panel
+	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    buttonPanel.setBackground(new Color(217, 217, 217));
+	    buttonPanel.add(start);
+	    buttonPanel.add(help);
+	    start.setBackground(customColor);
+	    help.setBackground(customColor);
+	    options.add(buttonPanel);
+	    
+	    // Create a combo box for selecting languages
+	    languages.setPreferredSize(new Dimension(150, 30));
+	    languages.setEditable(false);
+	    languages.setBackground(Color.BLACK);
+	    languages.setForeground(customColor);
+	    subMenu.add(options);
+	    menu.add(subMenu);
+	    menu.add(languages);
+
+	    // Add the menu panel to the frame
+	    splashFrame.add(menu, BorderLayout.CENTER);
+	    splashFrame.setVisible(true);
+	
+	}
+	
+	public void GameOfLife(JLabel[][] cells) {
+	    // Settings for the frame
+		GameOfLifeFrame.setTitle(GameOfLifeTitle);
+		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GameOfLifeFrame.setSize(1000, 800);
+		GameOfLifeFrame.setResizable(false);
+
+	    // Setting image icon for the program
+	    GameOfLifeFrame.getContentPane().setBackground(green);
+	    
+	    // Create a JPanel for the top panel
+	    JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	    topPanel.setBackground(Color.BLACK);
+
+	    // Place logoBanner in the top panel
+	    JLabel bannerLabel = new JLabel(banner);
+	    topPanel.add(bannerLabel);
+	    
+	    // Create a JPanel for the bottom panel
+	    JPanel bottomPanel = new JPanel();
+	    bottomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    bottomPanel.setBackground(green);
+
+	    // random and manual buttons
+	    random.setBackground(violet);
+	    manual.setBackground(violet);
+	    bottomPanel.add(random);
+	    bottomPanel.add(manual);
+	     
+	    // model and multicolor inputs
+	    bottomPanel.add(model);
+	    bottomPanel.add(modelText);
+	   
+	    JLabel multicolor = new JLabel("MULTICOLOR:");
+	    bottomPanel.add(multicolor);
+	    multicolorText.setBackground(green);
+	    bottomPanel.add(multicolorText);
+	    
+	    // Color input
+	    colorInput.setBackground(violet);
+	    bottomPanel.add(colorInput);
+	    
+	    // START input
+	    startGOL.setBackground(purple);
+	    bottomPanel.add(startGOL);
+	    
+	    // step inputs
+	    bottomPanel.add(steps);
+	    bottomPanel.add(stepText);
+	    
+	    // EXEC button
+	    execGOL.setBackground(purple);
+	    bottomPanel.add(execGOL);
+	    
+	    // STOP input
+	    stopGOL.setBackground(purple);
+	    bottomPanel.add(stopGOL);
+	    
+	    // Left and Button Panel
+	    JPanel leftPanel = new JPanel();
+	    JPanel buttonPanel = new JPanel();
+	    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); 
+	    
+	    //HOME Button
+	    homeGOL.setBackground(purple);
+	    buttonPanel.add(homeGOL);
+	  
+	    //HELP Button
+	    helpGOL.setBackground(purple);
+	    buttonPanel.add(helpGOL);
+	    
+	    //Language Button
+	    JComboBox<String> languageChoice = new JComboBox<>(languageOption);
+	    languageChoice.setBackground(purple);
+	    buttonPanel.add(languageChoice);
+	    
+	    leftPanel.add(buttonPanel);
+	    buttonPanel.setBackground(green);
+	    leftPanel.setBackground(green);
+	    
+	    //Center Panel
+	    centerPanel = paintGrid(cells);
+	    centerPanel.setBackground(green);
+	    GameOfLifeFrame.add(centerPanel);
+	    
+	    // Add topPanel and bottomPanel to the frame's content pane
+	    GameOfLifeFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
+	    GameOfLifeFrame.getContentPane().add(leftPanel, BorderLayout.WEST);
+	    GameOfLifeFrame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+
+	    // Make the frame visible
+	    GameOfLifeFrame.setVisible(true);
+	}
+	
+	public JPanel paintGrid(JLabel[][] cells) {
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));
+		
+	        for (JLabel[] row : cells) {
+	            for (JLabel label : row) {
+	                centerPanel.add(label);
+	            }
+	        }
+	    return centerPanel;  
+	}      
+	  
 }

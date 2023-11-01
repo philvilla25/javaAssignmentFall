@@ -38,7 +38,6 @@ public class GameController implements ActionListener {
 	     this.GameView.getExecGOL().addActionListener(this);
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getHomeGOL().addActionListener(this);
-	     handleCells();
 	}
 	
 	// this is different from uml in A21
@@ -85,7 +84,7 @@ public class GameController implements ActionListener {
 		if (e.getSource() == GameView.getRandomButton()) {
 			// handle random
 		}else if (e.getSource() == GameView.getManualButton()) {
-			// handle manual	
+			 handleCellClick(); //allow user click
 		}
 	}
 	
@@ -94,7 +93,7 @@ public class GameController implements ActionListener {
 	}
 
 	
-	public void handleCells() {
+	public void handleCellClick() {
 	    JLabel[][] cells = GameModel.getCells();
 	    for (int row = 0; row < cells.length; row++) {
 	        for (int col = 0; col < cells[0].length; col++) {
