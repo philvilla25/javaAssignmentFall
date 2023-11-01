@@ -213,7 +213,7 @@ public class GameController implements ActionListener {
 	private static void loadXMLResource(String language) {
 	    try {
 	        // Get the class loader for the CSModel class
-	        ClassLoader classLoader = CSModel.class.getClassLoader(); // Replace CSModel with your actual class name
+	        ClassLoader classLoader = GameController.class.getClassLoader(); // Replace CSModel with your actual class name
 
 	        // Construct the file name for the XML resource based on the selected language
 	        String xmlFileName = "strings_" + language + ".xml";

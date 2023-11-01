@@ -17,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 public class GameView {
@@ -338,6 +339,18 @@ public class GameView {
 
 	    // Make the frame visible
 	    GameOfLifeFrame.setVisible(true);
+	}
+	
+	public void chooseColor() {
+		 JTabbedPane colorPane = new JTabbedPane();
+	     
+		 colorPane.addTab("RGB", createRGBTab());
+		 colorPane.addTab("HSV", createHSVTab());
+		 colorPane.addTab("HSL", createHSLTab());
+		 colorPane.addTab("CMYK", createCMYKTab());
+
+	     add(colorPane);	 
+		
 	}
 	
 	public JPanel paintGrid(JLabel[][] cells) {
