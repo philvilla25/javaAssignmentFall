@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -37,7 +36,8 @@ public class GameController implements ActionListener {
 	     this.GameView.getStepText().addActionListener(this);
 	     this.GameView.getExecGOL().addActionListener(this);
 	     this.GameView.getStopGOL().addActionListener(this);
-	     this.GameView.getHomeGOL().addActionListener(this);
+	     this.GameView.getExitItem().addActionListener(this);
+	     this.GameView.getNewItem().addActionListener(this);
 	}
 	
 	// this is different from uml in A21
@@ -88,10 +88,13 @@ public class GameController implements ActionListener {
 		}
 	}
 	
-	public void handleHomeButton() {
+	public void handleExitItem() {
 		GameView.SplashScreen();
 	}
 
+	public void handleNewItem() {
+		GameModel.blankGrid();
+	}
 	
 	public void handleCellClick() {
 	    JLabel[][] cells = GameModel.getCells();
@@ -122,8 +125,10 @@ public class GameController implements ActionListener {
 			handleChangeLang();
 		}else if (e.getSource() == GameView.getRandomButton() || e.getSource() == GameView.getManualButton() ) {
 			handleRandomManual(e);
-		}else if (e.getSource() == GameView.getHomeGOL()) {
-			handleHomeButton();
+		}else if (e.getSource() == GameView.getExitItem()) {
+			handleExitItem();
+		}else if (e.getSource() == GameView.getNewItem()) {
+			handleNewItem();
 		}else if (e.getSource() == GameView.getModelText()) {
 			
 		}else if (e.getSource() == GameView.getMulticolorText()) {

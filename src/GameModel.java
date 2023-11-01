@@ -55,6 +55,14 @@ public class GameModel {
 	    }
 	}
 	
+	public void blankGrid() {
+		for (int row = 0; row < rows; row++) {
+	        for (int col = 0; col < cols; col++) {
+	            cells[row][col].setBackground(Color.WHITE);
+	        }
+		}
+	}
+	
 	 public void toggleCellState(int row, int col) {
 	        JLabel cell = getCell(row, col);
 	        if (cell.getBackground() == Color.WHITE) {

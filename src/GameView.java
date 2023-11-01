@@ -13,6 +13,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -36,7 +39,9 @@ public class GameView {
 	private String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	private JComboBox<String> games;
 	/** Buttons **/
-	private JButton start, help, random, manual, colorInput, startGOL, stopGOL, execGOL, homeGOL, helpGOL;
+	private JButton start, help, random, manual, colorInput, startGOL, stopGOL, execGOL;
+	private JMenu gameGOL, helpGOL, languageGOL;
+	private JMenuItem newItem, solutionItem, exitItem, colorsItem, aboutItem;
 	private JFrame splashFrame;
 	private JFrame GameOfLifeFrame;
 	private JTextField stepText,  modelText;
@@ -67,8 +72,9 @@ public class GameView {
 	    startGOL = new JButton("START");
 	    stopGOL = new JButton("STOP");
 	    execGOL = new JButton("EXEC: " + numberOfExecs);
-	    homeGOL = new JButton("HOME");
-	    helpGOL = new JButton("HELP");
+	    gameGOL = new JMenu("Game");
+	    helpGOL = new JMenu("Help");
+	    languageGOL = new JMenu("Language"); 
 	    model= new JLabel("MODEL:");
 	    modelText = new JTextField(10);
 	    multicolorText = new JCheckBox();
@@ -80,14 +86,39 @@ public class GameView {
 		GameOfLifeFrame = new JFrame();
 	    gameIcon = new ImageIcon(logoImg);
 	    banner = new ImageIcon(GameOfLifeBanner);
+	    
+	    // menu items
+	    ImageIcon newIcon = new ImageIcon("../resources/menuiconnew.gif"); 
+	    ImageIcon solutionIcon = new ImageIcon("../resources/menuiconsol.gif"); 
+	    ImageIcon exitIcon = new ImageIcon("../resources/menuiconext.gif"); 
+	    newItem = new JMenuItem("New", newIcon);
+	    solutionItem = new JMenuItem("Solution", solutionIcon);
+	    exitItem = new JMenuItem("Exit",exitIcon);
+	    
+	    ImageIcon colorsIcon = new ImageIcon("../resources/menuiconcol.gif"); 
+	    ImageIcon aboutIcon = new ImageIcon("../resources/menuiconabt.gif"); 
+	    colorsItem = new JMenuItem("New", colorsIcon);
+	    aboutItem = new JMenuItem("Solution", aboutIcon);  
 	}
 	
-    public JButton getHomeGOL() {
-		return homeGOL;
+	
+	public JMenuItem getExitItem() {
+		return exitItem;
 	}
 
-	public JButton getHelpGOL() {
-		return helpGOL;
+
+	public JMenuItem getNewItem() {
+		return newItem;
+	}
+
+
+	public void setExitItem(JMenuItem exitItem) {
+		this.exitItem = exitItem;
+	}
+
+
+	public JMenu getLanguageGOL() {
+		return languageGOL;
 	}
 
 	public JButton getColorInput() {
@@ -281,37 +312,28 @@ public class GameView {
 	    // STOP input
 	    stopGOL.setBackground(purple);
 	    bottomPanel.add(stopGOL);
-	    
-	    // Left and Button Panel
-	    JPanel leftPanel = new JPanel();
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); 
-	    
-	    //HOME Button
-	    homeGOL.setBackground(purple);
-	    buttonPanel.add(homeGOL);
-	  
-	    //HELP Button
-	    helpGOL.setBackground(purple);
-	    buttonPanel.add(helpGOL);
-	    
-	    //Language Button
-	    JComboBox<String> languageChoice = new JComboBox<>(languageOption);
-	    languageChoice.setBackground(purple);
-	    buttonPanel.add(languageChoice);
-	    
-	    leftPanel.add(buttonPanel);
-	    buttonPanel.setBackground(green);
-	    leftPanel.setBackground(green);
-	    
+	   
+	    //Menu Panel
+	    JMenuBar menuPanel = new  JMenuBar();
+	    menuPanel.setBackground(violet);
+	    menuPanel.add(gameGOL); // game menu 
+	    gameGOL.add(newItem);
+	    gameGOL.add(solutionItem);
+	    gameGOL.add(exitItem);
+	      
+	    menuPanel.add(helpGOL); // help menu 
+	    helpGOL.add(colorsItem);
+	    helpGOL.add(aboutItem );
+	    menuPanel.add(languageGOL); // language menu 
+
 	    //Center Panel
 	    centerPanel = paintGrid(cells);
 	    centerPanel.setBackground(green);
-	    GameOfLifeFrame.add(centerPanel);
 	    
 	    // Add topPanel and bottomPanel to the frame's content pane
 	    GameOfLifeFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
-	    GameOfLifeFrame.getContentPane().add(leftPanel, BorderLayout.WEST);
+	    GameOfLifeFrame.setJMenuBar(menuPanel);
+	    GameOfLifeFrame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	    GameOfLifeFrame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
 	    // Make the frame visible
