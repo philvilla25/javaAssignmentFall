@@ -1,3 +1,6 @@
+import gameOfLife_Controller.GameController;
+import gameOfLife_Model.GameModel;
+import gameOfLife_View.GameView;
 
 public class Game {
 

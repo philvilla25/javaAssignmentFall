@@ -1,9 +1,11 @@
+package gameOfLife_View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,15 +21,20 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class GameView {
 	/** Name of project **/
 	private String title = "Cellular Automata";
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
-	private String logoImg = "../resources/logo.png";
+	private String logoImg = "logo.png";
 	private ImageIcon gameIcon, banner ;
-	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
+	private String GameOfLifeBanner = "GOL_banner.png";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
 	private Color cyan = new Color(217, 217, 217);
@@ -260,7 +267,7 @@ public class GameView {
 	    // Settings for the frame
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
 		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GameOfLifeFrame.setSize(1000, 800);
+		GameOfLifeFrame.setSize(1200, 1000);
 		GameOfLifeFrame.setResizable(false);
 
 	    // Setting image icon for the program
@@ -331,27 +338,38 @@ public class GameView {
 	    centerPanel = paintGrid(cells);
 	    centerPanel.setBackground(green);
 	    
+//	    JPanel leftPanel = new JPanel();
+//	    leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+//	    leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//	    leftPanel.setBackground(green);
+//	    leftPanel.add(home);
+//	    leftPanel.add(help);
+//	    leftPanel.add(languageGOL);
+	  
+	    
 	    // Add topPanel and bottomPanel to the frame's content pane
+	    
 	    GameOfLifeFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
 	    GameOfLifeFrame.setJMenuBar(menuPanel);
 	    GameOfLifeFrame.getContentPane().add(centerPanel, BorderLayout.CENTER);
+	    //GameOfLifeFrame.getContentPane().add(leftPanel, BorderLayout.WEST);
 	    GameOfLifeFrame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
 	    // Make the frame visible
 	    GameOfLifeFrame.setVisible(true);
 	}
 	
-	public void chooseColor() {
-		 JTabbedPane colorPane = new JTabbedPane();
-	     
-		 colorPane.addTab("RGB", createRGBTab());
-		 colorPane.addTab("HSV", createHSVTab());
-		 colorPane.addTab("HSL", createHSLTab());
-		 colorPane.addTab("CMYK", createCMYKTab());
-
-	     add(colorPane);	 
-		
-	}
+//	public void chooseColor() {
+//		 JTabbedPane colorPane = new JTabbedPane();
+//	     
+//		 colorPane.addTab("RGB", createRGBTab());
+//		 colorPane.addTab("HSV", createHSVTab());
+//		 colorPane.addTab("HSL", createHSLTab());
+//		 colorPane.addTab("CMYK", createCMYKTab());
+//
+//	     add(colorPane);	 
+//		
+//	}
 	
 	public JPanel paintGrid(JLabel[][] cells) {
 		JPanel centerPanel = new JPanel();
@@ -365,4 +383,6 @@ public class GameView {
 	    return centerPanel;  
 	}      
 	  
+
+	
 }

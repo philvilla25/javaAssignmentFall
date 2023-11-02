@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>280</y>
+      <w>380</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+Package::gameOfLife_Controller
+Class:game_Controller
+--
+-rows:integer
+-cols:integer
+--
++handleStartClick():void
++handleStopClick():void
++handleResetClick():void
++handleCellClick(rows:integer,cols:integer)void
++handleHomeClick():void
++handleHelpClick():void
++handleChangeLang():void
++handleRandomSet():void
++handleManualSet():void
++handleModelTextBox(input:integer):integer
++handleMultiColor():void
++handleColorSet():void
++handleStepsTextBox(input:integer):integer
+--
+Responsibilities
+--Responsible for the handling event triggers  for start, stop, 
+reset, cellClick
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1420</x>
+      <y>280</y>
+      <w>380</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>bg=pink
+Package::gameOfLife_View
+Class:game_View
+--
+-rows:integer
+-cols:integer
+--
++initialize():void
++updateView():void
++paintGrid():void
++mainWindow():void
++loadXMLResource(language:String):void
++getLocalizedString(key:String):String
++createGrid(rows:integer,cols:integer):void	                                   
+--
+Responsibilities
+-- Responsible for the creation of the game's main window
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>280</y>
+      <w>380</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>bg=red
+Package::gameOfLife_Model
+Class: game_GridModel
+--
+-rows:integer
+-cols:integer
+--
++game_GridModel(rows:integer,cols:integer):void
++setRows(rows:integer):integer
++getRows():void
++setColumn(rows:integer):integer
++getColumn(cols:integer):void
+--
+Responsibilities
+-- Responsible for Grid logic implementation
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>110</x>
+      <y>760</y>
+      <w>280</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>bg=blue
+CSModel
+--
+_+main(args:String):void_
++mainMenu():void
++loadXMLResources(language:string):void
++getLocalizedString(key:String):String
++updateUIComponents():void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1090</x>
+      <y>890</y>
+      <w>520</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>UML Design by: Philogene Villanueva,Oghenerukevw Akpoguma
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1140</x>
+      <y>450</y>
+      <w>290</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;270.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>450</y>
+      <w>340</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>400</y>
+      <w>350</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>330.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>400</y>
+      <w>280</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,3 +1,4 @@
+package gameOfLife_Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +13,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import gameOfLife_Model.GameModel;
+import gameOfLife_View.GameView;  
 
 public class GameController implements ActionListener {
 	private GameModel GameModel;
@@ -45,9 +48,9 @@ public class GameController implements ActionListener {
 		JComboBox<String> gamesComboBox = GameView.getGamesComboBox();
 	    String selectedProgram = (String)gamesComboBox.getSelectedItem();
         if ("Cellular Automata".equals(selectedProgram)) {
-            mainGUI gui = new mainGUI();
-            gui.mainWindow();
-            GameView.getSplashFrame().dispose();
+            //mainGUI gui = new mainGUI();
+            //gui.mainWindow();
+            //GameView.getSplashFrame().dispose();
         } else if ("Game Of Life".equals(selectedProgram)) {
             GameView.GameOfLife(GameModel.getCells());
             GameView.getSplashFrame().dispose();

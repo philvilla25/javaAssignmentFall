@@ -204,10 +204,10 @@ public class mainGUI {
 	    run.setText(getLocalizedString("run"));
 
 	    // Update the text of the "STOP" button
-	    stop.setText(getLocalizedString("stop"));
+	    //stop.setText(getLocalizedString("stop"));
 
 	    // Update the text of the "PAUSE" button
-	    pause.setText(getLocalizedString("pause"));
+	    //pause.setText(getLocalizedString("pause"));
 	}
 	
 	
