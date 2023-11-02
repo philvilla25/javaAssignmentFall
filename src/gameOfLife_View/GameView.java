@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 
 import javax.swing.BorderFactory;
@@ -263,10 +265,9 @@ public class GameView {
 //	    splashFrame.add(menu, BorderLayout.CENTER);
 //	    splashFrame.setVisible(true);
 	
-		   GameView gameView = new GameView();
            GameModel gameModel = new GameModel();
-			gameView.GameOfLife(gameModel.getCells());
-			gameView.getSplashFrame().dispose();
+			GameOfLife(gameModel.getCells());
+			getSplashFrame().dispose();
 	}
 	
 	public void GameOfLife(JLabel[][] cells) {
@@ -391,8 +392,24 @@ public class GameView {
 	        for (JLabel[] row : cells) {
 	            for (JLabel label : row) {
 	                centerPanel.add(label);
+	                
+	             // Add a mouse click listener to toggle cell colors
+	                label.addMouseListener(new MouseAdapter() {
+		                @Override
+		                public void mouseClicked(MouseEvent e) {
+		                    // Toggle the cell's color when clicked
+		                    if (label.getBackground() == Color.WHITE) {
+		                    	label.setBackground(Color.BLACK);
+		                    } else {
+		                    	label.setBackground(Color.WHITE);
+		                    }
+		                }
+		            });
 	            }
 	        }
+	        
+	        centerPanel.revalidate();
+		    centerPanel.repaint();
 	    return centerPanel;  
 	}      
 	  

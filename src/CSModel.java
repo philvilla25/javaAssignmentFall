@@ -138,7 +138,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	                gui.mainWindow();
 	                frame.dispose();
 	            } else if ("Game Of Life".equals(selectedProgram)) {
-	               Game.main();
+	               Game.main(currentLanguage);
 	            } else if ("Turing Machine".equals(selectedProgram)) {
 	                programNotAvailable();
 	            }
