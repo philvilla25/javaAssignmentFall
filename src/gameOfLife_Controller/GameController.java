@@ -29,7 +29,7 @@ public class GameController implements ActionListener {
 	     this.GameView = GameView;
 	     this.GameView.getStartButton().addActionListener(this);
 	     this.GameView.getHelpButton().addActionListener(this);
-	     this.GameView.getLanguages().addActionListener(this);
+	    // this.GameView.getLanguages().addActionListener(this);
 	     this.GameView.getManualButton().addActionListener(this);
 	     this.GameView.getRandomButton().addActionListener(this);
 	     this.GameView.getModelText().addActionListener(this);

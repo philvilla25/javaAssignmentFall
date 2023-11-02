@@ -27,6 +27,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import gameOfLife_Model.GameModel;
+
 public class GameView {
 	/** Name of project **/
 	private String title = "Cellular Automata";
@@ -165,7 +167,7 @@ public class GameView {
 		return stopGOL;
 	}
 
-	public JFrame getSplashFrame() {
+	public  JFrame getSplashFrame() {
 		return splashFrame;
 	}
 
@@ -204,67 +206,73 @@ public class GameView {
 	/** Default Constructor **/
 	public void SplashScreen() {
 	    // Create a new JFrame for the main menu
-		splashFrame.setTitle(title);
-		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		splashFrame.setResizable(false);
-		splashFrame.setSize(400, 250);
-		splashFrame.setVisible(true);
-	    
-	    // Set the image icon for the program
-	    splashFrame.setIconImage(gameIcon.getImage());
-
-	    // Create panels for the main menu
-	    JPanel menu = new JPanel(); // Use Flow Layout
-	    JPanel subMenu = new JPanel(); // Use flow layout
-	    JPanel options = new JPanel(); // Use box layout
-	    options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
-	    
-	    // Set background colors for panels
-	    menu.setBackground(cyan);
-	    subMenu.setBackground(cyan);
-	    options.setBackground(cyan);
-
-	    // Create a content image label
-	    ImageIcon contentImage = new ImageIcon(logoImg);
-	    JLabel imageLabel = new JLabel(contentImage);
-	    subMenu.add(imageLabel);
-	    
-	    // Create a label for "HOME" text
-	    home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
-	    home.setHorizontalAlignment(JLabel.CENTER); // Center align text
-	    options.add(home);
-
-	    // Create a combo box for selecting games
-	    games.setEditable(false);
-	    options.add(games);
-	    options.add(games);
-
-	    // Create buttons panel
-	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    buttonPanel.setBackground(new Color(217, 217, 217));
-	    buttonPanel.add(start);
-	    buttonPanel.add(help);
-	    start.setBackground(customColor);
-	    help.setBackground(customColor);
-	    options.add(buttonPanel);
-	    
-	    // Create a combo box for selecting languages
-	    languages.setPreferredSize(new Dimension(150, 30));
-	    languages.setEditable(false);
-	    languages.setBackground(Color.BLACK);
-	    languages.setForeground(customColor);
-	    subMenu.add(options);
-	    menu.add(subMenu);
-	    menu.add(languages);
-
-	    // Add the menu panel to the frame
-	    splashFrame.add(menu, BorderLayout.CENTER);
-	    splashFrame.setVisible(true);
+//		splashFrame.setTitle(title);
+//		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		splashFrame.setResizable(false);
+//		splashFrame.setSize(400, 250);
+//		splashFrame.setVisible(true);
+//	    
+//	    // Set the image icon for the program
+//	    splashFrame.setIconImage(gameIcon.getImage());
+//
+//	    // Create panels for the main menu
+//	    JPanel menu = new JPanel(); // Use Flow Layout
+//	    JPanel subMenu = new JPanel(); // Use flow layout
+//	    JPanel options = new JPanel(); // Use box layout
+//	    options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
+//	    
+//	    // Set background colors for panels
+//	    menu.setBackground(cyan);
+//	    subMenu.setBackground(cyan);
+//	    options.setBackground(cyan);
+//
+//	    // Create a content image label
+//	    ImageIcon contentImage = new ImageIcon(logoImg);
+//	    JLabel imageLabel = new JLabel(contentImage);
+//	    subMenu.add(imageLabel);
+//	    
+//	    // Create a label for "HOME" text
+//	    home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
+//	    home.setHorizontalAlignment(JLabel.CENTER); // Center align text
+//	    options.add(home);
+//
+//	    // Create a combo box for selecting games
+//	    games.setEditable(false);
+//	    options.add(games);
+//	    options.add(games);
+//
+//	    // Create buttons panel
+//	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//	    buttonPanel.setBackground(new Color(217, 217, 217));
+//	    buttonPanel.add(start);
+//	    buttonPanel.add(help);
+//	    start.setBackground(customColor);
+//	    help.setBackground(customColor);
+//	    options.add(buttonPanel);
+//	    
+//	    // Create a combo box for selecting languages
+//	    languages.setPreferredSize(new Dimension(150, 30));
+//	    languages.setEditable(false);
+//	    languages.setBackground(Color.BLACK);
+//	    languages.setForeground(customColor);
+//	    subMenu.add(options);
+//	    menu.add(subMenu);
+//	    menu.add(languages);
+//
+//	    // Add the menu panel to the frame
+//	    splashFrame.add(menu, BorderLayout.CENTER);
+//	    splashFrame.setVisible(true);
 	
+		   GameView gameView = new GameView();
+           GameModel gameModel = new GameModel();
+			gameView.GameOfLife(gameModel.getCells());
+			gameView.getSplashFrame().dispose();
 	}
 	
 	public void GameOfLife(JLabel[][] cells) {
 	    // Settings for the frame
+		
+		try {
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
 		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GameOfLifeFrame.setSize(1200, 1000);
@@ -275,7 +283,7 @@ public class GameView {
 	    
 	    // Create a JPanel for the top panel
 	    JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-	    topPanel.setBackground(Color.BLACK);
+	    topPanel.setBackground(green);
 
 	    // Place logoBanner in the top panel
 	    JLabel bannerLabel = new JLabel(banner);
@@ -357,6 +365,11 @@ public class GameView {
 
 	    // Make the frame visible
 	    GameOfLifeFrame.setVisible(true);
+	    
+	    
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 //	public void chooseColor() {
