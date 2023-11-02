@@ -10,7 +10,7 @@ public class Game {
 		GameView gameView = new GameView();
 	    GameController gameController = new GameController(gameModel, gameView);    
 	    // Configure and display the initial GUI
-	    gameView.SplashScreen();
+	   
 	}
 
 }

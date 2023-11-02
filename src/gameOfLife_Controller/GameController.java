@@ -29,7 +29,7 @@ public class GameController implements ActionListener {
 	     this.GameView = GameView;
 	     this.GameView.getStartButton().addActionListener(this);
 	     this.GameView.getHelpButton().addActionListener(this);
-	    // this.GameView.getLanguages().addActionListener(this);
+	     this.GameView.getLanguages().addActionListener(this);
 	     this.GameView.getManualButton().addActionListener(this);
 	     this.GameView.getRandomButton().addActionListener(this);
 	     this.GameView.getModelText().addActionListener(this);
@@ -41,8 +41,13 @@ public class GameController implements ActionListener {
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getExitItem().addActionListener(this);
 	     this.GameView.getNewItem().addActionListener(this);
+	     callSplash();
 	}
 	
+	public void callSplash() {
+		this.GameView.GameOfLife(this.GameModel.getCells());;
+		this.GameView.getSplashFrame().dispose();
+	}
 	// this is different from uml in A21
 	public void handleStartClick() {
 		JComboBox<String> gamesComboBox = GameView.getGamesComboBox();

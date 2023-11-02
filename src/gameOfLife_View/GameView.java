@@ -36,9 +36,9 @@ public class GameView {
 	private String title = "Cellular Automata";
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
-	private String logoImg = "logo.png";
+	private String logoImg = "../javaAssignmentFall/resources/logo.png";
 	private ImageIcon gameIcon, banner ;
-	private String GameOfLifeBanner = "GOL_banner.png";
+	private String GameOfLifeBanner = "../javaAssignmentFall/resources/Game of Life Banner.png";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
 	private Color cyan = new Color(217, 217, 217);
@@ -100,15 +100,15 @@ public class GameView {
 	    banner = new ImageIcon(GameOfLifeBanner);
 	    
 	    // menu items
-	    ImageIcon newIcon = new ImageIcon("../resources/menuiconnew.gif"); 
-	    ImageIcon solutionIcon = new ImageIcon("../resources/menuiconsol.gif"); 
-	    ImageIcon exitIcon = new ImageIcon("../resources/menuiconext.gif"); 
+	    ImageIcon newIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconnew.gif"); 
+	    ImageIcon solutionIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconsol.gif"); 
+	    ImageIcon exitIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconext.gif"); 
 	    newItem = new JMenuItem("New", newIcon);
 	    solutionItem = new JMenuItem("Solution", solutionIcon);
 	    exitItem = new JMenuItem("Exit",exitIcon);
 	    
-	    ImageIcon colorsIcon = new ImageIcon("../resources/menuiconcol.gif"); 
-	    ImageIcon aboutIcon = new ImageIcon("../resources/menuiconabt.gif"); 
+	    ImageIcon colorsIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconcol.gif"); 
+	    ImageIcon aboutIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconabt.gif"); 
 	    colorsItem = new JMenuItem("New", colorsIcon);
 	    aboutItem = new JMenuItem("Solution", aboutIcon);  
 	}
@@ -265,9 +265,9 @@ public class GameView {
 //	    splashFrame.add(menu, BorderLayout.CENTER);
 //	    splashFrame.setVisible(true);
 	
-           GameModel gameModel = new GameModel();
-			GameOfLife(gameModel.getCells());
-			getSplashFrame().dispose();
+           //GameModel gameModel = new GameModel();
+//			GameOfLife(gameModel.getCells());
+//			getSplashFrame().dispose();
 	}
 	
 	public void GameOfLife(JLabel[][] cells) {
@@ -276,7 +276,7 @@ public class GameView {
 		try {
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
 		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GameOfLifeFrame.setSize(1200, 1000);
+		GameOfLifeFrame.setSize(1000, 800);
 		GameOfLifeFrame.setResizable(false);
 
 	    // Setting image icon for the program
@@ -342,19 +342,12 @@ public class GameView {
 	    helpGOL.add(colorsItem);
 	    helpGOL.add(aboutItem );
 	    menuPanel.add(languageGOL); // language menu 
-
+	    languageGOL.add("English");
+	    languageGOL.add("French");
 	    //Center Panel
 	    centerPanel = paintGrid(cells);
 	    centerPanel.setBackground(green);
-	    
-//	    JPanel leftPanel = new JPanel();
-//	    leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-//	    leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//	    leftPanel.setBackground(green);
-//	    leftPanel.add(home);
-//	    leftPanel.add(help);
-//	    leftPanel.add(languageGOL);
-	  
+
 	    
 	    // Add topPanel and bottomPanel to the frame's content pane
 	    
@@ -392,24 +385,10 @@ public class GameView {
 	        for (JLabel[] row : cells) {
 	            for (JLabel label : row) {
 	                centerPanel.add(label);
-	                
-	             // Add a mouse click listener to toggle cell colors
-	                label.addMouseListener(new MouseAdapter() {
-		                @Override
-		                public void mouseClicked(MouseEvent e) {
-		                    // Toggle the cell's color when clicked
-		                    if (label.getBackground() == Color.WHITE) {
-		                    	label.setBackground(Color.BLACK);
-		                    } else {
-		                    	label.setBackground(Color.WHITE);
-		                    }
-		                }
-		            });
+	                         
 	            }
 	        }
-	        
-	        centerPanel.revalidate();
-		    centerPanel.repaint();
+	        	     
 	    return centerPanel;  
 	}      
 	  
