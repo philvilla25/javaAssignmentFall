@@ -93,9 +93,9 @@ public class GameModel {
 	        }
 	 }
 	
-	 public void setCellToBlack(int row, int col) {
+	 public void setCellToMainColour(int row, int col) {
 			 JLabel cell = getCell(row, col);
-			 cell.setBackground(Color.BLACK);
+			 cell.setBackground(mainColor);
 		 }
 	 
 	 public void calculateNextGeneration(){

@@ -3,24 +3,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,29 +23,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import gameOfLife_Model.GameModel;
 
 public class GameView {
 	/** Name of project **/
-	private String title = "Cellular Automata";
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
 	private ImageIcon gameIcon, banner ;
 	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
-	private Color customColor = new Color(11, 171, 164);
-	private Color cyan = new Color(217, 217, 217);
 	private Color green = new Color(12, 106, 71);
 	private Color violet = new Color(238, 229, 240);
 	private Color purple = new Color(240, 193, 250);
@@ -118,11 +103,16 @@ public class GameView {
 	    
 	    ImageIcon colorsIcon = new ImageIcon("../resources/menuiconcol.gif"); 
 	    ImageIcon aboutIcon = new ImageIcon("../resources/menuiconabt.gif"); 
-	    colorsItem = new JMenuItem("New", colorsIcon);
-	    aboutItem = new JMenuItem("Solution", aboutIcon);  
+	    colorsItem = new JMenuItem("Colors", colorsIcon);
+	    aboutItem = new JMenuItem("About", aboutIcon);  
 	}
 	
 	
+	public JMenuItem getAboutItem() {
+		return aboutItem;
+	}
+
+
 	public JFrame getGameOfLifeFrame() {
 		return GameOfLifeFrame;
 	}
@@ -142,6 +132,9 @@ public class GameView {
 		this.exitItem = exitItem;
 	}
 
+	public JMenuItem getColorsItem() {
+		return colorsItem;
+	}
 
 	public JMenu getLanguageGOL() {
 		return languageGOL;
@@ -202,6 +195,7 @@ public class GameView {
 	public JLabel getHomeButton() {
 		return home;
 	}
+	
 
 	public JComboBox<String> getLanguages() {
 		return languages;
@@ -377,6 +371,38 @@ public class GameView {
 		return selectedColor;
 	}
 	
+	public void aboutMenu() {
+		 JDialog aboutDialog = new JDialog();
+         aboutDialog.setTitle("About My Application");
+        // aboutDialog.setPreferredSize(new Dimension(400, 200));
+         aboutDialog.setResizable(false);
+         JTextArea textArea = new JTextArea("About Conway's Game of Life\r\n"
+         		+ "\r\n"
+         		+ "Conway's Game of Life is a cellular automaton developed by the British mathematician John Conway in 1970. "
+         		+ "\r\n"
+         		+ "It is a zero-player game that operates based on simple rules and can create complex and fascinating patterns.\r\n"
+         		+ "\r\n"
+         		+ "Game Logic:\r\n"
+         		+ "Users enter an 18-bit binary number known as the \"GL rule.\" This rule defines the game's behavior,\r\n "
+         		+ "and each generation (N) depends on the previous state (P) and the sum of neighbors (S).\r\n"
+         		+ "\r\n"
+         		+ "Rules:\r\n"
+         		+ "- Value: 0 0 0 1 0 0 0 0 0 0 0 1 1 0 0 0 0 0\r\n"
+         		+ "- Index positions: 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17\r\n"
+         		+ "- Previous state: |-------------- DEAD (0) --------------| |-------------- ALIVE(1) -----------|\r\n"
+         		+ "- Living neighbors: 0 1 2 3 4 5 6 7 8 0 1 2 3 4 5 6 7 8\r\n"
+         		+ "- If the bit is on (1), the cell remains alive; if it's off (0), the cell dies.\r\n"
+         		+ "- The first nine bits represent an empty cell with a count of living neighbors (00 to 08).\r\n"
+         		+ "- The next nine bits represent a live cell's neighbor count.\r\n"
+         		+ "\r\n"
+         		+ "Enjoy exploring the world of Conway's Game of Life and watch how simple rules can lead to mesmerizing patterns and dynamics.\r\n");
+         textArea.setEditable(false);
+         textArea.setBackground(violet);
+         aboutDialog.add(textArea);
+         aboutDialog.pack();
+         aboutDialog.setVisible(true);
+	}
+
 	public JPanel paintGrid(JLabel[][] cells) {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));

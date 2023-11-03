@@ -20,6 +20,7 @@ import org.w3c.dom.NodeList;
 import gameOfLife_Model.GameModel;
 import gameOfLife_View.GameView;  
 
+
 public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;
@@ -45,6 +46,8 @@ public class GameController implements ActionListener {
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getExitItem().addActionListener(this);
 	     this.GameView.getNewItem().addActionListener(this);
+	     this.GameView.getAboutItem().addActionListener(this);
+	     this.GameView.getColorsItem().addActionListener(this);
 	     callSplash();
 	}
 	
@@ -121,7 +124,8 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleExitItem() {
-		GameView.SplashScreen();
+		CSModel runMenu = new CSModel();
+		runMenu.mainMenu();
 	}
 
 	public void handleNewItem() {
@@ -154,7 +158,7 @@ public class GameController implements ActionListener {
 	        for (int col = 0; col < cells[0].length; col++) {
 	        	 boolean setCellToBlack = Math.random() < 0.15;
 	             if (setCellToBlack) {
-	            	 GameModel.setCellToBlack(row, col);
+	            	 GameModel.setCellToMainColour(row, col);
 	             }
 	        }
 	    }
@@ -221,6 +225,8 @@ public class GameController implements ActionListener {
 			handleExitItem();
 		}else if (e.getSource() == GameView.getNewItem()) {
 			handleNewItem();
+		}else if (e.getSource() == GameView.getAboutItem()) {
+			GameView.aboutMenu();
 		}else if (e.getSource() == GameView.getModelText()) {
 			handleModelTextBox();
 		}else if (e.getSource() == GameView.getStepText()) {
@@ -232,6 +238,8 @@ public class GameController implements ActionListener {
 		            GameModel.resetColors();
 		        }
 		}else if (e.getSource() == GameView.getColorInput()) {
+			handleColorSet();
+		}else if (e.getSource() == GameView.getColorsItem()) {
 			handleColorSet();
 		}else if (e.getSource() == GameView.getStartGOL()) {
 			
