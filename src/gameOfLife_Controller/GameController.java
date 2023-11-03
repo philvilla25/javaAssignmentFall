@@ -1,4 +1,5 @@
 package gameOfLife_Controller;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -106,6 +107,7 @@ public class GameController implements ActionListener {
 	
 	public void handleCellClick() {
 	    JLabel[][] cells = GameModel.getCells();
+	    GameModel.blankGrid();
 	    for (int row = 0; row < cells.length; row++) {
 	        for (int col = 0; col < cells[0].length; col++) {
 	            final int currentRow = row;
@@ -122,6 +124,63 @@ public class GameController implements ActionListener {
 	    }
 	}
 	
+	public void handleRandomSet(){
+		JLabel[][] cells = GameModel.getCells();
+		GameModel.blankGrid();
+	    for (int row = 0; row < cells.length; row++) {
+	        for (int col = 0; col < cells[0].length; col++) {
+	        	 boolean setCellToBlack = Math.random() < 0.15;
+	             if (setCellToBlack) {
+	            	 GameModel.setCellToBlack(row, col);
+	             }
+	        }
+	    }
+	}
+	
+	public void handleModelTextBox() {
+		String GLRule = GameView.getModelText().getText();
+		boolean valid = isValidBinary18BitNumber(GLRule);
+		  if (valid) {
+			  GameModel.setGLRule(GLRule); // set rule
+          } else {
+              JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid 18-bit binary number");
+          } 
+	}
+	
+	public static boolean isValidBinary18BitNumber(String binaryString) {
+		// Check if the string is exactly 18 characters long
+		 if (binaryString.length() != 18) {
+		        return false;
+		    }
+		 // Check if the string consists of only '0' and '1' characters
+		 for (int i = 0; i < binaryString.length(); i++) {
+		        char c = binaryString.charAt(i);
+		        if (c != '0' && c != '1') {
+		            return false;
+		        }
+		    }
+		return true;
+	}
+	
+	public void handleStepsTextBox() {
+		String steps = GameView.getStepText().getText();
+		GameModel.setSteps(steps);
+	}
+	
+	public void handleMultiColor() {
+		JLabel[][] cells = GameModel.getCells();
+		for (int row = 0; row < cells.length; row++) {
+		    for (int col = 0; col < cells[0].length; col++) {
+		    	JLabel cell = cells[row][col];
+		    	if (GameModel.isCellDead(cell)) {
+		    		int liveNeighbors = GameModel.calculateLiveNeighbors(row, col);
+			        Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors);
+			        cells[row][col].setBackground(cellColor);
+		    	}
+		    }
+		}
+	}
+	
 	// fill in the blanks for these and create the appropriate methods
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -131,18 +190,26 @@ public class GameController implements ActionListener {
 			handleHelpClick();
 		}else if (e.getSource() == GameView.getLanguages()) {
 			handleChangeLang();
-		}else if (e.getSource() == GameView.getRandomButton() || e.getSource() == GameView.getManualButton() ) {
+		}else if (e.getSource() == GameView.getRandomButton()) {
+			handleRandomSet();
+		}else if(e.getSource() == GameView.getManualButton() ) {
 			handleRandomManual(e);
 		}else if (e.getSource() == GameView.getExitItem()) {
 			handleExitItem();
 		}else if (e.getSource() == GameView.getNewItem()) {
 			handleNewItem();
 		}else if (e.getSource() == GameView.getModelText()) {
-			
+			handleModelTextBox();
+		}else if (e.getSource() == GameView.getStepText()) {
+			handleStepsTextBox();
 		}else if (e.getSource() == GameView.getMulticolorText()) {
-			
+			 if (GameView.getMulticolorText().isSelected()) {
+				 	handleMultiColor();
+		        } else {
+		            GameModel.resetColors();
+		        }
 		}else if (e.getSource() == GameView.getColorInput()) {
-			
+			handleColorSet();
 		}else if (e.getSource() == GameView.getStartGOL()) {
 			
 		}else if (e.getSource() == GameView.getStepText()) {
@@ -155,6 +222,22 @@ public class GameController implements ActionListener {
 	}
 	
 	
+	public void handleColorSet() {
+		Color selectedColor = GameView.chooseColor();	
+		GameModel.setMainColor(selectedColor);
+		JLabel[][] cells = GameModel.getCells();
+		for (int row = 0; row < cells.length; row++) {
+		    for (int col = 0; col < cells[0].length; col++) {
+		    	JLabel cell = cells[row][col];
+		    	if (GameModel.isCellDead(cell)) {
+		    		cells[row][col].setBackground(selectedColor);
+		    	}
+		    }
+		}
+		 GameView.getGameOfLifeFrame().repaint();
+	}
+	
+
 	public void programNotAvailable() {
 	    // Show a message dialog with program unavailable message
 	    JOptionPane.showMessageDialog(

@@ -14,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +24,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -36,9 +39,9 @@ public class GameView {
 	private String title = "Cellular Automata";
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
-	private String logoImg = "../javaAssignmentFall/resources/logo.png";
+	private String logoImg = "../resources/logo.png";
 	private ImageIcon gameIcon, banner ;
-	private String GameOfLifeBanner = "../javaAssignmentFall/resources/Game of Life Banner.png";
+	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color customColor = new Color(11, 171, 164);
 	private Color cyan = new Color(217, 217, 217);
@@ -100,20 +103,25 @@ public class GameView {
 	    banner = new ImageIcon(GameOfLifeBanner);
 	    
 	    // menu items
-	    ImageIcon newIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconnew.gif"); 
-	    ImageIcon solutionIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconsol.gif"); 
-	    ImageIcon exitIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconext.gif"); 
+	    ImageIcon newIcon = new ImageIcon("../resources/menuiconnew.gif"); 
+	    ImageIcon solutionIcon = new ImageIcon("../resources/menuiconsol.gif"); 
+	    ImageIcon exitIcon = new ImageIcon("../resources/menuiconext.gif"); 
 	    newItem = new JMenuItem("New", newIcon);
 	    solutionItem = new JMenuItem("Solution", solutionIcon);
 	    exitItem = new JMenuItem("Exit",exitIcon);
 	    
-	    ImageIcon colorsIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconcol.gif"); 
-	    ImageIcon aboutIcon = new ImageIcon("../javaAssignmentFall/resources/menuiconabt.gif"); 
+	    ImageIcon colorsIcon = new ImageIcon("../resources/menuiconcol.gif"); 
+	    ImageIcon aboutIcon = new ImageIcon("../resources/menuiconabt.gif"); 
 	    colorsItem = new JMenuItem("New", colorsIcon);
 	    aboutItem = new JMenuItem("Solution", aboutIcon);  
 	}
 	
 	
+	public JFrame getGameOfLifeFrame() {
+		return GameOfLifeFrame;
+	}
+
+
 	public JMenuItem getExitItem() {
 		return exitItem;
 	}
@@ -366,17 +374,10 @@ public class GameView {
 		}
 	}
 	
-//	public void chooseColor() {
-//		 JTabbedPane colorPane = new JTabbedPane();
-//	     
-//		 colorPane.addTab("RGB", createRGBTab());
-//		 colorPane.addTab("HSV", createHSVTab());
-//		 colorPane.addTab("HSL", createHSLTab());
-//		 colorPane.addTab("CMYK", createCMYKTab());
-//
-//	     add(colorPane);	 
-//		
-//	}
+	public Color chooseColor() {
+		Color selectedColor = JColorChooser.showDialog(GameOfLifeFrame, "Choose a Color", Color.BLACK);
+		return selectedColor;
+	}
 	
 	public JPanel paintGrid(JLabel[][] cells) {
 		JPanel centerPanel = new JPanel();

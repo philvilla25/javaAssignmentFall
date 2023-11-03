@@ -35,7 +35,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	/** Name of project **/
 	private String title = "Cellular Automata";
 	/** Name of logo image **/
-	private String logoImg = "../javaAssignmentFall/resources/logo.png";
+	private String logoImg = "../resources/logo.png";
 	/** Name of games **/
 	private String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
 	/** Language options **/
