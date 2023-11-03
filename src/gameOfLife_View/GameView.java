@@ -47,7 +47,7 @@ public class GameView {
 	/** Buttons **/
 	private JButton start, help, random, manual, colorInput, startGOL, stopGOL, execGOL;
 	private JMenu gameGOL, helpGOL, languageGOL;
-	private JMenuItem newItem, solutionItem, exitItem, colorsItem, aboutItem;
+	private JMenuItem newItem, solutionItem, exitItem, colorsItem, aboutItem, englishLanguage, frenchLanguage;
 	private JFrame splashFrame;
 	private JFrame GameOfLifeFrame;
 	private JTextField stepText,  modelText;
@@ -103,8 +103,14 @@ public class GameView {
 	    
 	    ImageIcon colorsIcon = new ImageIcon("../resources/menuiconcol.gif"); 
 	    ImageIcon aboutIcon = new ImageIcon("../resources/menuiconabt.gif"); 
+
 	    colorsItem = new JMenuItem("Colors", colorsIcon);
 	    aboutItem = new JMenuItem("About", aboutIcon);  
+	    
+	    ImageIcon englishLangIcon = new ImageIcon("../resources/menuiconeng.gif");
+	    englishLanguage = new JMenuItem("English", englishLangIcon);
+	    ImageIcon frenchLangIcon = new ImageIcon("../resources/menuiconfra.gif");
+	    frenchLanguage = new JMenuItem("French", frenchLangIcon);
 	}
 	
 	
@@ -342,8 +348,8 @@ public class GameView {
 	    helpGOL.add(colorsItem);
 	    helpGOL.add(aboutItem );
 	    menuPanel.add(languageGOL); // language menu 
-	    languageGOL.add("English");
-	    languageGOL.add("French");
+	    languageGOL.add(englishLanguage);
+	    languageGOL.add(frenchLanguage);
 	    //Center Panel
 	    centerPanel = paintGrid(cells);
 	    centerPanel.setBackground(green);
