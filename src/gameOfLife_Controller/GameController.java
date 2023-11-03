@@ -124,8 +124,8 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleExitItem() {
-		CSModel runMenu = new CSModel();
-		runMenu.mainMenu();
+		//CSModel runMenu = new CSModel();
+		//runMenu.mainMenu();
 	}
 
 	public void handleNewItem() {
