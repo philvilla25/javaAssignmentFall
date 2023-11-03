@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -46,8 +49,28 @@ public class GameController implements ActionListener {
 	}
 	
 	public void callSplash() {
-		this.GameView.GameOfLife(this.GameModel.getCells());;
-		this.GameView.getSplashFrame().dispose();
+		  this.GameView.SplashScreen();
+
+		    // Schedule a TimerTask to dispose of the splash screen after a delay
+		    TimerTask disposeTask = new TimerTask() {
+		        @Override
+		        public void run() {
+		            SwingUtilities.invokeLater(new Runnable() {
+		                @Override
+		                public void run() {
+		                    // Run the other methods after the splash screen is done
+		                    GameView.GameOfLife(GameModel.getCells());
+		                }
+		            });
+		            GameView.getSplashFrame().dispose();
+		        }
+		    };
+
+		    // Create a Timer to schedule the disposeTask after a delay
+		    Timer timer = new Timer();
+		    // Adjust the delay (in milliseconds) as needed to ensure the splash screen is displayed long enough
+		    int delay = 3000; // 3 seconds (adjust as needed)
+		    timer.schedule(disposeTask, delay);
 	}
 	// this is different from uml in A21
 	public void handleStartClick() {

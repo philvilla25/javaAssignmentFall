@@ -5,9 +5,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,16 +20,18 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-
-
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -215,68 +221,60 @@ public class GameView {
 	
 	/** Default Constructor **/
 	public void SplashScreen() {
-	    // Create a new JFrame for the main menu
-//		splashFrame.setTitle(title);
-//		splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		splashFrame.setResizable(false);
-//		splashFrame.setSize(400, 250);
-//		splashFrame.setVisible(true);
-//	    
-//	    // Set the image icon for the program
-//	    splashFrame.setIconImage(gameIcon.getImage());
-//
-//	    // Create panels for the main menu
-//	    JPanel menu = new JPanel(); // Use Flow Layout
-//	    JPanel subMenu = new JPanel(); // Use flow layout
-//	    JPanel options = new JPanel(); // Use box layout
-//	    options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
-//	    
-//	    // Set background colors for panels
-//	    menu.setBackground(cyan);
-//	    subMenu.setBackground(cyan);
-//	    options.setBackground(cyan);
-//
-//	    // Create a content image label
-//	    ImageIcon contentImage = new ImageIcon(logoImg);
-//	    JLabel imageLabel = new JLabel(contentImage);
-//	    subMenu.add(imageLabel);
-//	    
-//	    // Create a label for "HOME" text
-//	    home.setFont(new Font("Arial", Font.BOLD, 24)); // Set font and size
-//	    home.setHorizontalAlignment(JLabel.CENTER); // Center align text
-//	    options.add(home);
-//
-//	    // Create a combo box for selecting games
-//	    games.setEditable(false);
-//	    options.add(games);
-//	    options.add(games);
-//
-//	    // Create buttons panel
-//	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//	    buttonPanel.setBackground(new Color(217, 217, 217));
-//	    buttonPanel.add(start);
-//	    buttonPanel.add(help);
-//	    start.setBackground(customColor);
-//	    help.setBackground(customColor);
-//	    options.add(buttonPanel);
-//	    
-//	    // Create a combo box for selecting languages
-//	    languages.setPreferredSize(new Dimension(150, 30));
-//	    languages.setEditable(false);
-//	    languages.setBackground(Color.BLACK);
-//	    languages.setForeground(customColor);
-//	    subMenu.add(options);
-//	    menu.add(subMenu);
-//	    menu.add(languages);
-//
-//	    // Add the menu panel to the frame
-//	    splashFrame.add(menu, BorderLayout.CENTER);
-//	    splashFrame.setVisible(true);
+		
+		  SwingUtilities.invokeLater(new Runnable() {
+	            public void run() {
+	                // Create the splash screen dialog
+	                JDialog splashDialog = new JDialog();
+	                splashDialog.setUndecorated(true); // Remove window decorations (title bar, border)
+	                splashDialog.setSize(400, 150);
+	                splashDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Dispose the dialog, not exit the application
+
+	                // Center the dialog in the middle of the screen
+	                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	                int x = (screenSize.width - splashDialog.getWidth()) / 2;
+	                int y = (screenSize.height - splashDialog.getHeight()) / 2;
+	                splashDialog.setLocation(x, y);
+
+	                // Create a JPanel to hold the splash screen content
+	                JPanel splashPanel = new JPanel();
+	                splashPanel.setBackground(Color.WHITE);
+	                splashDialog.add(splashPanel);
+
+	                // Add a progress bar to the splash screen
+	                JProgressBar progressBar = new JProgressBar(0, 100);
+	                progressBar.setValue(50);
+	                progressBar.setStringPainted(true);
+	                splashPanel.add(progressBar);
+
+	                // Create a Timer to simulate loading progress
+	                Timer timer = new Timer(19, new ActionListener() {
+	                    int progress = 0;
+
+	                    @Override
+	                    public void actionPerformed(ActionEvent e) {
+	                        if (progress < 100) {
+	                            progressBar.setValue(progress);
+	                            progress++;
+	                        } else {
+	                            // Loading is complete
+	                            ((Timer) e.getSource()).stop();
+	                            splashDialog.dispose(); // Close the splash dialog
+	                           
+	                        }
+	                    }
+	                });
+
+	                timer.start(); // Start the loading progress
+
+	                // Show the splash dialog
+	                
+	                splashDialog.setVisible(true);
+	            }
+	        });
+	    }
+	    
 	
-           //GameModel gameModel = new GameModel();
-//			GameOfLife(gameModel.getCells());
-//			getSplashFrame().dispose();
-	}
 	
 	public void GameOfLife(JLabel[][] cells) {
 	    // Settings for the frame
