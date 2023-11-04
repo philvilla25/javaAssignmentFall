@@ -34,5 +34,41 @@
 		Choisissez le programme que vous souhaitez, puis cliquez sur le bouton Démarrer.	
 			</value>
     </entry>
+    <entry>
+        <key>RANDOM</key>
+        <value>ALÉATOIRE</value>
+    </entry>
+    <entry>
+        <key>MANUAL</key>
+        <value>MANUEL</value>
+    </entry>
+     <entry>
+        <key>MODEL</key>
+        <value>MODÈLE:</value>
+    </entry>
+    <entry>
+        <key>MODEL</key>
+        <value>MODÈLE</value>
+    </entry>
+     <entry>
+        <key>MULTICOLOR</key>
+        <value>MULTICOLORE</value>
+    </entry>
+     <entry>
+        <key>COLOR</key>
+        <value>COULEUR</value>
+    </entry>
+     <entry>
+        <key>START</key>
+        <value>COMMENCER</value>
+    </entry>
+     <entry>
+        <key>STEPS</key>
+        <value>PAS:</value>
+    </entry>
+    <entry>
+        <key>STOP</key>
+        <value>ARRÊT</value>
+    </entry>
     <!-- Add more key-value pairs for other localized strings as needed -->
 </resources>

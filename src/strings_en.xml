@@ -34,6 +34,37 @@
 	Choose the program you and then click the start button.
 	</value>
     </entry>
-    
+    <entry>
+        <key>RANDOM</key>
+        <value>RANDOM</value>
+    </entry>
+    <entry>
+        <key>MANUAL</key>
+        <value>MANUAL</value>
+    </entry>
+     <entry>
+        <key>MODEL</key>
+        <value>MODEL:</value>
+    </entry>
+     <entry>
+        <key>MULTICOLOR</key>
+        <value>MULTICOLORE</value>
+    </entry>
+     <entry>
+        <key>COLOR</key>
+        <value>COLOR</value>
+    </entry>
+     <entry>
+        <key>START</key>
+        <value>START</value>
+    </entry>
+     <entry>
+        <key>STEPS</key>
+        <value>STEPS:</value>
+    </entry>
+    <entry>
+        <key>STOP</key>
+        <value>STOP</value>
+    </entry>
     <!-- Add more key-value pairs for other localized strings as needed -->
 </resources>

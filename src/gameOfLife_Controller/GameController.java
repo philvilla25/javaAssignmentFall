@@ -36,7 +36,7 @@ public class GameController implements ActionListener {
 	     this.GameView = GameView;
 	     this.GameView.getStartButton().addActionListener(this);
 	     this.GameView.getHelpButton().addActionListener(this);
-	     this.GameView.getLanguages().addActionListener(this);
+	     this.GameView.getLanguageGOL().addActionListener(this);
 	     this.GameView.getManualButton().addActionListener(this);
 	     this.GameView.getRandomButton().addActionListener(this);
 	     this.GameView.getModelText().addActionListener(this);
@@ -50,6 +50,8 @@ public class GameController implements ActionListener {
 	     this.GameView.getNewItem().addActionListener(this);
 	     this.GameView.getAboutItem().addActionListener(this);
 	     this.GameView.getColorsItem().addActionListener(this);
+	     this.GameView.getEnglish().addActionListener(this);
+	     this.GameView.getFrench().addActionListener(this);
 	     callSplash();
 	}
 	
@@ -82,21 +84,6 @@ public class GameController implements ActionListener {
 	public void handleHelpClick() {
 		 String helpMessage = getLocalizedString("messageHelp");
          JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
-	}
-	
-	public void handleChangeLang() {
-		 String selectedLanguage = (String) GameView.getLanguages().getSelectedItem();
-         switch (selectedLanguage) {
-             case "English":
-                 currentLanguage = "en";
-                 break;
-             case "Français":
-                 currentLanguage = "fr";
-                 break;
-         }
-         loadXMLResource(currentLanguage);
-         // Update the UI components
-         updateUIComponents();	
 	}
 	
 	public void handleRandomManual(ActionEvent e) {
@@ -200,8 +187,13 @@ public class GameController implements ActionListener {
 			handleStartClick();
 		}else if (e.getSource() == GameView.getHelpButton()) {
 			handleHelpClick();
-		}else if (e.getSource() == GameView.getLanguages()) {
-			handleChangeLang();
+		}else if (e.getSource() == GameView.getEnglish()) {
+			System.out.println("Awa" + GameView.getEnglish().getText());
+			handleChangeLang(GameView.getEnglish().getText());
+		
+		}else if (e.getSource() == GameView.getFrench()) {
+			System.out.println("Awa PREns" + GameView.getFrench().getText());
+			handleChangeLang(GameView.getFrench().getText());
 		}else if (e.getSource() == GameView.getRandomButton()) {
 			handleRandomSet();
 		}else if(e.getSource() == GameView.getManualButton() ) {
@@ -253,6 +245,23 @@ public class GameController implements ActionListener {
 		}
 	}
 	
+	public void handleChangeLang(String lang) {
+		 String selectedLanguage = lang;
+		 System.out.println("choice" + selectedLanguage);
+        switch (selectedLanguage) {
+            case "English":
+                currentLanguage = "en";
+                break;
+            case "Français":
+                currentLanguage = "fr";
+                break;
+        }
+        loadXMLResource(currentLanguage);
+        // Update the UI components
+        updateUIComponents();	
+	}
+	
+	
 	public void handleColorSet() {
 		Color selectedColor = GameView.chooseColor();	
 		GameModel.setMainColor(selectedColor);
@@ -281,12 +290,19 @@ public class GameController implements ActionListener {
 	
 	public void updateUIComponents() {
 	    // Update the 'home' label with a localized string
-	    GameView.getHomeButton().setText(getLocalizedString("home"));
+	    GameView.getHomeButton().setText(getLocalizedString("HOME"));
 	    // Update the 'start' button with a localized string
-	    GameView.getStartButton().setText(getLocalizedString("start"));
+	    GameView.getStartGOL().setText(getLocalizedString("START"));
 	    // Update the 'help' button with a localized string
-	    GameView.getHelpButton().setText(getLocalizedString("help"));
-	    // You can add more update statements here for other UI components as needed.
+	    GameView.getHelpButton().setText(getLocalizedString("HELP"));
+	    
+	    GameView.getRandomButton().setText(getLocalizedString("RANDOM"));
+	    // You can add more update statements here for other UI components as needed.  
+	    GameView.getManualButton().setText(getLocalizedString("MANUAL"));
+	    GameView.getModel().setText(getLocalizedString("MODEL"));
+	    GameView.getColorInput().setText(getLocalizedString("COLOR"));
+	    GameView.getStep().setText(getLocalizedString("STEPS"));
+	    GameView.getStopGOL().setText(getLocalizedString("stop"));
 	}
 
 	/**
@@ -300,10 +316,10 @@ public class GameController implements ActionListener {
 	    if (currentXMLDocument == null) {
 	        return "XML document not loaded";
 	    }
-
+	    
 	    // Get a NodeList of all 'entry' elements in the XML document
 	    NodeList entryNodes = currentXMLDocument.getElementsByTagName("entry");
-
+	   
 	    // Iterate through the 'entry' elements to find a matching key
 	    for (int i = 0; i < entryNodes.getLength(); i++) {
 	        // Get the current 'entry' element
