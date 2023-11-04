@@ -110,7 +110,7 @@ public class GameView {
 	    ImageIcon englishLangIcon = new ImageIcon("../resources/menuiconeng.gif");
 	    englishLanguage = new JMenuItem("English", englishLangIcon);
 	    ImageIcon frenchLangIcon = new ImageIcon("../resources/menuiconfra.gif");
-	    frenchLanguage = new JMenuItem("French", frenchLangIcon);
+	    frenchLanguage = new JMenuItem("Français", frenchLangIcon);
 	}
 	
 	
@@ -118,7 +118,20 @@ public class GameView {
 		return aboutItem;
 	}
 
+	public JLabel getModel() {
+		return model;
+	}
+	
+	public JLabel getStep() {
+		return steps;
+	}
+	public JMenuItem getEnglish() {
+		return englishLanguage;
+	}
 
+	public JMenuItem getFrench() {
+		return frenchLanguage;
+	}
 	public JFrame getGameOfLifeFrame() {
 		return GameOfLifeFrame;
 	}
@@ -282,7 +295,7 @@ public class GameView {
 		try {
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
 		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GameOfLifeFrame.setSize(1000, 800);
+		GameOfLifeFrame.setSize(1050, 800);
 		GameOfLifeFrame.setResizable(false);
 
 	    // Setting image icon for the program
