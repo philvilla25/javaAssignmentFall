@@ -10,6 +10,7 @@ public class GameModel {
 	private String steps;
 	private Color mainColor = Color.BLACK;
 	private Color cellColor = null;
+	private JLabel[][] cells;
 	
 	public String getSteps() {
 		return steps;
@@ -42,8 +43,15 @@ public class GameModel {
 	public void setCols(int cols) {
 		this.cols = cols;
 	}
+	
+	public Color getMainColor() {
+		return mainColor;
+	}
 
-	private JLabel[][] cells;
+	public void setMainColor(Color mainColor) {
+		this.mainColor = mainColor;
+	}
+
 	
 	
 	public GameModel() {
@@ -106,7 +114,7 @@ public class GameModel {
 		  }
 	 }
 	 
-	 public boolean isCellDead(JLabel cell) {
+	 public boolean isCellAlive(JLabel cell) {
 		 Color backgroundColor = cell.getBackground();
 		 return !Color.WHITE.equals(backgroundColor);
 	}
@@ -115,7 +123,7 @@ public class GameModel {
 		 for (int row = 0; row < rows; row++) {
 		    for (int col = 0; col < cols; col++) {
 		        JLabel cell = cells[row][col];
-		        if (isCellDead(cell)) {
+		        if (isCellAlive(cell)) {
 		            cell.setBackground(mainColor);  // Change the colored cell back to the main color
 		         }
 		    }
@@ -126,42 +134,42 @@ public class GameModel {
 		int neighborsCount = 0;
 	    // Check the top neighbor
 	    JLabel top = getCell(row - 1, col);
-	    if (top != null && isCellDead(top)) {
+	    if (top != null && isCellAlive(top)) {
 	        neighborsCount++;
 	    }
 	    // Check the top-right neighbor
 	    JLabel topRight = getCell(row - 1, col + 1);
-	    if (topRight != null && isCellDead(topRight)) {
+	    if (topRight != null && isCellAlive(topRight)) {
 	        neighborsCount++;
 	    }
 	    // Check the right neighbor
 	    JLabel right = getCell(row, col + 1);
-	    if (right != null && isCellDead(right)) {
+	    if (right != null && isCellAlive(right)) {
 	        neighborsCount++;
 	    }
 	    // Check the bottom-right neighbor
 	    JLabel bottomRight = getCell(row + 1, col + 1);
-	    if (bottomRight != null && isCellDead(bottomRight)) {
+	    if (bottomRight != null && isCellAlive(bottomRight)) {
 	        neighborsCount++;
 	    }
 	    // Check the bottom neighbor
 	    JLabel bottom = getCell(row + 1, col);
-	    if (bottom != null && isCellDead(bottom)) {
+	    if (bottom != null && isCellAlive(bottom)) {
 	        neighborsCount++;
 	    }
 	    // Check the bottom-left neighbor
 	    JLabel bottomLeft = getCell(row + 1, col - 1);
-	    if (bottomLeft != null && isCellDead(bottomLeft)) {
+	    if (bottomLeft != null && isCellAlive(bottomLeft)) {
 	        neighborsCount++;
 	    }
 	    // Check the left neighbor
 	    JLabel left = getCell(row, col - 1);
-	    if (left != null && isCellDead(left)) {
+	    if (left != null && isCellAlive(left)) {
 	        neighborsCount++;
 	    }
 	    // Check the top-left neighbor
 	    JLabel topLeft = getCell(row - 1, col - 1);
-	    if (topLeft != null && isCellDead(topLeft)) {
+	    if (topLeft != null && isCellAlive(topLeft)) {
 	        neighborsCount++;
 	    }
 	    return  neighborsCount;
@@ -202,14 +210,46 @@ public class GameModel {
 		    }
 		    return cellColor;
 		}
+	 
+	 public void nextGeneration(boolean useMultiColor) {
+		// Split the 18-bit rule into two parts
+		 String deadCellRule = GLRule.substring(0, 9); // First nine bits
+		 String liveNeighborRule = GLRule.substring(9, 18); // Next nine bits
+		 
+		    for (int row = 0; row < rows; row++) {
+		        for (int col = 0; col < cols; col++) {
+		        	JLabel cell = cells[row][col];
+		        	int liveNeighbours = calculateLiveNeighbors(row, col);
+		        	if(isCellAlive(cell)) { // cell is alive
+		        		if (liveNeighborRule.charAt(liveNeighbours) == '1') { // check the value at the neighbor count
+		        			 // check color for cells
+		        			if (useMultiColor) {
+		        			        Color cellColor = getColorForLiveNeighbors(liveNeighbours);  // multicolor option
+		        			        cell.setBackground(cellColor);
+		        			} else {
+		        			        cell.setBackground(mainColor);// use main color
+		        			}	
+		        		}else {
+		        		  	cell.setBackground(Color.WHITE);// The cell becomes dead.
+		        		}
+		        		
+		        	}else { // cell is dead
+		        		if (deadCellRule.charAt(liveNeighbours) == '1') { // check the value at the neighbor count
+		        			// color cells
+			        		if (useMultiColor) {
+		                        Color cellColor = getColorForLiveNeighbors(liveNeighbours);
+		                        cell.setBackground(cellColor); // multicolor option
+			                } else {
+			                	cell.setBackground(mainColor);// use main color
+			                }
+		        		}else {
+		        			cell.setBackground(Color.WHITE);// The cell remains dead.
+		        		}
+		        	}
+		        }
+		    }
+	 }
 
-	public Color getMainColor() {
-		return mainColor;
-	}
-
-	public void setMainColor(Color mainColor) {
-		this.mainColor = mainColor;
-	}
 	 
 	 
 }

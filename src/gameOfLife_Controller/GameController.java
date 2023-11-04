@@ -24,6 +24,8 @@ import gameOfLife_View.GameView;
 public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;
+    private int stepsLeft;
+    private boolean useMultiColor = false;
     /** default language **/
 	private static String currentLanguage = "en"; // Default language
 	/** XML **/
@@ -74,24 +76,6 @@ public class GameController implements ActionListener {
 		    // Adjust the delay (in milliseconds) as needed to ensure the splash screen is displayed long enough
 		    int delay = 3000; // 3 seconds (adjust as needed)
 		    timer.schedule(disposeTask, delay);
-	}
-	// this is different from uml in A21
-	public void handleStartClick() {
-		JComboBox<String> gamesComboBox = GameView.getGamesComboBox();
-	    String selectedProgram = (String)gamesComboBox.getSelectedItem();
-        if ("Cellular Automata".equals(selectedProgram)) {
-            //mainGUI gui = new mainGUI();
-            //gui.mainWindow();
-            //GameView.getSplashFrame().dispose();
-        } else if ("Game Of Life".equals(selectedProgram)) {
-            GameView.GameOfLife(GameModel.getCells());
-            GameView.getSplashFrame().dispose();
-        } else if ("Turing Machine".equals(selectedProgram)) {
-            programNotAvailable();
-        }
-
-        // Update UI components
-        updateUIComponents();	
 	}
 
 	// help message does not show what its meant to?
@@ -195,11 +179,12 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleMultiColor() {
+	    useMultiColor = GameView.getMulticolorText().isSelected();
 		JLabel[][] cells = GameModel.getCells();
 		for (int row = 0; row < cells.length; row++) {
 		    for (int col = 0; col < cells[0].length; col++) {
 		    	JLabel cell = cells[row][col];
-		    	if (GameModel.isCellDead(cell)) {
+		    	if (GameModel.isCellAlive(cell)) {
 		    		int liveNeighbors = GameModel.calculateLiveNeighbors(row, col);
 			        Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors);
 			        cells[row][col].setBackground(cellColor);
@@ -227,8 +212,8 @@ public class GameController implements ActionListener {
 			handleNewItem();
 		}else if (e.getSource() == GameView.getAboutItem()) {
 			GameView.aboutMenu();
-		}else if (e.getSource() == GameView.getModelText()) {
-			handleModelTextBox();
+		/*}else if (e.getSource() == GameView.getModelText()) {
+			handleModelTextBox(); */
 		}else if (e.getSource() == GameView.getStepText()) {
 			handleStepsTextBox();
 		}else if (e.getSource() == GameView.getMulticolorText()) {
@@ -242,16 +227,31 @@ public class GameController implements ActionListener {
 		}else if (e.getSource() == GameView.getColorsItem()) {
 			handleColorSet();
 		}else if (e.getSource() == GameView.getStartGOL()) {
-			
+			handleStartClick();
 		}else if (e.getSource() == GameView.getStepText()) {
 				
 		}else if (e.getSource() == GameView.getExecGOL()) {
 			
 		}else if (e.getSource() == GameView.getStopGOL()){
-			
+		     
 		}
 	}
 	
+	public void handleStartClick() {
+		try {
+		 //int numSteps = Integer.parseInt(GameModel.getSteps());
+	     handleModelTextBox();
+		 GameModel.nextGeneration(useMultiColor);
+		 GameView.getGameOfLifeFrame().repaint();
+		}catch(NullPointerException e){
+			JOptionPane.showMessageDialog(
+		            GameView.getGameOfLifeFrame(),
+		            "Enter complete configurations",
+		            "Incomplete Configurations Entered",
+		            JOptionPane.INFORMATION_MESSAGE
+		    );
+		}
+	}
 	
 	public void handleColorSet() {
 		Color selectedColor = GameView.chooseColor();	
@@ -260,7 +260,7 @@ public class GameController implements ActionListener {
 		for (int row = 0; row < cells.length; row++) {
 		    for (int col = 0; col < cells[0].length; col++) {
 		    	JLabel cell = cells[row][col];
-		    	if (GameModel.isCellDead(cell)) {
+		    	if (GameModel.isCellAlive(cell)) {
 		    		cells[row][col].setBackground(selectedColor);
 		    	}
 		    }
