@@ -23,8 +23,7 @@ import gameOfLife_View.GameView;
 
 public class GameController implements ActionListener {
 	private GameModel GameModel;
-    private GameView GameView;
-    private int stepsLeft;
+    private GameView GameView;  
     private boolean useMultiColor = false;
     /** default language **/
 	private static String currentLanguage = "en"; // Default language
@@ -166,7 +165,6 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleMultiColor() {
-	    useMultiColor = GameView.getMulticolorText().isSelected();
 		JLabel[][] cells = GameModel.getCells();
 		for (int row = 0; row < cells.length; row++) {
 		    for (int col = 0; col < cells[0].length; col++) {
@@ -210,8 +208,10 @@ public class GameController implements ActionListener {
 			handleStepsTextBox();
 		}else if (e.getSource() == GameView.getMulticolorText()) {
 			 if (GameView.getMulticolorText().isSelected()) {
+				 	useMultiColor = true;
 				 	handleMultiColor();
 		        } else {
+		        	useMultiColor = false;
 		            GameModel.resetColors();
 		        }
 		}else if (e.getSource() == GameView.getColorInput()) {

@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.border.LineBorder;
 
 public class GameView {
 	/** Name of project **/
@@ -251,13 +254,16 @@ public class GameView {
 
 	                // Create a JPanel to hold the splash screen content
 	                JPanel splashPanel = new JPanel();
-	                splashPanel.setBackground(Color.WHITE);
+	                splashPanel.setBackground(purple);
+	                LineBorder lineBorder = new LineBorder(green, 10);
+	                splashPanel.setBorder(lineBorder);
 	                splashDialog.add(splashPanel);
-
+	                
 	                // Add a progress bar to the splash screen
 	                JProgressBar progressBar = new JProgressBar(0, 100);
 	                progressBar.setValue(50);
 	                progressBar.setStringPainted(true);
+	                progressBar.setForeground(green);
 	                splashPanel.add(progressBar);
 
 	                // Create a Timer to simulate loading progress
