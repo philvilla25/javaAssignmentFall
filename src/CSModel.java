@@ -20,9 +20,6 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
-import gameOfLife_View.GameView;
-import gameOfLife_Controller.GameController;
-import gameOfLife_Model.GameModel;
 /**
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
