@@ -304,7 +304,7 @@ public class GameView {
 		
 		try {
 		GameOfLifeFrame.setTitle(GameOfLifeTitle);
-		GameOfLifeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GameOfLifeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GameOfLifeFrame.setSize(1050, 800);
 		GameOfLifeFrame.setResizable(false);
 

@@ -93,8 +93,7 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleExitItem() {
-		//CSModel runMenu = new CSModel();
-		//runMenu.mainMenu();
+		GameView.getGameOfLifeFrame().dispose();
 	}
 
 	public void handleNewItem() {
