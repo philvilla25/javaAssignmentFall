@@ -70,5 +70,17 @@
         <key>STOP</key>
         <value>ARRÊT</value>
     </entry>
+    <entry>
+        <key>LANGUAGE</key>
+        <value>Langue</value>
+    </entry>
+     <entry>
+        <key>HELP</key>
+        <value>Aide</value>
+    </entry>
+    <entry>
+        <key>GAME</key>
+        <value>Jeu</value>
+    </entry>
     <!-- Add more key-value pairs for other localized strings as needed -->
 </resources>

@@ -113,6 +113,13 @@ public class GameView {
 	    frenchLanguage = new JMenuItem("Français", frenchLangIcon);
 	}
 	
+	public JMenuItem getHelpGOL() {
+		return helpGOL;
+	}
+	
+	public JMenuItem getGameGOL() {
+		return gameGOL;
+	}
 	
 	public JMenuItem getAboutItem() {
 		return aboutItem;

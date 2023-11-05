@@ -185,11 +185,8 @@ public class GameController implements ActionListener {
 		}else if (e.getSource() == GameView.getHelpButton()) {
 			handleHelpClick();
 		}else if (e.getSource() == GameView.getEnglish()) {
-			System.out.println("Awa" + GameView.getEnglish().getText());
 			handleChangeLang(GameView.getEnglish().getText());
-		
 		}else if (e.getSource() == GameView.getFrench()) {
-			System.out.println("Awa PREns" + GameView.getFrench().getText());
 			handleChangeLang(GameView.getFrench().getText());
 		}else if (e.getSource() == GameView.getRandomButton()) {
 			handleRandomSet();
@@ -302,6 +299,9 @@ public class GameController implements ActionListener {
 	    GameView.getColorInput().setText(getLocalizedString("COLOR"));
 	    GameView.getStep().setText(getLocalizedString("STEPS"));
 	    GameView.getStopGOL().setText(getLocalizedString("stop"));
+	    GameView.getLanguageGOL().setText(getLocalizedString("LANGUAGE"));
+	    GameView.getHelpGOL().setText(getLocalizedString("HELP"));
+	    GameView.getGameGOL().setText(getLocalizedString("GAME"));
 	}
 
 	/**
