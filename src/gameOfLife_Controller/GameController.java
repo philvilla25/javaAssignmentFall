@@ -104,6 +104,10 @@ public class GameController implements ActionListener {
 		GameModel.blankGrid();
 	}
 	
+	public void handleSolutionItem() {
+		GameModel.nextGeneration(useMultiColor);
+	}
+	
 	public void handleCellClick() {
 	    JLabel[][] cells = GameModel.getCells();
 	    GameModel.blankGrid();
@@ -302,9 +306,9 @@ public class GameController implements ActionListener {
 		                public void run() {
 		                    if (currentStep < numSteps) {
 		                    	GameModel.nextGeneration(useMultiColor);
-		                    	System.out.println("ni sud");
 		                        GameView.getGameOfLifeFrame().revalidate();
 		                    	GameView.getGameOfLifeFrame().repaint();
+		                     	System.out.println("ni sud");
 		                        currentStep++;
 		                        
 		                        GameView.updateStepLabel(currentStep);

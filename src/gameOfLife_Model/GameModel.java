@@ -106,14 +106,6 @@ public class GameModel {
 			 cell.setBackground(mainColor);
 		 }
 	 
-	 public void calculateNextGeneration(){
-		  for (int row = 0; row < rows; row++) {
-		        for (int col = 0; col < cols; col++) {
-		        	
-		        }
-		  }
-	 }
-	 
 	 public boolean isCellAlive(JLabel cell) {
 		 Color backgroundColor = cell.getBackground();
 		 return !Color.WHITE.equals(backgroundColor);
