@@ -24,11 +24,14 @@ public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;  
     private boolean useMultiColor = false;
+    private Timer timer;
+    private int delay = 1000; // Delay in milliseconds
     /** default language **/
 	private static String currentLanguage = "en"; // Default language
 	/** XML **/
 	private static org.w3c.dom.Document currentXMLDocument;
-
+	private Color mainColor = Color.BLACK;
+	
 	public GameController(GameModel GameModel, GameView GameView) {
 		 this.GameModel = GameModel;
 	     this.GameView = GameView;
@@ -51,6 +54,7 @@ public class GameController implements ActionListener {
 	     this.GameView.getEnglish().addActionListener(this);
 	     this.GameView.getFrench().addActionListener(this);
 	     callSplash();
+	     initializeTimer();
 	}
 	
 	public void callSplash() {
@@ -224,12 +228,72 @@ public class GameController implements ActionListener {
 		}
 	}
 	
+	
+	 // Replace the existing `nextGeneration` method with this modified version
+    public void nextGeneration(boolean useMultiColor) {
+        // Split the 18-bit rule into two parts
+        String deadCellRule = GameModel.getGLRule().substring(0, 9); // First nine bits
+        String liveNeighborRule = GameModel.getGLRule().substring(9, 18); // Next nine bits
+        System.out.println("ni sud");
+        JLabel[][] cells = GameModel.getCells();
+        int rows = cells.length;
+        int cols = cells[0].length;
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                JLabel cell = cells[row][col];
+                int liveNeighbours = GameModel.calculateLiveNeighbors(row, col);
+
+                // Create a final reference for cell, row, and col
+                final JLabel finalCell = cell;
+                final int finalRow = row;
+                final int finalCol = col;
+
+                // Use Timer to schedule the cell update task
+                TimerTask cellUpdateTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (GameModel.isCellAlive(finalCell)) {
+                            if (liveNeighborRule.charAt(liveNeighbours) == '1') {
+                                if (useMultiColor) {
+                                    Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbours);
+                                    finalCell.setBackground(cellColor);
+                                } else {
+                                    finalCell.setBackground(mainColor);
+                                }
+                            } else {
+                                finalCell.setBackground(Color.WHITE);
+                            }
+                        } else {
+                            if (deadCellRule.charAt(liveNeighbours) == '1') {
+                                if (useMultiColor) {
+                                    Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbours);
+                                    finalCell.setBackground(cellColor);
+                                } else {
+                                    finalCell.setBackground(mainColor);
+                                }
+                            } else {
+                                finalCell.setBackground(Color.WHITE);
+                            }
+                        }
+                        GameView.getGameOfLifeFrame().revalidate();
+                        GameView.getGameOfLifeFrame().repaint();
+                    }
+                };
+
+                // Schedule the cell update task with a delay
+                timer.schedule(cellUpdateTask, delay);
+            }
+        }
+    }
+	
 	public void handleStartClick() {
 		try {
 		 //int numSteps = Integer.parseInt(GameModel.getSteps());
 	     handleModelTextBox();
-		 GameModel.nextGeneration(useMultiColor);
-		 GameView.getGameOfLifeFrame().repaint();
+		 nextGeneration(useMultiColor);
+		// GameView.getGameOfLifeFrame().repaint();
+		 
 		}catch(NullPointerException e){
 			JOptionPane.showMessageDialog(
 		            GameView.getGameOfLifeFrame(),
@@ -377,5 +441,9 @@ public class GameController implements ActionListener {
 	    }
 	}
 
+	  // Initialize the timer
+    public void initializeTimer() {
+        timer = new Timer();
+    }
 
 }
