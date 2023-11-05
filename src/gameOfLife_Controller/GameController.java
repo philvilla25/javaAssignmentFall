@@ -30,7 +30,7 @@ public class GameController implements ActionListener {
 	private static String currentLanguage = "en"; // Default language
 	/** XML **/
 	private static org.w3c.dom.Document currentXMLDocument;
-	private Color mainColor = Color.BLACK;
+	private int numSteps;
 	
 	public GameController(GameModel GameModel, GameView GameView) {
 		 this.GameModel = GameModel;
@@ -44,17 +44,17 @@ public class GameController implements ActionListener {
 	     this.GameView.getMulticolorText().addActionListener(this);
 	     this.GameView.getColorInput().addActionListener(this);
 	     this.GameView.getStartGOL().addActionListener(this);
-	     this.GameView.getStepText().addActionListener(this);
+	     //this.GameView.getStepText().addActionListener(this);
 	     this.GameView.getExecGOL().addActionListener(this);
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getExitItem().addActionListener(this);
 	     this.GameView.getNewItem().addActionListener(this);
 	     this.GameView.getAboutItem().addActionListener(this);
 	     this.GameView.getColorsItem().addActionListener(this);
+	     this.GameView.getSolutionItem().addActionListener(null);
 	     this.GameView.getEnglish().addActionListener(this);
 	     this.GameView.getFrench().addActionListener(this);
 	     callSplash();
-	     initializeTimer();
 	}
 	
 	public void callSplash() {
@@ -162,8 +162,15 @@ public class GameController implements ActionListener {
 	}
 	
 	public void handleStepsTextBox() {
-		String steps = GameView.getStepText().getText();
-		GameModel.setSteps(steps);
+		try {
+		 String stepsText = GameView.getStepText();
+		    if (stepsText != null && !stepsText.isEmpty()) {
+		        numSteps = Integer.parseInt(stepsText);
+		        GameModel.setSteps(numSteps);
+		    }
+		}catch (Exception e) {
+	    	 JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid integer");
+		}
 	}
 	
 	public void handleMultiColor() {
@@ -201,8 +208,6 @@ public class GameController implements ActionListener {
 			handleNewItem();
 		}else if (e.getSource() == GameView.getAboutItem()) {
 			GameView.aboutMenu();
-		/*}else if (e.getSource() == GameView.getModelText()) {
-			handleModelTextBox(); */
 		}else if (e.getSource() == GameView.getStepText()) {
 			handleStepsTextBox();
 		}else if (e.getSource() == GameView.getMulticolorText()) {
@@ -218,19 +223,15 @@ public class GameController implements ActionListener {
 		}else if (e.getSource() == GameView.getColorsItem()) {
 			handleColorSet();
 		}else if (e.getSource() == GameView.getStartGOL()) {
-			handleStartClick();
-		}else if (e.getSource() == GameView.getStepText()) {
-				
-		}else if (e.getSource() == GameView.getExecGOL()) {
-			
+			handleStartClick();		
 		}else if (e.getSource() == GameView.getStopGOL()){
-		     
+			handleStopClick(); 
 		}
 	}
 	
 	
 	 // Replace the existing `nextGeneration` method with this modified version
-    public void nextGeneration(boolean useMultiColor) {
+   /* public void nextGeneration(boolean useMultiColor) {
         // Split the 18-bit rule into two parts
         String deadCellRule = GameModel.getGLRule().substring(0, 9); // First nine bits
         String liveNeighborRule = GameModel.getGLRule().substring(9, 18); // Next nine bits
@@ -285,23 +286,50 @@ public class GameController implements ActionListener {
                 timer.schedule(cellUpdateTask, delay);
             }
         }
-    }
+    }*/
 	
 	public void handleStartClick() {
-		try {
-		 //int numSteps = Integer.parseInt(GameModel.getSteps());
-	     handleModelTextBox();
-		 nextGeneration(useMultiColor);
-		// GameView.getGameOfLifeFrame().repaint();
-		 
-		}catch(NullPointerException e){
-			JOptionPane.showMessageDialog(
-		            GameView.getGameOfLifeFrame(),
-		            "Enter complete configurations",
-		            "Incomplete Configurations Entered",
-		            JOptionPane.INFORMATION_MESSAGE
-		    );
-		}
+		try {	
+			handleStepsTextBox();
+			numSteps = GameModel.getSteps();
+			handleModelTextBox();
+			
+			  if (numSteps > 0) {
+				  timer = new Timer();
+		            TimerTask cellUpdateTask = new TimerTask() {
+		                int currentStep = 0;
+		                @Override
+		                public void run() {
+		                    if (currentStep < numSteps) {
+		                    	GameModel.nextGeneration(useMultiColor);
+		                    	System.out.println("ni sud");
+		                        GameView.getGameOfLifeFrame().revalidate();
+		                    	GameView.getGameOfLifeFrame().repaint();
+		                        currentStep++;
+		                        
+		                        GameView.updateStepLabel(currentStep);
+		                    } else {
+		                        timer.cancel();  // Stop the timer
+		                    }
+		                }
+		            };  
+		            // Schedule the cell update task with the specified delay
+		            timer.scheduleAtFixedRate(cellUpdateTask, 0, delay);          
+			  }
+			} catch (NullPointerException e) {
+			       JOptionPane.showMessageDialog(
+			       GameView.getGameOfLifeFrame(),
+			       "Enter complete configurations",
+			       "Incomplete Configurations Entered",
+			       JOptionPane.INFORMATION_MESSAGE
+			       );
+			}
+	 }
+	
+	public void handleStopClick() {
+		 if (timer != null) {
+		        timer.cancel();
+		    }
 	}
 	
 	public void handleChangeLang(String lang) {
@@ -354,7 +382,6 @@ public class GameController implements ActionListener {
 	    GameView.getStartGOL().setText(getLocalizedString("START"));
 	    // Update the 'help' button with a localized string
 	    GameView.getHelpButton().setText(getLocalizedString("HELP"));
-	    
 	    GameView.getRandomButton().setText(getLocalizedString("RANDOM"));
 	    // You can add more update statements here for other UI components as needed.  
 	    GameView.getManualButton().setText(getLocalizedString("MANUAL"));
@@ -440,10 +467,4 @@ public class GameController implements ActionListener {
 	        e.printStackTrace();
 	    }
 	}
-
-	  // Initialize the timer
-    public void initializeTimer() {
-        timer = new Timer();
-    }
-
 }

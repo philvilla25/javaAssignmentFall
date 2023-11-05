@@ -34,6 +34,10 @@ public class GameView {
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
 	private ImageIcon gameIcon, banner ;
+	public JMenuItem getSolutionItem() {
+		return solutionItem;
+	}
+
 	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color green = new Color(12, 106, 71);
@@ -113,6 +117,11 @@ public class GameView {
 	    frenchLanguage = new JMenuItem("Français", frenchLangIcon);
 	}
 	
+
+	public void updateStepLabel(int currentExec) {
+		execGOL.setText("EXEC: " + currentExec);
+	}
+	
 	public JMenuItem getHelpGOL() {
 		return helpGOL;
 	}
@@ -178,8 +187,8 @@ public class GameView {
 		return multicolorText;
 	}
 
-	public JTextField getStepText() {
-		return stepText;
+	public String getStepText() {
+		return stepText.getText();
 	}
 
 	public void setStepText(JTextField stepText) {

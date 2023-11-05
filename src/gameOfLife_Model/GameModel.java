@@ -7,16 +7,16 @@ public class GameModel {
 	private int rows= 60;
 	private int cols = 60;
 	private String GLRule;
-	private String steps;
+	private int steps;
 	private Color mainColor = Color.BLACK;
 	private Color cellColor = null;
 	private JLabel[][] cells;
 	
-	public String getSteps() {
+	public int getSteps() {
 		return steps;
 	}
 
-	public void setSteps(String steps) {
+	public void setSteps(int steps) {
 		this.steps = steps;
 	}
 
