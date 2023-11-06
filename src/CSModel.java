@@ -23,8 +23,8 @@ import org.w3c.dom.*;
 /**
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
- * CST8221 A12
- * Date: 2nd October, 2023.
+ * CST8221 A22
+ * Date: 5th November, 2023.
  */
 @SuppressWarnings("serial")
 public class CSModel extends JFrame implements ActionListener, ItemListener {

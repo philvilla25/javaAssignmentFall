@@ -19,7 +19,16 @@ import org.w3c.dom.NodeList;
 import gameOfLife_Model.GameModel;
 import gameOfLife_View.GameView;  
 
+/**
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A22
+ * Date: 5th October, 2023.
+ */
 
+/**
+ * Controller Class responsible for handling action events
+ */
 public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;  
@@ -32,6 +41,11 @@ public class GameController implements ActionListener {
 	private static org.w3c.dom.Document currentXMLDocument;
 	private int numSteps;
 	
+	/**
+	 * Constructor to initialize the variables
+	 * @param GameModel Model class
+	 * @param GameView View Class
+	 */
 	public GameController(GameModel GameModel, GameView GameView) {
 		 this.GameModel = GameModel;
 	     this.GameView = GameView;
@@ -44,7 +58,6 @@ public class GameController implements ActionListener {
 	     this.GameView.getMulticolorText().addActionListener(this);
 	     this.GameView.getColorInput().addActionListener(this);
 	     this.GameView.getStartGOL().addActionListener(this);
-	     //this.GameView.getStepText().addActionListener(this);
 	     this.GameView.getExecGOL().addActionListener(this);
 	     this.GameView.getStopGOL().addActionListener(this);
 	     this.GameView.getExitItem().addActionListener(this);
@@ -57,6 +70,9 @@ public class GameController implements ActionListener {
 	     callSplash();
 	}
 	
+	/**
+	 * Calls Splash Screen
+	 */
 	public void callSplash() {
 		  this.GameView.SplashScreen();
 
@@ -82,36 +98,34 @@ public class GameController implements ActionListener {
 		    timer.schedule(disposeTask, delay);
 	}
 
-	// help message does not show what its meant to?
-	public void handleHelpClick() {
-		 String helpMessage = getLocalizedString("messageHelp");
-         JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
-	}
-	
-	public void handleRandomManual(ActionEvent e) {
-		if (e.getSource() == GameView.getRandomButton()) {
-			// handle random
-		}else if (e.getSource() == GameView.getManualButton()) {
-			 handleCellClick(); //allow user click
-		}
-	}
-	
+	/**
+	 * Handle Exit menu option
+	 */
 	public void handleExitItem() {
 		GameView.getGameOfLifeFrame().dispose();
 	}
 
+	/**
+	 *  Handle New menu option
+	 */
 	public void handleNewItem() {
 		GameModel.blankGrid();
 	}
 	
+	/**
+	 * Handle Solution menu option
+	 */
 	public void handleSolutionItem() {
 		GameModel.nextGeneration(useMultiColor);
 	}
 	
+	/**
+	 * Allow user select cells to turn on (manual selection)
+	 */
 	public void handleCellClick() {
 	    JLabel[][] cells = GameModel.getCells();
 	    GameModel.blankGrid();
-	    for (int row = 0; row < cells.length; row++) {
+	    for (int row = 0; row < cells.length; row++) { //iterate through cells
 	        for (int col = 0; col < cells[0].length; col++) {
 	            final int currentRow = row;
 	            final int currentCol = col;
@@ -127,12 +141,15 @@ public class GameController implements ActionListener {
 	    }
 	}
 	
+	/**
+	 * Randomly configure the grid
+	 */
 	public void handleRandomSet(){
 		JLabel[][] cells = GameModel.getCells();
 		GameModel.blankGrid();
 	    for (int row = 0; row < cells.length; row++) {
 	        for (int col = 0; col < cells[0].length; col++) {
-	        	 boolean setCellToBlack = Math.random() < 0.15;
+	        	 boolean setCellToBlack = Math.random() < 0.15; // uses probability to randomly change cells
 	             if (setCellToBlack) {
 	            	 GameModel.setCellToMainColour(row, col);
 	             }
@@ -140,9 +157,12 @@ public class GameController implements ActionListener {
 	    }
 	}
 	
+	/**
+	 * Handles model text input
+	 */
 	public void handleModelTextBox() {
 		String GLRule = GameView.getModelText().getText();
-		boolean valid = isValidBinary18BitNumber(GLRule);
+		boolean valid = isValidBinary18BitNumber(GLRule); // verifies user input
 		  if (valid) {
 			  GameModel.setGLRule(GLRule); // set rule
           } else {
@@ -150,6 +170,11 @@ public class GameController implements ActionListener {
           } 
 	}
 	
+	/**
+	 * Verifies the user input
+	 * @param binaryString User input
+	 * @return true if input is valid, false if input is invalid
+	 */
 	public static boolean isValidBinary18BitNumber(String binaryString) {
 		// Check if the string is exactly 18 characters long
 		 if (binaryString.length() != 18) {
@@ -165,39 +190,46 @@ public class GameController implements ActionListener {
 		return true;
 	}
 	
+	/**
+	 * Handles steps input
+	 */
 	public void handleStepsTextBox() {
 		try {
 		 String stepsText = GameView.getStepText();
 		    if (stepsText != null && !stepsText.isEmpty()) {
-		        numSteps = Integer.parseInt(stepsText);
-		        GameModel.setSteps(numSteps);
+		        numSteps = Integer.parseInt(stepsText); // converts to int
+		        GameModel.setSteps(numSteps); // returns to model
 		    }
 		}catch (Exception e) {
 	    	 JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid integer");
 		}
 	}
 	
+	/**
+	 * Handles multi-colour options
+	 */
 	public void handleMultiColor() {
 		JLabel[][] cells = GameModel.getCells();
 		for (int row = 0; row < cells.length; row++) {
 		    for (int col = 0; col < cells[0].length; col++) {
 		    	JLabel cell = cells[row][col];
-		    	if (GameModel.isCellAlive(cell)) {
-		    		int liveNeighbors = GameModel.calculateLiveNeighbors(row, col);
-			        Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors);
+		    	if (GameModel.isCellAlive(cell)) { // if cell is alive
+		    		int liveNeighbors = GameModel.calculateLiveNeighbors(row, col); //calculate live neighbors
+			        Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors); // get color
 			        cells[row][col].setBackground(cellColor);
 		    	}
 		    }
 		}
 	}
 	
-	// fill in the blanks for these and create the appropriate methods
+
 	@Override
+	/**
+	 * Handles action events
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == GameView.getStartButton()) {
 			handleStartClick();
-		}else if (e.getSource() == GameView.getHelpButton()) {
-			handleHelpClick();
 		}else if (e.getSource() == GameView.getEnglish()) {
 			handleChangeLang(GameView.getEnglish().getText());
 		}else if (e.getSource() == GameView.getFrench()) {
@@ -205,7 +237,7 @@ public class GameController implements ActionListener {
 		}else if (e.getSource() == GameView.getRandomButton()) {
 			handleRandomSet();
 		}else if(e.getSource() == GameView.getManualButton() ) {
-			handleRandomManual(e);
+			handleCellClick();
 		}else if (e.getSource() == GameView.getExitItem()) {
 			handleExitItem();
 		}else if (e.getSource() == GameView.getNewItem()) {
@@ -292,13 +324,16 @@ public class GameController implements ActionListener {
         }
     }*/
 	
+	/**
+	 * Handles start click
+	 */
 	public void handleStartClick() {
 		try {	
-			handleStepsTextBox();
+			handleStepsTextBox(); // set steps
 			numSteps = GameModel.getSteps();
-			handleModelTextBox();
+			handleModelTextBox(); // set model
 			
-			  if (numSteps > 0) {
+			  if (numSteps > 0) { // if we have steps 
 				  timer = new Timer();
 		            TimerTask cellUpdateTask = new TimerTask() {
 		                int currentStep = 0;
@@ -330,12 +365,19 @@ public class GameController implements ActionListener {
 			}
 	 }
 	
+	/**
+	 * Handles stop click
+	 */
 	public void handleStopClick() {
 		 if (timer != null) {
 		        timer.cancel();
 		    }
 	}
 	
+	/**
+	 * Handles language change
+	 * @param lang Accepts language choice
+	 */
 	public void handleChangeLang(String lang) {
 		 String selectedLanguage = lang;
 		 System.out.println("choice" + selectedLanguage);
@@ -352,10 +394,12 @@ public class GameController implements ActionListener {
         updateUIComponents();	
 	}
 	
-	
+	/**
+	 * Handles individual color choice
+	 */
 	public void handleColorSet() {
 		Color selectedColor = GameView.chooseColor();	
-		GameModel.setMainColor(selectedColor);
+		GameModel.setMainColor(selectedColor); 
 		JLabel[][] cells = GameModel.getCells();
 		for (int row = 0; row < cells.length; row++) {
 		    for (int col = 0; col < cells[0].length; col++) {
@@ -368,17 +412,9 @@ public class GameController implements ActionListener {
 		 GameView.getGameOfLifeFrame().repaint();
 	}
 	
-
-	public void programNotAvailable() {
-	    // Show a message dialog with program unavailable message
-	    JOptionPane.showMessageDialog(
-	            GameView.getSplashFrame(),
-	            "Program is not available right now. Please check back later.",
-	            "Program Unavailable",
-	            JOptionPane.INFORMATION_MESSAGE
-	    );
-	}
-	
+	/**
+	 * Update UI Components
+	 */
 	public void updateUIComponents() {
 	    // Update the 'home' label with a localized string
 	    GameView.getHomeButton().setText(getLocalizedString("HOME"));

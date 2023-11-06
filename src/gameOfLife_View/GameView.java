@@ -28,16 +28,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
+/**
+ * Game Class
+ */
 public class GameView {
 	/** Name of project **/
 	private String GameOfLifeTitle = "Game Of Life";
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
 	private ImageIcon gameIcon, banner ;
-	public JMenuItem getSolutionItem() {
-		return solutionItem;
-	}
-
 	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color green = new Color(12, 106, 71);
@@ -64,7 +63,9 @@ public class GameView {
 	private String languageOption[] = { "English", "Français" };
 	private String numberOfExecs;
 	
-	
+	/**
+	 * Default constructor 
+	 */
 	public GameView() {
 		//splash screen buttons
 		games = new JComboBox<String>(strGames);
@@ -118,132 +119,242 @@ public class GameView {
 	}
 	
 
+	/**
+	 * Update step button
+	 * @param currentExec Current Step of Execution
+	 */
 	public void updateStepLabel(int currentExec) {
 		execGOL.setText("EXEC: " + currentExec);
 	}
 	
+	/**
+	 * Getter for help menu 
+	 * @return help menu
+	 */
 	public JMenuItem getHelpGOL() {
 		return helpGOL;
 	}
 	
+	/**
+	 * Getter for game menu 
+	 * @return game menu
+	 */
 	public JMenuItem getGameGOL() {
 		return gameGOL;
 	}
 	
+	/**
+	 * Getter for about menu item
+	 * @return about menu item
+	 */
 	public JMenuItem getAboutItem() {
 		return aboutItem;
 	}
+	
+	/**
+	 * Getter for solution menu item
+	 * @return solution menu item
+	 */
+	public JMenuItem getSolutionItem() {
+		return solutionItem;
+	}
 
+	/**
+	 * Getter for Model JLabel
+	 * @return Model JLabel
+	 */
 	public JLabel getModel() {
 		return model;
 	}
 	
+	/**
+	 * Getter for Step JLabel
+	 * @return  Step JLabel
+	 */
 	public JLabel getStep() {
 		return steps;
 	}
+	
+	/**
+	 *  Getter for English menu item
+	 * @return English menu item
+	 */
 	public JMenuItem getEnglish() {
 		return englishLanguage;
 	}
 
+	/**
+	 *  Getter for French menu item
+	 * @return French menu item
+	 */
 	public JMenuItem getFrench() {
 		return frenchLanguage;
 	}
+	
+	/**
+	 * Getter for Game of Life Frame
+	 * @return  Game of Life Frame
+	 */
 	public JFrame getGameOfLifeFrame() {
 		return GameOfLifeFrame;
 	}
 
-
+	/**
+	 *  Getter for Exit menu item
+	 * @return Exit menu item
+	 */
 	public JMenuItem getExitItem() {
 		return exitItem;
 	}
 
-
+	/**
+	 *  Getter for New menu item
+	 * @return New menu item
+	 */
 	public JMenuItem getNewItem() {
 		return newItem;
 	}
 
-
-	public void setExitItem(JMenuItem exitItem) {
-		this.exitItem = exitItem;
-	}
-
+	/**
+	 *  Getter for Colors menu item
+	 * @return Colors menu item
+	 */
 	public JMenuItem getColorsItem() {
 		return colorsItem;
 	}
 
+	/**
+	 *  Getter for Language menu 
+	 * @return Language menu
+	 */
 	public JMenu getLanguageGOL() {
 		return languageGOL;
 	}
 
+	/**
+	 *  Getter for Color Button
+	 * @return Color Button
+	 */
 	public JButton getColorInput() {
 		return colorInput;
 	}
 
+	/**
+	 *  Getter for Model text field
+	 * @return Model text field
+	 */
 	public JTextField getModelText() {
 		return modelText;
 	}
 
+	/**
+	 * Getter for Multicolor check box
+	 * @return Multicolor check box
+	 */
 	public JCheckBox getMulticolorText() {
 		return multicolorText;
 	}
 
+	/**
+	 * Getter for steps text 
+	 * @return String of steps text
+	 */
 	public String getStepText() {
 		return stepText.getText();
 	}
-
-	public void setStepText(JTextField stepText) {
-		this.stepText = stepText;
-	}
-
+	
+	/**
+	 *  Getter for Exec Button
+	 * @return Exec Button
+	 */
 	public JButton getExecGOL() {
 		return execGOL;
 	}
 
+	/**
+	 *  Getter for Start Button
+	 * @return Start Button
+	 */
 	public JButton getStart() {
 		return start;
 	}
 
+	/**
+	 *  Getter for StartGOL Button
+	 * @return StartGOL Button
+	 */
 	public JButton getStartGOL() {
 		return startGOL;
 	}
 
+	/**
+	 * Getter for StopGOL Button
+	 * @return StopGOL Button
+	 */
 	public JButton getStopGOL() {
 		return stopGOL;
 	}
 
+	/**
+	 * Getter for splash screen frame
+	 * @return Splash Screen Frame
+	 */
 	public  JFrame getSplashFrame() {
 		return splashFrame;
 	}
 
-	public JComboBox<String> getGamesComboBox() {
-	    return games;
-	}
-	   
+	/**
+	 * Getter for start button
+	 * @return start button
+	 */
 	public JButton getStartButton() {
 	    return start;
 	}
 
+	/**
+	 * Getter for help button
+	 * @return help button
+	 */
 	public JButton getHelpButton() {
 		return help;
 	}
 
+	/**
+	 * Getter for home button
+	 * @return home button
+	 */
 	public JLabel getHomeButton() {
 		return home;
 	}
 	
-
+	/**
+	 * Getter for language combo box
+	 * @return  language combo box
+	 */
 	public JComboBox<String> getLanguages() {
 		return languages;
 	}
 
+	/**
+	 * Getter for random button
+	 * @return random button
+	 */
 	public JButton getRandomButton() {
 		return random;
 	}
 
+	/**
+	 * Getter for manual button
+	 * @return manual button
+	 */
 	public JButton getManualButton() {
 		return manual;
 	}
 
+	/**
+	 * Getter for 2d grid cells
+	 * @return 2d grid cells
+	 */
 	public JLabel[][] getCells() {
 		return cells;
 	}
@@ -307,7 +418,10 @@ public class GameView {
 	    }
 	    
 	
-	
+	/**
+	 * Game of Life Screen
+	 * @param cells 2d grid of cells
+	 */
 	public void GameOfLife(JLabel[][] cells) {
 	    // Settings for the frame
 		
@@ -404,11 +518,18 @@ public class GameView {
 		}
 	}
 	
+	/**
+	 * Color Chooser Dialogue
+	 * @return user selected color
+	 */
 	public Color chooseColor() {
 		Color selectedColor = JColorChooser.showDialog(GameOfLifeFrame, "Choose a Color", Color.BLACK);
 		return selectedColor;
 	}
 	
+	/**
+	 * About Menu Dialog
+	 */
 	public void aboutMenu() {
 		 JDialog aboutDialog = new JDialog();
          aboutDialog.setTitle("About My Application");
@@ -441,6 +562,11 @@ public class GameView {
          aboutDialog.setVisible(true);
 	}
 
+	/**
+	 * Display Grid
+	 * @param cells 2d grid of cells
+	 * @return panel containing 2d grid
+	 */
 	public JPanel paintGrid(JLabel[][] cells) {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));

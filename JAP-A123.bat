@@ -29,8 +29,11 @@ SET DOCERR=jap-javadoc.err
 SET MAINCLASSSRC1=src/CSModel.java
 SET MAINCLASSSRC2=src/mainGUI.java
 SET MAINCLASSSRC3=src/GridClass.java
+SET MAINCLASSSRC4=src/Game.java
+SET MAINCLASSSRC5=src/gameOfLife_Model/GameModel.java
+SET MAINCLASSSRC6=src/gameOfLife_View/GameView.java
+SET MAINCLASSSRC7=src/gameOfLife_Controller/GameController.java
 SET MAINCLASSBIN=CSModel
-::SET IMAGES=src
 SET RESOURCES=resources
 
 @echo off
@@ -70,12 +73,11 @@ ECHO "0. Preconfiguring ................."
 mkdir "%BINDIR%"
 mkdir "%BINDIR%\%PACKAGE%"
 copy "%RESOURCES%\*.png" "%BINDIR%\%RESOURCES%"
-copy "%RESOURCES%\*.gif"  "%BINDIR%\%RECOURCES%"
-
+copy "%RESOURCES%\*.gif"  "%BINDIR%\%RESOURCES%"
 
 ECHO "1. Compiling ......................"
 ::javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
-javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %MAINCLASSSRC4% %MAINCLASSSRC5% %MAINCLASSSRC6%             %MAINCLASSSRC7% -d %BINDIR% 2> %BINERR%
 
 :: ECHO "Running (outside JAR) ........................."
 :: start java -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*" CST8221.Main
@@ -83,7 +85,9 @@ javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% -d
 ECHO "2. Creating Jar ..................."
 cd bin
 ::jar cvfe CST8221.jar Lab . > labs-jar.out 2> labs-jar.err
-jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
+::jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
+jar cvfe %JARNAME% %MAINCLASSBIN% -C src . -C src/gameOfLife_Controller -C src/gameOfLife_Model -C src/gameOfLife_View ../%JAROUT% 2> ../%JARERR%
+
 
 ECHO "3. Creating Javadoc ..............."
 cd ..

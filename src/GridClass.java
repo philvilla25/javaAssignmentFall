@@ -26,18 +26,19 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 	private static final int NUM_COLUMNS = 50;
 	/** text field for number **/
 	private JTextField modelText;
+	
 	/**
-	 * Default Constructor
+	 * Default constructor
+	 * @param modelText model text
+	 * @param cells cells
 	 */
 	public GridClass(JTextField modelText, JLabel[][] cells) {
 		this.modelText = modelText;
 		this.cells = cells;
 	}
 
-	
     /**
      * Description: this is the method that generates cellular automata on a 30 by 30 matrice
-     * @return void
      */
 	public void runSimulation() {
 	    // Set the middle cell in the first row to 1
@@ -101,8 +102,7 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 
 	/**
 	 * Description: A method that listens to item's state change
-	 * @param ItemEvent
-	 * @return void
+	 * @param ItemEvent event 
 	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -112,8 +112,7 @@ public class GridClass extends JFrame implements ActionListener, ItemListener{
 
 	/**
 	 * Description: A method that listens to action events
-	 * @param ActionEvent
-	 * @return void
+	 * @param ActionEvent event
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

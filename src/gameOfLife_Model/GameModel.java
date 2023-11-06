@@ -3,6 +3,9 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
+/**
+ * Model class
+ */
 public class GameModel {
 	private int rows= 60;
 	private int cols = 60;
@@ -12,57 +15,108 @@ public class GameModel {
 	private Color cellColor = null;
 	private JLabel[][] cells;
 	
+	/**
+	 * Getter for steps
+	 * @return steps
+	 */
 	public int getSteps() {
 		return steps;
 	}
 
+	/**
+	 * Set steps
+	 * @param steps int to be set as steps
+	 */
 	public void setSteps(int steps) {
 		this.steps = steps;
 	}
 
+	/**
+	 * Getter for GLRule
+	 * @return  GLRule
+	 */
 	public String getGLRule() {
 		return GLRule;
 	}
 
+	/**
+	 * Set GLRule
+	 * @param gLRule String to be set as GLRule
+	 */
 	public void setGLRule(String gLRule) {
 		GLRule = gLRule;
 	}
 	
+	/**
+	 * Getter for rows
+	 * @return rows
+	 */
 	public int getRows() {
 		return rows;
 	}
 
+	/**
+	 * Setter for rows
+	 * @param rows  int to be set as rows
+	 */
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
 
+	/**
+	 * Getter for columns
+	 * @return cols int to be set as cols
+	 */
 	public int getCols() {
 		return cols;
 	}
 
+	/**
+	 * Setter for columns
+	 * @param cols column for grid
+	 */
 	public void setCols(int cols) {
 		this.cols = cols;
 	}
 	
+	/**
+	 * Getter for main color
+	 * @return color
+	 */
 	public Color getMainColor() {
 		return mainColor;
 	}
 
+	/**
+	 * Setter for main color
+	 * @param mainColor main color
+	 */
 	public void setMainColor(Color mainColor) {
 		this.mainColor = mainColor;
 	}
 
+	/**
+	 * Getter for cells
+	 * @return 2d array of cells
+	 */
+	public JLabel[][] getCells() {
+        return cells;
+	}
 	
-	
+	/**
+	 * Game Model Default Constructor
+	 */
 	public GameModel() {
         cells = new JLabel[rows][cols];
         createGrid();
     }
 	
-	public JLabel[][] getCells() {
-        return cells;
-	}
-	
+	/**
+	 * Getter for specific cells
+	 * @param rowIndex specified row
+	 * @param colIndex  specified column
+	 * @return cell at particular row, column
+	 */
 	public JLabel getCell(int rowIndex, int colIndex) {
 	    if (rowIndex >= 0 && rowIndex < cells.length && colIndex >= 0 && colIndex < cells[0].length) {
 	        return cells[rowIndex][colIndex];
@@ -71,6 +125,9 @@ public class GameModel {
 	    }
 	}
 	
+	/**
+	 * Create 2d grid
+	 */
 	public void createGrid() {
 	    // Create empty cells (e.g., JLabels with a white background) and add them to the grid
 	    for (int row = 0; row < rows; row++) {
@@ -84,6 +141,9 @@ public class GameModel {
 	    }
 	}
 	
+	/**
+	 * Makes grid white
+	 */
 	public void blankGrid() {
 		for (int row = 0; row < rows; row++) {
 	        for (int col = 0; col < cols; col++) {
@@ -92,6 +152,11 @@ public class GameModel {
 		}
 	}
 	
+	/**
+	 * Toggles cell state
+	 * @param row Specified Row
+	 * @param col Specified Column
+	 */
 	 public void toggleCellState(int row, int col) {
 	        JLabel cell = getCell(row, col);
 	        if (cell.getBackground() == Color.WHITE) {
@@ -101,16 +166,29 @@ public class GameModel {
 	        }
 	 }
 	
+	 /**
+	  * Set specified cell to main color
+	  * @param row Specified Row
+	  * @param col Specified Column
+	  */
 	 public void setCellToMainColour(int row, int col) {
 			 JLabel cell = getCell(row, col);
 			 cell.setBackground(mainColor);
 		 }
 	 
+	 /**
+	  * Checks if cell is alive
+	  * @param cell Cell to check if its alive
+	  * @return true if cell is alive, false if it is dead
+	  */
 	 public boolean isCellAlive(JLabel cell) {
 		 Color backgroundColor = cell.getBackground();
 		 return !Color.WHITE.equals(backgroundColor);
-	}
+	 }
 	 
+	 /**
+	  * reset colors (from mutlicolor to single color option)
+	  */
     public void resetColors() {
 		 for (int row = 0; row < rows; row++) {
 		    for (int col = 0; col < cols; col++) {
@@ -122,6 +200,12 @@ public class GameModel {
 		 }
      } 
     
+    /**
+     * Calculate live neighbors
+     * @param row Specified Row
+     * @param col Specified Column
+     * @return the live neighbor count
+     */
 	 public int calculateLiveNeighbors(int row, int col) {
 		int neighborsCount = 0;
 	    // Check the top neighbor
@@ -167,6 +251,11 @@ public class GameModel {
 	    return  neighborsCount;
 	 }
 	 
+	 /**
+	  * Determines the color the cell should be based on live neighbor
+	  * @param liveNeighbors the number of live neighbors a cell has
+	  * @return the color the cell should be
+	  */
 	 public Color getColorForLiveNeighbors(int liveNeighbors) {
 		    switch (liveNeighbors) {
 		        case 0:
@@ -203,6 +292,10 @@ public class GameModel {
 		    return cellColor;
 		}
 	 
+	 /**
+	  * Generates next generation of the cells
+	  * @param useMultiColor Checks if multicolor option has been selected
+	  */
 	 public void nextGeneration(boolean useMultiColor) {
 		// Split the 18-bit rule into two parts
 		 String deadCellRule = GLRule.substring(0, 9); // First nine bits
