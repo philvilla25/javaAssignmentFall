@@ -19,7 +19,14 @@ import org.w3c.dom.NodeList;
 import gameOfLife_Model.GameModel;
 import gameOfLife_View.GameView;  
 
-
+/**
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A22
+ * Date: 11 November, 2023.
+ * Professor: Daniel Cormier
+ * Compiler: Eclipse IDE for Java Developers - Version: 2023-06 (4.28.0)]
+ */
 public class GameController implements ActionListener {
 	private GameModel GameModel;
     private GameView GameView;  
@@ -32,353 +39,498 @@ public class GameController implements ActionListener {
 	private static org.w3c.dom.Document currentXMLDocument;
 	private int numSteps;
 	
+	/**
+	 * This constructor initializes a GameController with the provided GameModel and GameView.
+	 *
+	 * @param GameModel The GameModel instance for the game.
+	 * @param GameView The GameView instance for the game.
+	 */
 	public GameController(GameModel GameModel, GameView GameView) {
-		 this.GameModel = GameModel;
-	     this.GameView = GameView;
-	     this.GameView.getStartButton().addActionListener(this);
-	     this.GameView.getHelpButton().addActionListener(this);
-	     this.GameView.getLanguageGOL().addActionListener(this);
-	     this.GameView.getManualButton().addActionListener(this);
-	     this.GameView.getRandomButton().addActionListener(this);
-	     this.GameView.getModelText().addActionListener(this);
-	     this.GameView.getMulticolorText().addActionListener(this);
-	     this.GameView.getColorInput().addActionListener(this);
-	     this.GameView.getStartGOL().addActionListener(this);
-	     //this.GameView.getStepText().addActionListener(this);
-	     this.GameView.getExecGOL().addActionListener(this);
-	     this.GameView.getStopGOL().addActionListener(this);
-	     this.GameView.getExitItem().addActionListener(this);
-	     this.GameView.getNewItem().addActionListener(this);
-	     this.GameView.getAboutItem().addActionListener(this);
-	     this.GameView.getColorsItem().addActionListener(this);
-	     this.GameView.getSolutionItem().addActionListener(null);
-	     this.GameView.getEnglish().addActionListener(this);
-	     this.GameView.getFrench().addActionListener(this);
-	     callSplash();
+	    // Initialize the GameModel and GameView
+	    this.GameModel = GameModel;
+	    this.GameView = GameView;
+
+	    // Add action listeners to various components in the GameView
+	    this.GameView.getStartButton().addActionListener(this);
+	    this.GameView.getHelpButton().addActionListener(this);
+	    this.GameView.getLanguageGOL().addActionListener(this);
+	    this.GameView.getManualButton().addActionListener(this);
+	    this.GameView.getRandomButton().addActionListener(this);
+	    this.GameView.getModelText().addActionListener(this);
+	    this.GameView.getMulticolorText().addActionListener(this);
+	    this.GameView.getColorInput().addActionListener(this);
+	    this.GameView.getStartGOL().addActionListener(this);
+	    this.GameView.getExecGOL().addActionListener(this);
+	    this.GameView.getStopGOL().addActionListener(this);
+	    this.GameView.getExitItem().addActionListener(this);
+	    this.GameView.getNewItem().addActionListener(this);
+	    this.GameView.getAboutItem().addActionListener(this);
+	    this.GameView.getColorsItem().addActionListener(this);
+	    this.GameView.getSolutionItem().addActionListener(null); // Action listener set to null
+	    this.GameView.getEnglish().addActionListener(this);
+	    this.GameView.getFrench().addActionListener(this);
+
+	    // Call the splash screen method
+	    callSplash();
 	}
 	
+	
+	/**
+	 * Displays a splash screen and schedules its disposal.
+	 */
 	public void callSplash() {
-		  this.GameView.SplashScreen();
+	    // Display the splash screen using the GameView's SplashScreen method
+	    this.GameView.SplashScreen();
 
-		    // Schedule a TimerTask to dispose of the splash screen after a delay
-		    TimerTask disposeTask = new TimerTask() {
-		        @Override
-		        public void run() {
-		            SwingUtilities.invokeLater(new Runnable() {
-		                @Override
-		                public void run() {
-		                    // Run the other methods after the splash screen is done
-		                    GameView.GameOfLife(GameModel.getCells());
-		                }
-		            });
-		            GameView.getSplashFrame().dispose();
-		        }
-		    };
+	    // Schedule a TimerTask to dispose of the splash screen after a delay
+	    TimerTask disposeTask = new TimerTask() {
+	        @Override
+	        public void run() {
+	            // Run the disposal and other methods after the splash screen is done
+	            SwingUtilities.invokeLater(new Runnable() {
+	                @Override
+	                public void run() {
+	                    // Initialize the Game of Life and paint the grid
+	                    GameView.GameOfLife(GameModel.getCells());
+	                }
+	            });
 
-		    // Create a Timer to schedule the disposeTask after a delay
-		    Timer timer = new Timer();
-		    // Adjust the delay (in milliseconds) as needed to ensure the splash screen is displayed long enough
-		    int delay = 3000; // 3 seconds (adjust as needed)
-		    timer.schedule(disposeTask, delay);
+	            // Dispose of the splash frame
+	            GameView.getSplashFrame().dispose();
+	        }
+	    };
+
+	    // Create a Timer to schedule the disposeTask after a delay
+	    Timer timer = new Timer();
+	    // Adjust the delay (in milliseconds) as needed to ensure the splash screen is displayed long enough
+	    int delay = 3000; // 3 seconds (adjust as needed)
+	    timer.schedule(disposeTask, delay);
 	}
 
-	// help message does not show what its meant to?
+
+	/**
+	 * Displays a help message when the help button is clicked.
+	 */
 	public void handleHelpClick() {
-		 String helpMessage = getLocalizedString("messageHelp");
-         JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);	
+	    // Get the localized help message from resources
+	    String helpMessage = getLocalizedString("messageHelp");
+	    
+	    // Display the help message in a dialog box with a title
+	    JOptionPane.showMessageDialog(GameView.getSplashFrame(), helpMessage, "Help", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	/**
+	 * Handles the actions for the "Random" and "Manual" buttons.
+	 *
+	 * @param e The action event generated by button clicks.
+	 */
 	public void handleRandomManual(ActionEvent e) {
-		if (e.getSource() == GameView.getRandomButton()) {
-			// handle random
-		}else if (e.getSource() == GameView.getManualButton()) {
-			 handleCellClick(); //allow user click
-		}
+	    if (e.getSource() == GameView.getRandomButton()) {
+	        // Handle the "Random" button action
+	        // Add code here to perform the desired action for the "Random" button
+	    } else if (e.getSource() == GameView.getManualButton()) {
+	        // Handle the "Manual" button action by allowing user interaction
+	        handleCellClick(); // This method allows the user to interact with the cells
+	    }
 	}
 	
+	/**
+	 * Handles the action when the "Exit" menu item is selected.
+	 * It disposes of the Game of Life frame, effectively closing the application.
+	 */
 	public void handleExitItem() {
-		GameView.getGameOfLifeFrame().dispose();
+	    // Dispose of the Game of Life frame to close the application
+	    GameView.getGameOfLifeFrame().dispose();
 	}
 
+	/**
+	 * Handles the action when the "New" menu item is selected.
+	 * It clears the grid, resetting all cells to their initial state.
+	 */
 	public void handleNewItem() {
-		GameModel.blankGrid();
-	}
-	
-	public void handleSolutionItem() {
-		GameModel.nextGeneration(useMultiColor);
-	}
-	
-	public void handleCellClick() {
-	    JLabel[][] cells = GameModel.getCells();
+	    // Clear the grid by setting all cells to their initial state
 	    GameModel.blankGrid();
+	}
+	
+	/**
+	 * Handles the action when the "Solution" menu item is selected.
+	 * It advances the game to the next generation using the specified mode (single or multicolor).
+	 */
+	public void handleSolutionItem() {
+	    // Advance the game to the next generation using the specified mode (single or multicolor).
+	    GameModel.nextGeneration(useMultiColor);
+	}
+	
+	/**
+	 * Handles the action when a cell is clicked by the user.
+	 * It allows the user to interact with individual cells by toggling their state.
+	 */
+	public void handleCellClick() {
+	    // Get the 2D array of cells from the GameModel
+	    JLabel[][] cells = GameModel.getCells();
+	    
+	    // Clear the grid (set all cells to blank)
+	    GameModel.blankGrid();
+	    
+	    // Iterate through the cells and add mouse listeners to each cell
 	    for (int row = 0; row < cells.length; row++) {
 	        for (int col = 0; col < cells[0].length; col++) {
 	            final int currentRow = row;
 	            final int currentCol = col;
 	            JLabel cell = cells[currentRow][currentCol];
+	            
+	            // Add a mouse listener to toggle the cell's state when clicked
 	            cell.addMouseListener(new MouseAdapter() {
 	                @Override
 	                public void mouseClicked(MouseEvent e) {
 	                    GameModel.toggleCellState(currentRow, currentCol);
-	                    cell.repaint(); 
+	                    cell.repaint(); // Repaint the cell to reflect the new state
 	                }
 	            });
 	        }
 	    }
 	}
+
 	
-	public void handleRandomSet(){
-		JLabel[][] cells = GameModel.getCells();
-		GameModel.blankGrid();
+	/**
+	 * Handles setting the grid cells to random states.
+	 * Randomly sets a percentage of cells to the main color.
+	 */
+	public void handleRandomSet() {
+	    // Get the 2D array of cells from the GameModel
+	    JLabel[][] cells = GameModel.getCells();
+	    
+	    // Clear the grid (set all cells to blank)
+	    GameModel.blankGrid();
+	    
+	    // Iterate through the cells and randomly set a percentage of them to the main color
 	    for (int row = 0; row < cells.length; row++) {
 	        for (int col = 0; col < cells[0].length; col++) {
-	        	 boolean setCellToBlack = Math.random() < 0.15;
-	             if (setCellToBlack) {
-	            	 GameModel.setCellToMainColour(row, col);
-	             }
+	            boolean setCellToBlack = Math.random() < 0.15; // Adjust the probability as needed
+	            if (setCellToBlack) {
+	                GameModel.setCellToMainColour(row, col);
+	            }
 	        }
 	    }
 	}
+
 	
+	/**
+	 * Handles input in the model text box, validating and setting the GL rule.
+	 * Gets the GL rule from the view, validates it as an 18-bit binary number,
+	 * and sets it in the model if it's valid. Shows an error message if the input is invalid.
+	 */
 	public void handleModelTextBox() {
-		String GLRule = GameView.getModelText().getText();
-		boolean valid = isValidBinary18BitNumber(GLRule);
-		  if (valid) {
-			  GameModel.setGLRule(GLRule); // set rule
-          } else {
-              JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid 18-bit binary number");
-          } 
+	    // Get the GL rule as text from the GameView
+	    String GLRule = GameView.getModelText().getText();
+	    
+	    // Validate the input as an 18-bit binary number
+	    boolean valid = isValidBinary18BitNumber(GLRule);
+	    
+	    // If the input is valid, set the GL rule in the GameModel
+	    if (valid) {
+	        GameModel.setGLRule(GLRule);
+	    } else {
+	        // Show an error message if the input is invalid
+	        JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid 18-bit binary number");
+	    }
 	}
+
 	
+	/**
+	 * Validates a string to check if it represents a valid 18-bit binary number.
+	 *
+	 * @param binaryString The input string to be validated.
+	 * @return True if the input is a valid 18-bit binary number, false otherwise.
+	 */
 	public static boolean isValidBinary18BitNumber(String binaryString) {
-		// Check if the string is exactly 18 characters long
-		 if (binaryString.length() != 18) {
-		        return false;
-		    }
-		 // Check if the string consists of only '0' and '1' characters
-		 for (int i = 0; i < binaryString.length(); i++) {
-		        char c = binaryString.charAt(i);
-		        if (c != '0' && c != '1') {
-		            return false;
-		        }
-		    }
-		return true;
+	    // Check if the string is exactly 18 characters long
+	    if (binaryString.length() != 18) {
+	        return false;
+	    }
+	    // Check if the string consists of only '0' and '1' characters
+	    for (int i = 0; i < binaryString.length(); i++) {
+	        char c = binaryString.charAt(i);
+	        if (c != '0' && c != '1') {
+	            return false;
+	        }
+	    }
+	    return true;
 	}
+
 	
+	/**
+	 * Handles the input from the steps text box, validates it, and updates the number of steps in the game model.
+	 */
 	public void handleStepsTextBox() {
-		try {
-		 String stepsText = GameView.getStepText();
-		    if (stepsText != null && !stepsText.isEmpty()) {
-		        numSteps = Integer.parseInt(stepsText);
-		        GameModel.setSteps(numSteps);
-		    }
-		}catch (Exception e) {
-	    	 JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid integer");
-		}
+	    try {
+	        String stepsText = GameView.getStepText();
+	        if (stepsText != null && !stepsText.isEmpty()) {
+	            numSteps = Integer.parseInt(stepsText);
+	            GameModel.setSteps(numSteps);
+	        }
+	    } catch (Exception e) {
+	        // If an exception occurs, display a message to the user to enter a valid integer
+	        JOptionPane.showMessageDialog(GameView.getGameOfLifeFrame(), "Please enter a valid integer");
+	    }
 	}
+
 	
+	/**
+	 * Handles the multi-color feature by updating the colors of the cells based on their state and live neighbors.
+	 */
 	public void handleMultiColor() {
-		JLabel[][] cells = GameModel.getCells();
-		for (int row = 0; row < cells.length; row++) {
-		    for (int col = 0; col < cells[0].length; col++) {
-		    	JLabel cell = cells[row][col];
-		    	if (GameModel.isCellAlive(cell)) {
-		    		int liveNeighbors = GameModel.calculateLiveNeighbors(row, col);
-			        Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors);
-			        cells[row][col].setBackground(cellColor);
-		    	}
-		    }
-		}
+	    JLabel[][] cells = GameModel.getCells();
+	    for (int row = 0; row < cells.length; row++) {
+	        for (int col = 0; col < cells[0].length; col++) {
+	            JLabel cell = cells[row][col];
+	            if (GameModel.isCellAlive(cell)) {
+	                int liveNeighbors = GameModel.calculateLiveNeighbors(row, col);
+	                // Calculate the cell color based on the number of live neighbors
+	                Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbors);
+	                cells[row][col].setBackground(cellColor);
+	            }
+	        }
+	    }
 	}
+
 	
-	// fill in the blanks for these and create the appropriate methods
+	/**
+	 * Handles action events triggered by various components.
+	 * 
+	 * @param e The ActionEvent object representing the action event.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == GameView.getStartButton()) {
-			handleStartClick();
-		}else if (e.getSource() == GameView.getHelpButton()) {
-			handleHelpClick();
-		}else if (e.getSource() == GameView.getEnglish()) {
-			handleChangeLang(GameView.getEnglish().getText());
-		}else if (e.getSource() == GameView.getFrench()) {
-			handleChangeLang(GameView.getFrench().getText());
-		}else if (e.getSource() == GameView.getRandomButton()) {
-			handleRandomSet();
-		}else if(e.getSource() == GameView.getManualButton() ) {
-			handleRandomManual(e);
-		}else if (e.getSource() == GameView.getExitItem()) {
-			handleExitItem();
-		}else if (e.getSource() == GameView.getNewItem()) {
-			handleNewItem();
-		}else if (e.getSource() == GameView.getAboutItem()) {
-			GameView.aboutMenu();
-		}else if (e.getSource() == GameView.getStepText()) {
-			handleStepsTextBox();
-		}else if (e.getSource() == GameView.getMulticolorText()) {
-			 if (GameView.getMulticolorText().isSelected()) {
-				 	useMultiColor = true;
-				 	handleMultiColor();
-		        } else {
-		        	useMultiColor = false;
-		            GameModel.resetColors();
-		        }
-		}else if (e.getSource() == GameView.getColorInput()) {
-			handleColorSet();
-		}else if (e.getSource() == GameView.getColorsItem()) {
-			handleColorSet();
-		}else if (e.getSource() == GameView.getStartGOL()) {
-			handleStartClick();		
-		}else if (e.getSource() == GameView.getStopGOL()){
-			handleStopClick(); 
-		}
+	    if (e.getSource() == GameView.getStartButton()) {
+	        /**
+	         * Handles the click event on the "Start" button.
+	         */
+	        handleStartClick();
+	    } else if (e.getSource() == GameView.getHelpButton()) {
+	        /**
+	         * Handles the click event on the "Help" button.
+	         */
+	        handleHelpClick();
+	    } else if (e.getSource() == GameView.getEnglish()) {
+	        /**
+	         * Handles the selection of the English language.
+	         */
+	        handleChangeLang(GameView.getEnglish().getText());
+	    } else if (e.getSource() == GameView.getFrench()) {
+	        /**
+	         * Handles the selection of the French language.
+	         */
+	        handleChangeLang(GameView.getFrench().getText());
+	    } else if (e.getSource() == GameView.getRandomButton()) {
+	        /**
+	         * Handles the click event on the "Random" button.
+	         */
+	        handleRandomSet();
+	    } else if (e.getSource() == GameView.getManualButton()) {
+	        /**
+	         * Handles the click event on the "Manual" button.
+	         */
+	        handleRandomManual(e);
+	    } else if (e.getSource() == GameView.getExitItem()) {
+	        /**
+	         * Handles the selection of the "Exit" menu item.
+	         */
+	        handleExitItem();
+	    } else if (e.getSource() == GameView.getNewItem()) {
+	        /**
+	         * Handles the selection of the "New" menu item.
+	         */
+	        handleNewItem();
+	    } else if (e.getSource() == GameView.getAboutItem()) {
+	        /**
+	         * Handles the selection of the "About" menu item.
+	         */
+	        GameView.aboutMenu();
+	    } else if (e.getSource() == GameView.getStepText()) {
+	        /**
+	         * Handles changes to the step text field.
+	         */
+	        handleStepsTextBox();
+	    } else if (e.getSource() == GameView.getMulticolorText()) {
+	        /**
+	         * Handles changes to the multi-color checkbox.
+	         */
+	        if (GameView.getMulticolorText().isSelected()) {
+	            // Multi-color enabled
+	            useMultiColor = true;
+	            handleMultiColor();
+	        } else {
+	            // Multi-color disabled
+	            useMultiColor = false;
+	            GameModel.resetColors();
+	        }
+	    } else if (e.getSource() == GameView.getColorInput()) {
+	        /**
+	         * Handles the click event on the color input button.
+	         */
+	        handleColorSet();
+	    } else if (e.getSource() == GameView.getColorsItem()) {
+	        /**
+	         * Handles the selection of the "Colors" menu item.
+	         */
+	        handleColorSet();
+	    } else if (e.getSource() == GameView.getStartGOL()) {
+	        /**
+	         * Handles the click event on the "Start" button for the Game of Life.
+	         */
+	        handleStartClick();
+	    } else if (e.getSource() == GameView.getStopGOL()) {
+	        /**
+	         * Handles the click event on the "Stop" button for the Game of Life.
+	         */
+	        handleStopClick();
+	    }
 	}
+
 	
 	
-	 // Replace the existing `nextGeneration` method with this modified version
-   /* public void nextGeneration(boolean useMultiColor) {
-        // Split the 18-bit rule into two parts
-        String deadCellRule = GameModel.getGLRule().substring(0, 9); // First nine bits
-        String liveNeighborRule = GameModel.getGLRule().substring(9, 18); // Next nine bits
-        System.out.println("ni sud");
-        JLabel[][] cells = GameModel.getCells();
-        int rows = cells.length;
-        int cols = cells[0].length;
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                JLabel cell = cells[row][col];
-                int liveNeighbours = GameModel.calculateLiveNeighbors(row, col);
-
-                // Create a final reference for cell, row, and col
-                final JLabel finalCell = cell;
-                final int finalRow = row;
-                final int finalCol = col;
-
-                // Use Timer to schedule the cell update task
-                TimerTask cellUpdateTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (GameModel.isCellAlive(finalCell)) {
-                            if (liveNeighborRule.charAt(liveNeighbours) == '1') {
-                                if (useMultiColor) {
-                                    Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbours);
-                                    finalCell.setBackground(cellColor);
-                                } else {
-                                    finalCell.setBackground(mainColor);
-                                }
-                            } else {
-                                finalCell.setBackground(Color.WHITE);
-                            }
-                        } else {
-                            if (deadCellRule.charAt(liveNeighbours) == '1') {
-                                if (useMultiColor) {
-                                    Color cellColor = GameModel.getColorForLiveNeighbors(liveNeighbours);
-                                    finalCell.setBackground(cellColor);
-                                } else {
-                                    finalCell.setBackground(mainColor);
-                                }
-                            } else {
-                                finalCell.setBackground(Color.WHITE);
-                            }
-                        }
-                        GameView.getGameOfLifeFrame().revalidate();
-                        GameView.getGameOfLifeFrame().repaint();
-                    }
-                };
-
-                // Schedule the cell update task with a delay
-                timer.schedule(cellUpdateTask, delay);
-            }
-        }
-    }*/
-	
+	/**
+	 * Handles the click event on the "Start" button for running the Game of Life simulation.
+	 */
 	public void handleStartClick() {
-		try {	
-			handleStepsTextBox();
-			numSteps = GameModel.getSteps();
-			handleModelTextBox();
-			
-			  if (numSteps > 0) {
-				  timer = new Timer();
-		            TimerTask cellUpdateTask = new TimerTask() {
-		                int currentStep = 0;
-		                @Override
-		                public void run() {
-		                    if (currentStep < numSteps) {
-		                    	GameModel.nextGeneration(useMultiColor);
-		                        GameView.getGameOfLifeFrame().revalidate();
-		                    	GameView.getGameOfLifeFrame().repaint();
-		                     	System.out.println("ni sud");
-		                        currentStep++;
-		                        
-		                        GameView.updateStepLabel(currentStep);
-		                    } else {
-		                        timer.cancel();  // Stop the timer
-		                    }
-		                }
-		            };  
-		            // Schedule the cell update task with the specified delay
-		            timer.scheduleAtFixedRate(cellUpdateTask, 0, delay);          
-			  }
-			} catch (NullPointerException e) {
-			       JOptionPane.showMessageDialog(
-			       GameView.getGameOfLifeFrame(),
-			       "Enter complete configurations",
-			       "Incomplete Configurations Entered",
-			       JOptionPane.INFORMATION_MESSAGE
-			       );
-			}
-	 }
-	
-	public void handleStopClick() {
-		 if (timer != null) {
-		        timer.cancel();
-		    }
-	}
-	
-	public void handleChangeLang(String lang) {
-		 String selectedLanguage = lang;
-		 System.out.println("choice" + selectedLanguage);
-        switch (selectedLanguage) {
-            case "English":
-                currentLanguage = "en";
-                break;
-            case "Français":
-                currentLanguage = "fr";
-                break;
-        }
-        loadXMLResource(currentLanguage);
-        // Update the UI components
-        updateUIComponents();	
-	}
-	
-	
-	public void handleColorSet() {
-		Color selectedColor = GameView.chooseColor();	
-		GameModel.setMainColor(selectedColor);
-		JLabel[][] cells = GameModel.getCells();
-		for (int row = 0; row < cells.length; row++) {
-		    for (int col = 0; col < cells[0].length; col++) {
-		    	JLabel cell = cells[row][col];
-		    	if (GameModel.isCellAlive(cell)) {
-		    		cells[row][col].setBackground(selectedColor);
-		    	}
-		    }
-		}
-		 GameView.getGameOfLifeFrame().repaint();
-	}
-	
+	    try {
+	        // Handle user inputs for steps and GLRule
+	        handleStepsTextBox();
+	        numSteps = GameModel.getSteps();
+	        handleModelTextBox();
 
-	public void programNotAvailable() {
-	    // Show a message dialog with program unavailable message
-	    JOptionPane.showMessageDialog(
-	            GameView.getSplashFrame(),
-	            "Program is not available right now. Please check back later.",
-	            "Program Unavailable",
+	        if (numSteps > 0) {
+	            // Initialize and schedule a TimerTask for cell updates
+	            timer = new Timer();
+	            TimerTask cellUpdateTask = new TimerTask() {
+	                int currentStep = 0;
+
+	                @Override
+	                public void run() {
+	                    if (currentStep < numSteps) {
+	                        // Advance the Game of Life simulation for the current step
+	                        GameModel.nextGeneration(useMultiColor);
+
+	                        // Update the GUI components
+	                        GameView.getGameOfLifeFrame().revalidate();
+	                        GameView.getGameOfLifeFrame().repaint();
+
+	                        // Print a message for debugging purposes
+	                        System.out.println("ni sud");
+
+	                        currentStep++;
+
+	                        // Update the step label in the GUI
+	                        GameView.updateStepLabel(currentStep);
+	                    } else {
+	                        timer.cancel();  // Stop the timer when all steps are completed
+	                    }
+	                }
+	            };
+
+	            // Schedule the cell update task with the specified delay
+	            timer.scheduleAtFixedRate(cellUpdateTask, 0, delay);
+	        }
+	    } catch (NullPointerException e) {
+	        // Handle incomplete configurations
+	        JOptionPane.showMessageDialog(
+	            GameView.getGameOfLifeFrame(),
+	            "Enter complete configurations",
+	            "Incomplete Configurations Entered",
 	            JOptionPane.INFORMATION_MESSAGE
+	        );
+	    }
+	}
+
+	/**
+	 * Handles the click event on the "Stop" button, stopping the Game of Life simulation if it's running.
+	 */
+	public void handleStopClick() {
+	    // Check if the timer is not null (i.e., the simulation is running)
+	    if (timer != null) {
+	        // Cancel the timer to stop the simulation
+	        timer.cancel();
+	    }
+	}
+
+	
+	/**
+	 * Handles a change in language selection and updates the user interface accordingly.
+	 *
+	 * @param lang The selected language (e.g., "English" or "Français").
+	 */
+	public void handleChangeLang(String lang) {
+	    // Store the selected language
+	    String selectedLanguage = lang;
+	    System.out.println("choice" + selectedLanguage);
+
+	    // Update the current language based on the selected language
+	    switch (selectedLanguage) {
+	        case "English":
+	            currentLanguage = "en";
+	            break;
+	        case "Français":
+	            currentLanguage = "fr";
+	            break;
+	    }
+
+	    // Load the appropriate XML resource for the selected language
+	    loadXMLResource(currentLanguage);
+
+	    // Update the UI components to reflect the new language
+	    updateUIComponents();
+	}
+
+	
+	
+	/**
+	 * Handles the color selection for the cells and updates the cell colors accordingly.
+	 */
+	public void handleColorSet() {
+	    // Allow the user to choose a color
+	    Color selectedColor = GameView.chooseColor();
+
+	    // Set the main color for the GameModel
+	    GameModel.setMainColor(selectedColor);
+
+	    // Get the array of cells from the GameModel
+	    JLabel[][] cells = GameModel.getCells();
+
+	    // Update the background color of live cells with the selected color
+	    for (int row = 0; row < cells.length; row++) {
+	        for (int col = 0; col < cells[0].length; col++) {
+	            JLabel cell = cells[row][col];
+	            if (GameModel.isCellAlive(cell)) {
+	                cells[row][col].setBackground(selectedColor);
+	            }
+	        }
+	    }
+
+	    // Repaint the GameOfLifeFrame to apply the new cell colors
+	    GameView.getGameOfLifeFrame().repaint();
+	}
+
+
+	/**
+	 * Displays a message dialog to inform the user that the program is not available.
+	 * This method is typically used when the program encounters unavailability or downtime.
+	 */
+	public void programNotAvailable() {
+	    // Show a message dialog with the program unavailable message
+	    JOptionPane.showMessageDialog(
+	        GameView.getSplashFrame(),
+	        "Program is not available right now. Please check back later.",
+	        "Program Unavailable",
+	        JOptionPane.INFORMATION_MESSAGE
 	    );
 	}
+
 	
+	/**
+	 * Updates various UI components with localized strings.
+	 * This method is responsible for changing the text of UI components to match the selected language.
+	 */
 	public void updateUIComponents() {
 	    // Update the 'home' label with a localized string
 	    GameView.getHomeButton().setText(getLocalizedString("HOME"));
@@ -386,17 +538,27 @@ public class GameController implements ActionListener {
 	    GameView.getStartGOL().setText(getLocalizedString("START"));
 	    // Update the 'help' button with a localized string
 	    GameView.getHelpButton().setText(getLocalizedString("HELP"));
+	    // Update the 'random' button with a localized string
 	    GameView.getRandomButton().setText(getLocalizedString("RANDOM"));
-	    // You can add more update statements here for other UI components as needed.  
+	    // Update the 'manual' button with a localized string
 	    GameView.getManualButton().setText(getLocalizedString("MANUAL"));
+	    // Update the 'model' label with a localized string
 	    GameView.getModel().setText(getLocalizedString("MODEL"));
+	    // Update the 'color input' button with a localized string
 	    GameView.getColorInput().setText(getLocalizedString("COLOR"));
+	    // Update the 'steps' label with a localized string
 	    GameView.getStep().setText(getLocalizedString("STEPS"));
-	    GameView.getStopGOL().setText(getLocalizedString("stop"));
+	    // Update the 'stop' button with a localized string
+	    GameView.getStopGOL().setText(getLocalizedString("STOP"));
+	    // Update the 'language' menu with a localized string
 	    GameView.getLanguageGOL().setText(getLocalizedString("LANGUAGE"));
+	    // Update the 'help' menu with a localized string
 	    GameView.getHelpGOL().setText(getLocalizedString("HELP"));
+	    // Update the 'game' menu with a localized string
 	    GameView.getGameGOL().setText(getLocalizedString("GAME"));
+	    // You can add more update statements here for other UI components as needed.
 	}
+
 
 	/**
 	 * Retrieves a localized string from the loaded XML document based on the provided key.

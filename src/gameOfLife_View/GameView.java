@@ -28,6 +28,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
+/**
+ * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * CST8221 A22
+ * Date: 11 November, 2023.
+ * Professor: Daniel Cormier
+ * Compiler: Eclipse IDE for Java Developers - Version: 2023-06 (4.28.0)]
+ */
 public class GameView {
 	/** Name of project **/
 	private String GameOfLifeTitle = "Game Of Life";
@@ -64,8 +72,11 @@ public class GameView {
 	private String languageOption[] = { "English", "Français" };
 	private String numberOfExecs;
 	
-	
+	 /**
+     * Default constructor for the GameView class. Initializes various components and settings.
+     */
 	public GameView() {
+		 
 		//splash screen buttons
 		games = new JComboBox<String>(strGames);
 		home = new JLabel("HOME");
@@ -118,137 +129,300 @@ public class GameView {
 	}
 	
 
+	/**
+	 * Update the label displaying the current execution number.
+	 *
+	 * @param currentExec The current execution number to display.
+	 */
 	public void updateStepLabel(int currentExec) {
-		execGOL.setText("EXEC: " + currentExec);
+	    execGOL.setText("EXEC: " + currentExec);
 	}
-	
+
+	/**
+	 * Get the "Help" menu item.
+	 *
+	 * @return The "Help" menu item.
+	 */
 	public JMenuItem getHelpGOL() {
-		return helpGOL;
+	    return helpGOL;
 	}
-	
+
+	/**
+	 * Get the "Game" menu item.
+	 *
+	 * @return The "Game" menu item.
+	 */
 	public JMenuItem getGameGOL() {
-		return gameGOL;
+	    return gameGOL;
 	}
-	
+
+	/**
+	 * Get the "About" menu item.
+	 *
+	 * @return The "About" menu item.
+	 */
 	public JMenuItem getAboutItem() {
-		return aboutItem;
+	    return aboutItem;
 	}
 
+	/**
+	 * Get the label for the model.
+	 *
+	 * @return The label for the model.
+	 */
 	public JLabel getModel() {
-		return model;
+	    return model;
 	}
-	
+
+	/**
+	 * Get the label for the step.
+	 *
+	 * @return The label for the step.
+	 */
 	public JLabel getStep() {
-		return steps;
+	    return steps;
 	}
+
+	/**
+	 * Get the "English" language menu item.
+	 *
+	 * @return The "English" language menu item.
+	 */
 	public JMenuItem getEnglish() {
-		return englishLanguage;
+	    return englishLanguage;
 	}
 
+	/**
+	 * Get the "Français" language menu item.
+	 *
+	 * @return The "Français" language menu item.
+	 */
 	public JMenuItem getFrench() {
-		return frenchLanguage;
+	    return frenchLanguage;
 	}
+
+	/**
+	 * Get the main Game of Life frame.
+	 *
+	 * @return The main Game of Life frame.
+	 */
 	public JFrame getGameOfLifeFrame() {
-		return GameOfLifeFrame;
+	    return GameOfLifeFrame;
 	}
 
-
+	/**
+	 * Get the "Exit" menu item.
+	 *
+	 * @return The "Exit" menu item.
+	 */
 	public JMenuItem getExitItem() {
-		return exitItem;
+	    return exitItem;
 	}
 
-
+	/**
+	 * Get the "New" menu item.
+	 *
+	 * @return The "New" menu item.
+	 */
 	public JMenuItem getNewItem() {
-		return newItem;
+	    return newItem;
 	}
 
-
+	/**
+	 * Set the "Exit" menu item.
+	 *
+	 * @param exitItem The "Exit" menu item to set.
+	 */
 	public void setExitItem(JMenuItem exitItem) {
-		this.exitItem = exitItem;
+	    this.exitItem = exitItem;
 	}
 
+	/**
+	 * Get the "Colors" menu item.
+	 *
+	 * @return The "Colors" menu item.
+	 */
 	public JMenuItem getColorsItem() {
-		return colorsItem;
+	    return colorsItem;
 	}
 
+	/**
+	 * Get the "Language" menu.
+	 *
+	 * @return The "Language" menu.
+	 */
 	public JMenu getLanguageGOL() {
-		return languageGOL;
+	    return languageGOL;
 	}
 
+	/**
+	 * Get the "Color" input button.
+	 *
+	 * @return The "Color" input button.
+	 */
 	public JButton getColorInput() {
-		return colorInput;
+	    return colorInput;
 	}
 
+	/**
+	 * Get the model text input field.
+	 *
+	 * @return The model text input field.
+	 */
 	public JTextField getModelText() {
-		return modelText;
+	    return modelText;
 	}
 
+	/**
+	 * Get the multicolor text checkbox.
+	 *
+	 * @return The multicolor text checkbox.
+	 */
 	public JCheckBox getMulticolorText() {
-		return multicolorText;
+	    return multicolorText;
 	}
 
+	/**
+	 * Get the text entered in the step input field.
+	 *
+	 * @return The text entered in the step input field.
+	 */
 	public String getStepText() {
-		return stepText.getText();
+	    return stepText.getText();
 	}
 
+	/**
+	 * Set the step input field.
+	 *
+	 * @param stepText The step input field to set.
+	 */
 	public void setStepText(JTextField stepText) {
-		this.stepText = stepText;
+	    this.stepText = stepText;
 	}
 
+	/**
+	 * Get the "EXEC" button.
+	 *
+	 * @return The "EXEC" button.
+	 */
 	public JButton getExecGOL() {
-		return execGOL;
+	    return execGOL;
 	}
 
+	/**
+	 * Get the "START" button.
+	 *
+	 * @return The "START" button.
+	 */
 	public JButton getStart() {
-		return start;
+	    return start;
 	}
 
+	/**
+	 * Get the "START" button for Game of Life.
+	 *
+	 * @return The "START" button for Game of Life.
+	 */
 	public JButton getStartGOL() {
-		return startGOL;
+	    return startGOL;
 	}
 
+	/**
+	 * Get the "STOP" button for Game of Life.
+	 *
+	 * @return The "STOP" button for Game of Life.
+	 */
 	public JButton getStopGOL() {
-		return stopGOL;
+	    return stopGOL;
 	}
 
+	/**
+	 * Get the splash frame.
+	 *
+	 * @return The splash frame.
+	 */
 	public  JFrame getSplashFrame() {
-		return splashFrame;
+	    return splashFrame;
 	}
 
+	/**
+	 * Get the games combo box.
+	 *
+	 * @return The games combo box.
+	 */
 	public JComboBox<String> getGamesComboBox() {
 	    return games;
 	}
-	   
+
+	/**
+	 * Get the "START" button for the splash screen.
+	 *
+	 * @return The "START" button for the splash screen.
+	 */
 	public JButton getStartButton() {
 	    return start;
 	}
 
+	/**
+	 * Get the "HELP" button for the splash screen.
+	 *
+	 * @return The "HELP" button for the splash screen.
+	 */
 	public JButton getHelpButton() {
-		return help;
+	    return help;
 	}
 
+	/**
+	 * Get the "HOME" label for the splash screen.
+	 *
+	 * @return The "HOME" label for the splash screen.
+	 */
 	public JLabel getHomeButton() {
-		return home;
+	    return home;
 	}
-	
 
+	/**
+	 * Get the languages combo box.
+	 *
+	 * @return The languages combo box.
+	 */
 	public JComboBox<String> getLanguages() {
-		return languages;
+	    return languages;
 	}
 
+	/**
+	 * Get the "RANDOM" button for Game of Life.
+	 *
+	 * @return The "RANDOM" button for Game of Life.
+	 */
 	public JButton getRandomButton() {
-		return random;
+	    return random;
 	}
 
+	/**
+	 * Get the "MANUAL" button for Game of Life.
+	 *
+	 * @return The "MANUAL" button for Game of Life.
+	 */
 	public JButton getManualButton() {
-		return manual;
+	    return manual;
 	}
 
+	/**
+	 * Get the 2D array of JLabels representing the grid of cells.
+	 *
+	 * @return The 2D array of JLabels representing the grid of cells.
+	 */
 	public JLabel[][] getCells() {
-		return cells;
+	    return cells;
 	}
+
 	
-	/** Default Constructor **/
+	  // Methods and functionality provided by the view
+
+    /**
+     * Display the splash screen for the application.
+     */
 	public void SplashScreen() {
 		
 		  SwingUtilities.invokeLater(new Runnable() {
@@ -307,7 +481,11 @@ public class GameView {
 	    }
 	    
 	
-	
+	 /**
+     * Display the main Game of Life user interface.
+     *
+     * @param cells The 2D array of JLabels representing the grid of cells.
+     */
 	public void GameOfLife(JLabel[][] cells) {
 	    // Settings for the frame
 		
@@ -404,11 +582,19 @@ public class GameView {
 		}
 	}
 	
+	/**
+     * Show a color chooser dialog and return the selected color.
+     *
+     * @return The selected color.
+     */
 	public Color chooseColor() {
 		Color selectedColor = JColorChooser.showDialog(GameOfLifeFrame, "Choose a Color", Color.BLACK);
 		return selectedColor;
 	}
 	
+	 /**
+     * Display an "About" dialog providing information about Conway's Game of Life.
+     */
 	public void aboutMenu() {
 		 JDialog aboutDialog = new JDialog();
          aboutDialog.setTitle("About My Application");
@@ -440,7 +626,14 @@ public class GameView {
          aboutDialog.pack();
          aboutDialog.setVisible(true);
 	}
-
+	
+	
+	/**
+     * Create and return a JPanel for displaying the grid of cells.
+     *
+     * @param cells The 2D array of JLabels representing the grid of cells.
+     * @return A JPanel containing the grid of cells.
+     */
 	public JPanel paintGrid(JLabel[][] cells) {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(cells.length, cells[0].length));
