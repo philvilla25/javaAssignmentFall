@@ -19,9 +19,9 @@ CLS
 SET SRCDIR=src
 SET BINDIR=bin
 SET BINERR=jap-javac.err
-SET JARNAME=jap.jar
-SET JAROUT=jap-jar.out
-SET JARERR=jap-jar.err
+SET JARNAME=Java_Assignment.jar
+SET JAROUT=Java_Assignment.out
+SET JARERR=Java_Assignment.err
 SET DOCDIR=src/doc
 SET DOCPACK=cs
 SET PACKAGE=cs
@@ -29,6 +29,10 @@ SET DOCERR=jap-javadoc.err
 SET MAINCLASSSRC1=src/CSModel.java
 SET MAINCLASSSRC2=src/mainGUI.java
 SET MAINCLASSSRC3=src/GridClass.java
+SET MAINCLASSSRC4=src/Game.java
+SET MAINCLASSSRC5=gameOfLife_Model/GameModel.java
+SET MAINCLASSSRC6=gameOfLife_COntroller/GameController.java
+SET MAINCLASSSRC7=gameOflife_View/GameView.java
 SET MAINCLASSBIN=CSModel
 ::SET IMAGES=src
 SET RESOURCES=resources
@@ -70,12 +74,12 @@ ECHO "0. Preconfiguring ................."
 mkdir "%BINDIR%"
 mkdir "%BINDIR%\%PACKAGE%"
 copy "%RESOURCES%\*.png" "%BINDIR%\%RESOURCES%"
-copy "%RESOURCES%\*.gif"  "%BINDIR%\%RECOURCES%"
-
+copy "%RESOURCES%\*.gif"  "%BINDIR%\%RESOURCES%"
+copy "%RESOURCES%\*.xml"  "%BINDIR%\%RESOURCES%"
 
 ECHO "1. Compiling ......................"
 ::javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
-javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %MAINCLASSSRC4% %MAINCLASSSRC5% %MAINCLASSSRC6% %MAINCLASSSRC7% -d %BINDIR% 2> %BINERR%
 
 :: ECHO "Running (outside JAR) ........................."
 :: start java -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*" CST8221.Main
