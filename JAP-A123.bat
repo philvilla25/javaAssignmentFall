@@ -87,8 +87,8 @@ javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %M
 ECHO "2. Creating Jar ..................."
 cd bin
 ::jar cvfe CST8221.jar Lab . > labs-jar.out 2> labs-jar.err
-::jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
-jar cvfe %JARNAME% %MAINCLASSBIN% -C src . -C src/gameOfLife_Controller -C src/gameOfLife_Model -C src/gameOfLife_View ../%JAROUT% 2> ../%JARERR%
+jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
+::jar cvfe %JARNAME% %MAINCLASSBIN% -C src . -C src/gameOfLife_Controller -C src/gameOfLife_Model -C src/gameOfLife_View > ../%JAROUT% 2> ../%JARERR%
 
 
 ECHO "3. Creating Javadoc ..............."
