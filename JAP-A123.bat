@@ -34,7 +34,6 @@ SET MAINCLASSSRC5=gameOfLife_Model/GameModel.java
 SET MAINCLASSSRC6=gameOfLife_COntroller/GameController.java
 SET MAINCLASSSRC7=gameOflife_View/GameView.java
 SET MAINCLASSBIN=CSModel
-::SET IMAGES=src
 SET RESOURCES=resources
 
 @echo off
@@ -81,6 +80,7 @@ ECHO "1. Compiling ......................"
 ::javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
 javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %MAINCLASSSRC4% %MAINCLASSSRC5% %MAINCLASSSRC6% %MAINCLASSSRC7% -d %BINDIR% 2> %BINERR%
 
+
 :: ECHO "Running (outside JAR) ........................."
 :: start java -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*" CST8221.Main
 
@@ -88,6 +88,8 @@ ECHO "2. Creating Jar ..................."
 cd bin
 ::jar cvfe CST8221.jar Lab . > labs-jar.out 2> labs-jar.err
 jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
+::jar cvfe %JARNAME% %MAINCLASSBIN% -C src . -C src/gameOfLife_Controller -C src/gameOfLife_Model -C src/gameOfLife_View > ../%JAROUT% 2> ../%JARERR%
+
 
 ECHO "3. Creating Javadoc ..............."
 cd ..

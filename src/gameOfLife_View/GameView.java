@@ -32,9 +32,15 @@ import javax.swing.border.LineBorder;
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
  * CST8221 A22
- * Date: 11 November, 2023.
+ * Date: 5th November, 2023.
  * Professor: Daniel Cormier
  * Compiler: Eclipse IDE for Java Developers - Version: 2023-06 (4.28.0)]
+ */
+
+/**
+ * Class Name: GameView
+ * Method List:SplashScreen(), GameOfLife(JLabel[][] cells) , chooseColor(), aboutMenu(),  paintGrid(JLabel[][] cells)
+ * Purpose:
  */
 public class GameView {
 	/** Name of project **/
@@ -42,10 +48,6 @@ public class GameView {
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
 	private ImageIcon gameIcon, banner ;
-	public JMenuItem getSolutionItem() {
-		return solutionItem;
-	}
-
 	private String GameOfLifeBanner = "../resources/Game of Life Banner.png";
 	/** Color **/
 	private Color green = new Color(12, 106, 71);
@@ -72,6 +74,7 @@ public class GameView {
 	private String languageOption[] = { "English", "Français" };
 	private String numberOfExecs;
 	
+
 	 /**
      * Default constructor for the GameView class. Initializes various components and settings.
      */
@@ -130,6 +133,7 @@ public class GameView {
 	
 
 	/**
+
 	 * Update the label displaying the current execution number.
 	 *
 	 * @param currentExec The current execution number to display.
@@ -137,6 +141,7 @@ public class GameView {
 	public void updateStepLabel(int currentExec) {
 	    execGOL.setText("EXEC: " + currentExec);
 	}
+
 
 	/**
 	 * Get the "Help" menu item.
@@ -147,14 +152,17 @@ public class GameView {
 	    return helpGOL;
 	}
 
+
 	/**
 	 * Get the "Game" menu item.
 	 *
 	 * @return The "Game" menu item.
+
 	 */
 	public JMenuItem getGameGOL() {
 	    return gameGOL;
 	}
+
 
 	/**
 	 * Get the "About" menu item.
@@ -163,6 +171,14 @@ public class GameView {
 	 */
 	public JMenuItem getAboutItem() {
 	    return aboutItem;
+	}
+	
+	/**
+	 * Getter for solution menu item
+	 * @return solution menu item
+	 */
+	public JMenuItem getSolutionItem() {
+		return solutionItem;
 	}
 
 	/**
@@ -174,6 +190,9 @@ public class GameView {
 	    return model;
 	}
 
+	
+
+
 	/**
 	 * Get the label for the step.
 	 *
@@ -182,6 +201,7 @@ public class GameView {
 	public JLabel getStep() {
 	    return steps;
 	}
+
 
 	/**
 	 * Get the "English" language menu item.
@@ -200,6 +220,7 @@ public class GameView {
 	public JMenuItem getFrench() {
 	    return frenchLanguage;
 	}
+
 
 	/**
 	 * Get the main Game of Life frame.
@@ -291,6 +312,7 @@ public class GameView {
 	    return stepText.getText();
 	}
 
+
 	/**
 	 * Set the step input field.
 	 *
@@ -380,6 +402,7 @@ public class GameView {
 	public JLabel getHomeButton() {
 	    return home;
 	}
+
 
 	/**
 	 * Get the languages combo box.
@@ -481,6 +504,7 @@ public class GameView {
 	    }
 	    
 	
+
 	 /**
      * Display the main Game of Life user interface.
      *
@@ -592,6 +616,7 @@ public class GameView {
 		return selectedColor;
 	}
 	
+
 	 /**
      * Display an "About" dialog providing information about Conway's Game of Life.
      */
@@ -626,6 +651,7 @@ public class GameView {
          aboutDialog.pack();
          aboutDialog.setVisible(true);
 	}
+
 	
 	
 	/**

@@ -8,9 +8,20 @@ import javax.swing.JLabel;
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
  * CST8221 A22
- * Date: 11 November, 2023.
+ * Date: 5th November, 2023.
  * Professor: Daniel Cormier
  * Compiler: Eclipse IDE for Java Developers - Version: 2023-06 (4.28.0)]
+ */
+
+/**
+ * Class Name: GameModel
+ * Method List:getSteps(),setSteps(int steps),getGLRule(),setGLRule(String GLRule),getRows() ,
+ * 			setRows(int rows),getCols(),setCols(int cols), getMainColor(),setMainColor(Color mainColor),
+ * 			getCells(),getCell(int rowIndex, int colIndex),createGrid(),blankGrid(),toggleCellState(int row, int col),
+ * 			setCellToMainColour(int row, int col),isCellAlive(JLabel cell),resetColors(),
+ * 			calculateLiveNeighbors(int row, int col),getColorForLiveNeighbors(int liveNeighbors),
+ * 			nextGeneration(boolean useMultiColor).
+ * Purpose:
  */
 public class GameModel {
     private int rows = 60;            // Number of rows in the grid
@@ -159,6 +170,7 @@ public class GameModel {
 	    }
 	}
 	
+
 	 /**
      * Set all cells in the grid to white, making the grid blank.
      */
@@ -187,30 +199,30 @@ public class GameModel {
 	 }
 	
 	 /**
-	     * Set the color of a cell at the given row and column to the main color.
-	     *
-	     * @param row The row index of the cell.
-	     * @param col The column index of the cell.
-	     */
+	   * Set the color of a cell at the given row and column to the main color.
+	   *
+	   * @param row The row index of the cell.
+	   * @param col The column index of the cell.
+	   */
 	 public void setCellToMainColour(int row, int col) {
 			 JLabel cell = getCell(row, col);
 			 cell.setBackground(mainColor);
 		 }
 	 
 	 /**
-	     * Check if a cell is alive (colored).
-	     *
-	     * @param cell The cell to check.
-	     * @return `true` if the cell is alive, `false` if it's not.
-	     */
+	   * Check if a cell is alive (colored).
+	   *
+	   * @param cell The cell to check.
+	   * @return `true` if the cell is alive, `false` if it's not.
+	   */
 	 public boolean isCellAlive(JLabel cell) {
 		 Color backgroundColor = cell.getBackground();
 		 return !Color.WHITE.equals(backgroundColor);
-	}
+	 }
 	 
 	 /**
-	     * Reset the colors of the grid by changing the colored cells back to the main color.
-	     */ 
+	   * Reset the colors of the grid by changing the colored cells back to the main color.
+	   */ 
     public void resetColors() {
 		 for (int row = 0; row < rows; row++) {
 		    for (int col = 0; col < cols; col++) {
@@ -222,6 +234,7 @@ public class GameModel {
 		 }
      } 
     
+
     
     /**
      * Calculate the number of live neighbors for a given cell at the specified row and column.
@@ -276,11 +289,11 @@ public class GameModel {
 	 }
 	 
 	 /**
-	     * Get the color to be used for a cell based on the number of live neighbors.
-	     *
-	     * @param liveNeighbors The number of live neighbors.
-	     * @return The color to be used for the cell.
-	     */
+	   * Get the color to be used for a cell based on the number of live neighbors.
+	   *
+	   * @param liveNeighbors The number of live neighbors.
+	   * @return The color to be used for the cell.
+	   */
 	 public Color getColorForLiveNeighbors(int liveNeighbors) {
 		    switch (liveNeighbors) {
 		        case 0:
@@ -318,10 +331,10 @@ public class GameModel {
 		}
 	 
 	 /**
-	     * Calculate the next generation of the grid based on the Game of Life rules.
-	     *
-	     * @param useMultiColor Whether to use multi-color for cells.
-	     */
+	   * Calculate the next generation of the grid based on the Game of Life rules.
+	   *
+	   * @param useMultiColor Whether to use multi-color for cells.
+	   */
 	 public void nextGeneration(boolean useMultiColor) {
 		// Split the 18-bit rule into two parts
 		 String deadCellRule = GLRule.substring(0, 9); // First nine bits
@@ -360,8 +373,6 @@ public class GameModel {
 		        }
 		    }
 	 }
-
-	 
 	 
 }
 	
