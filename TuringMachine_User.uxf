@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>670</x>
-      <y>580</y>
+      <x>1450</x>
+      <y>110</y>
       <w>670</w>
       <h>350</h>
     </coordinates>
@@ -29,9 +29,9 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1440</x>
-      <y>580</y>
-      <w>380</w>
+      <x>1540</x>
+      <y>660</y>
+      <w>470</w>
       <h>350</h>
     </coordinates>
     <panel_attributes>bg=pink
@@ -51,9 +51,9 @@ Responsibilities
     <id>UMLClass</id>
     <coordinates>
       <x>770</x>
-      <y>170</y>
-      <w>440</w>
-      <h>230</h>
+      <y>150</y>
+      <w>540</w>
+      <h>320</h>
     </coordinates>
     <panel_attributes>bg=blue
 Package::turingMachine_Controller
@@ -69,14 +69,15 @@ _+start(): void_
 -updateViews(): void
 +getLocalizedString(key:String):String
 +updateUIComponents():void
++listeners: List&lt;TapeListener&gt;
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>110</x>
-      <y>950</y>
+      <x>630</x>
+      <y>920</y>
       <w>520</w>
       <h>130</h>
     </coordinates>
@@ -87,8 +88,8 @@ bg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1090</x>
-      <y>390</y>
+      <x>1760</x>
+      <y>450</y>
       <w>30</w>
       <h>210</h>
     </coordinates>
@@ -99,7 +100,7 @@ bg=gray</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>590</x>
-      <y>350</y>
+      <y>330</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -110,7 +111,7 @@ bg=gray</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>240</y>
+      <y>220</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -120,19 +121,19 @@ bg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1330</x>
-      <y>860</y>
-      <w>130</w>
-      <h>30</h>
+      <x>1070</x>
+      <y>470</y>
+      <w>480</w>
+      <h>370</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;350.0;460.0;350.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>20</x>
-      <y>110</y>
+      <y>90</y>
       <w>580</w>
       <h>380</h>
     </coordinates>
@@ -142,9 +143,8 @@ Class: TuringMachine(Model)
 --
 -tape: Tape
 -currentState: State
--user: User
--server: Server
--listeners: List&lt;TapeListener&gt;
+-turingMachine_Client : turingMachine_User
+-turingMachine_Server: turingMachine_Server
 --
 +initializeTuringMachine(): void
 +executeTransition(): void
@@ -167,23 +167,54 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>950</x>
-      <y>400</y>
-      <w>30</w>
-      <h>190</h>
+      <x>1310</x>
+      <y>220</y>
+      <w>160</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1330</x>
-      <y>730</y>
-      <w>120</w>
+      <x>1300</x>
+      <y>320</y>
+      <w>170</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>610</y>
+      <w>470</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>bg=pink
+Package::turingMachine_Main
+Class:turingMachine_User(View)
+--
++turingMachine_User()
++setStateColor(color: Color): void
+--
+Responsibilities
+--entry point menu for user
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>290</x>
+      <y>460</y>
+      <w>30</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
 </diagram>

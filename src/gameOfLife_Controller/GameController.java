@@ -416,9 +416,6 @@ public class GameController implements ActionListener {
 	                        GameView.getGameOfLifeFrame().revalidate();
 	                        GameView.getGameOfLifeFrame().repaint();
 
-	                        // Print a message for debugging purposes
-	                        System.out.println("ni sud");
-
 	                        currentStep++;
 
 	                        // Update the step label in the GUI
