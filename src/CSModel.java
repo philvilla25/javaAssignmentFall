@@ -20,6 +20,8 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
+
+import turingMachine_Main.turingMachine_Server;
 /**
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
@@ -137,7 +139,8 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	            } else if ("Game Of Life".equals(selectedProgram)) {
 	               Game.main(currentLanguage);
 	            } else if ("Turing Machine".equals(selectedProgram)) {
-	                programNotAvailable();
+	            	turingMachine_Server server = new turingMachine_Server();
+	            	server.serverWindow();
 	            }
 
 	            // Update UI components
