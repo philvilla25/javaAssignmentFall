@@ -22,6 +22,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
 import turingMachine_Main.turingMachine_Server;
+import turingMachine_Main.turingMachine_User;
 /**
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
@@ -36,7 +37,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	/** Name of logo image **/
 	private String logoImg = "../resources/logo.png";
 	/** Name of games **/
-	private String strGames[] = { "Cellular Automata", "Game Of Life", "Turing Machine" };
+	private String strGames[] = { "Cellular Automata", "Game Of Life", "TM - Server", "TM - User" };
 	/** Language options **/
 	private String languageOption[] = { "English", "Français" };
 	/** Colour **/
@@ -138,11 +139,13 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	                frame.dispose();
 	            } else if ("Game Of Life".equals(selectedProgram)) {
 	               Game.main(currentLanguage);
-	            } else if ("Turing Machine".equals(selectedProgram)) {
+	            } else if ("TM - Server".equals(selectedProgram)) { 
 	            	turingMachine_Server server = new turingMachine_Server();
 	            	server.serverWindow();
+	            } else if ("TM - User".equals(selectedProgram)) {
+	            	turingMachine_User user = new turingMachine_User();
+	            	user.userWindow();
 	            }
-
 	            // Update UI components
 	            updateUIComponents();
 	        }
