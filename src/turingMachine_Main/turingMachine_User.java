@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +23,11 @@ public class turingMachine_User {
 	private JTextField userText, serverText, portText, tmText;
 	private JTextArea info;
 	private JScrollPane sp;
+	static String DEFAULT_USER = "User1";
+	static String DEFAULT_ADDR = "localhost";
+	static int DEFAULT_PORT = 12345;
+	private int port, tm;
+	private String user, server;
 
 	public turingMachine_User() {
 		userFrame = new JFrame();
@@ -93,5 +97,47 @@ public class turingMachine_User {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sendConfig() {
+		String portInput = portText.getText();
+        // Check if the input is not empty
+        if (!portInput.isEmpty()) {
+            // Parse the input as an integer if it's not empty
+            port = Integer.parseInt(portInput);
+            System.out.println("Entered port: " + port);
+        } else {
+            // Use the default value if the input is empty
+            port = DEFAULT_PORT;
+            System.out.println("Using default port: " + port);
+        }
+        
+        String userInput = userText.getText();
+        // Check if the input is not empty
+        if (!userInput.isEmpty()) {
+        	user = userInput;
+        }else {
+            // Use the default value if the input is empty
+        	user = DEFAULT_USER;
+        }
+        
+        String serverInput = serverText.getText();
+        // Check if the input is not empty
+        if (!serverInput.isEmpty()) {
+        	server = serverInput;
+        }else {
+            // Use the default value if the input is empty
+        	user = DEFAULT_ADDR;
+        }
+        
+        String tmInput = tmText.getText();
+        // Check if the input is not empty
+        if (!tmInput.isEmpty()) {
+        	//tm = tmInput;
+        }else {
+            // Use the default value if the input is empty
+        	user = DEFAULT_ADDR;
+        }
+	}
+	
 }
 

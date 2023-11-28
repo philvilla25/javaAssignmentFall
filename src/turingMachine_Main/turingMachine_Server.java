@@ -2,12 +2,18 @@ package turingMachine_Main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +30,8 @@ public class turingMachine_Server {
 	private JCheckBox  finalizesOption;
 	private JTextArea info;
 	private JScrollPane sp;
+	private int port;
+	static int DEFAULT_PORT = 12345;
 
 	public turingMachine_Server() {
 		serverFrame = new JFrame();
@@ -39,6 +47,17 @@ public class turingMachine_Server {
 		finalizesOption = new JCheckBox();
 		info = new  JTextArea(10, 20);
 		sp = new JScrollPane(info);
+		
+		startButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	try {
+						startConnection();
+					} catch (IOException e1) {
+						//JOptionPane.showMessageDialog(serverFrame, "Using default port number");
+					}
+	            }
+	    });
 	}
 	
 	public void serverWindow() {
@@ -77,5 +96,37 @@ public class turingMachine_Server {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean isValidPort(int port) {
+	        return port >= 10000 && port <= 65535;
+	 }
+	
+	public void startConnection() throws IOException {
+	  try {
+		  String portInput = portText.getText();
+	        // Check if the input is not empty
+	        if (!portInput.isEmpty()) {
+	            // Parse the input as an integer if it's not empty
+	            port = Integer.parseInt(portInput);
+	        } else {
+	            // Use the default value if the input is empty
+	            port = DEFAULT_PORT;
+	        }
+	        
+        if (isValidPort(port)) {
+        	 ServerSocket serverSocket = new ServerSocket(port);
+        	 System.out.println("Start button");
+             System.out.println("Port= " + port);
+             
+          /* Now you can handle incoming connections and implement your server logic
+             while (true) {
+                 Socket clientSocket = serverSocket.accept();
+                 // Handle the client connection (implement your logic here)
+             }*/
+        }
+	  }catch (NumberFormatException | IOException ex) {
+          JOptionPane.showMessageDialog(serverFrame, this, "Error: " + ex.getMessage(), 0);
+	  }
 	}
 }
