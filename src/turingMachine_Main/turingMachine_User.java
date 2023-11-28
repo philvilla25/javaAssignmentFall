@@ -52,6 +52,43 @@ public class turingMachine_User {
 		sp = new JScrollPane(info);
 	}
 	
+	
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public int getTm() {
+		return tm;
+	}
+
+	public void setTm(int tm) {
+		this.tm = tm;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getServer() {
+		return server;
+	}
+
+	public void setServer(String server) {
+		this.server = server;
+	}
+	
+	public JButton getConnectButton() {
+		return connectButton;
+	}
+
 	public void userWindow() {
 		try {
 			userFrame.setTitle(title);
@@ -97,21 +134,23 @@ public class turingMachine_User {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void sendConfig() {
 		String portInput = portText.getText();
+		String userInput = userText.getText();
+		String serverInput = serverText.getText();   
+        String tmInput = tmText.getText();
+		   
         // Check if the input is not empty
         if (!portInput.isEmpty()) {
             // Parse the input as an integer if it's not empty
             port = Integer.parseInt(portInput);
-            System.out.println("Entered port: " + port);
         } else {
             // Use the default value if the input is empty
             port = DEFAULT_PORT;
-            System.out.println("Using default port: " + port);
         }
         
-        String userInput = userText.getText();
+     
         // Check if the input is not empty
         if (!userInput.isEmpty()) {
         	user = userInput;
@@ -120,7 +159,7 @@ public class turingMachine_User {
         	user = DEFAULT_USER;
         }
         
-        String serverInput = serverText.getText();
+       
         // Check if the input is not empty
         if (!serverInput.isEmpty()) {
         	server = serverInput;
@@ -128,14 +167,13 @@ public class turingMachine_User {
             // Use the default value if the input is empty
         	user = DEFAULT_ADDR;
         }
-        
-        String tmInput = tmText.getText();
+     
         // Check if the input is not empty
         if (!tmInput.isEmpty()) {
-        	//tm = tmInput;
+        	tm = Integer.parseInt(tmInput);
         }else {
             // Use the default value if the input is empty
-        	user = DEFAULT_ADDR;
+        	//user = DEFAULT_ADDR;
         }
 	}
 	

@@ -21,8 +21,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
+import turingMachine_Controller.TuringController;
 import turingMachine_Main.turingMachine_Server;
 import turingMachine_Main.turingMachine_User;
+import turingMachine_Model.TuringMachine;
+import turingMachine_View.StateView;
+import turingMachine_View.TapeView;
 /**
  * Name:Akpoguma Oghenerukevwe and Philogene Villanueva
  * Student Number: 041075624 and 041063813
@@ -131,7 +135,10 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            String selectedProgram = (String) games.getSelectedItem();
-
+	            TuringMachine turingMachine = new TuringMachine(); 
+	            TapeView tapeView = new TapeView();
+	            StateView stateView = new StateView(); 
+	            
 	            // Call the proper program when selected
 	            if ("Cellular Automata".equals(selectedProgram)) {
 	                mainGUI gui = new mainGUI();
@@ -144,6 +151,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	            	server.serverWindow();
 	            } else if ("TM - User".equals(selectedProgram)) {
 	            	turingMachine_User user = new turingMachine_User();
+	                TuringController controller = new TuringController(turingMachine, user, tapeView, stateView);
 	            	user.userWindow();
 	            }
 	            // Update UI components

@@ -119,6 +119,8 @@ public class turingMachine_Server {
         	 System.out.println("Start button");
              System.out.println("Port= " + port);
              
+             Socket clientSocket = serverSocket.accept();
+             System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
           /* Now you can handle incoming connections and implement your server logic
              while (true) {
                  Socket clientSocket = serverSocket.accept();
