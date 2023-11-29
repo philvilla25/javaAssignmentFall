@@ -23,9 +23,6 @@ public class turingMachine_User {
 	private JTextField userText, serverText, portText, tmText;
 	private JTextArea info;
 	private JScrollPane sp;
-	static String DEFAULT_USER = "User1";
-	static String DEFAULT_ADDR = "localhost";
-	static int DEFAULT_PORT = 12345;
 	private int port, tm;
 	private String user, server;
 
@@ -161,7 +158,7 @@ public class turingMachine_User {
             port = Integer.parseInt(portInput);
         } else {
             // Use the default value if the input is empty
-            port = DEFAULT_PORT;
+            port = turingMachine_Config.DEFAULT_PORT;
         }
         
      
@@ -170,7 +167,7 @@ public class turingMachine_User {
         	user = userInput;
         }else {
             // Use the default value if the input is empty
-        	user = DEFAULT_USER;
+        	user = turingMachine_Config.DEFAULT_USER;
         }
         
        
@@ -179,7 +176,7 @@ public class turingMachine_User {
         	server = serverInput;
         }else {
             // Use the default value if the input is empty
-        	user = DEFAULT_ADDR;
+        	user = turingMachine_Config.DEFAULT_ADDR;
         }
      
         // Check if the input is not empty

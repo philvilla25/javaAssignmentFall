@@ -23,7 +23,7 @@ public class turingMachine_Server {
     private JTextArea info;
     private JScrollPane sp;
     private int port;
-    static int DEFAULT_PORT = 12345;
+    //static int DEFAULT_PORT = 12345;
     private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
     private ExecutorService executorService;
     private volatile boolean serverRunning = false;
@@ -120,7 +120,7 @@ public class turingMachine_Server {
             port = Integer.parseInt(portInput);
         } else {
             // Use the default value if the input is empty
-            port = DEFAULT_PORT;
+            port = turingMachine_Config.DEFAULT_PORT;
         }
 
         if (isValidPort(port)) {
