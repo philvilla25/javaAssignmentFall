@@ -5,20 +5,17 @@ import java.awt.event.ActionListener;
 
 import turingMachine_Main.turingMachine_User;
 import turingMachine_Model.TuringMachine;
-import turingMachine_View.StateView;
-import turingMachine_View.TapeView;
+import turingMachine_View.TuringView;
 
 public class TuringController {
 	private TuringMachine turingMachine;
 	private turingMachine_User turingMachine_Client;
-	private TapeView tapeView;
-	private StateView stateView;
+	private TuringView view ;
 	
-	public TuringController(TuringMachine turingMachine, turingMachine_User turingMachine_Client, TapeView tapeView, StateView stateView) {
+	public TuringController(TuringMachine turingMachine, turingMachine_User turingMachine_Client,TuringView view) {
         this.turingMachine = turingMachine;
         this.turingMachine_Client = turingMachine_Client;
-        this.tapeView = tapeView;
-        this.stateView = stateView;
+        this.view = view;
         addListener();
     }
 	
@@ -59,7 +56,7 @@ public class TuringController {
 	}
 	
 	public void handleConnectButtonClick() {
-	    turingMachine.startConnection(2); // 2 represents the "RUN_MACHINE" operation
+	    turingMachine.startConnection(2); // 2  represents connection
 	}
 	
 	public void handleSendButtonClick() {
@@ -71,6 +68,7 @@ public class TuringController {
 	}
 
 	public void handleRunButtonClick() {
-	    turingMachine.startConnection(2); // 2 represents the "RUN_MACHINE" operation
+		TuringView tm = new TuringView();
+    	tm.tmWindow();
 	}
 }

@@ -1,6 +1,9 @@
 package turingMachine_Main;
 
 import javax.swing.*;
+
+import turingMachine_View.TuringView;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -159,9 +162,12 @@ public class turingMachine_Server {
             } else if ("SEND_CONFIG".equals(request)) {
                 String configuration = in.readLine();
                 // Handle other types of requests
-            } else if ("RUN_MACHINE".equals(request)) {
-                // Handle run machine
             }
+           /* } else if ("RUN_MACHINE".equals(request)) {
+                // Handle run machine
+            	TuringView tm = new TuringView();
+            	tm.tmWindow();
+            } */
 
             // Close the resources
             out.close();

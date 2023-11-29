@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>670</x>
+      <y>580</y>
+      <w>670</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+Package::turingMachine_View
+Class:TapeView(View)
+--
++displayTape(): void
++highlightSymbol(index: int): void
++scrollTape(direction: Direction): void
+--
+Responsibilities
+--visual representation of the tape, showing the symbols on the tape and the position of the tape head
+-- Creating and managing the graphical or user interface elements that display the tape
+--update the view 
+--input related to the tape, such as clicking on symbols or interacting with controls
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1440</x>
+      <y>580</y>
+      <w>380</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>bg=pink
+Package::turingMachine_View
+Class:StateView(View)
+--
+-+displayState(): void|
+-+setStateColor(color: Color): void
+--
+Responsibilities
+--visual representation of the current state of the Turing Machine
+--managing graphical or user interface elements that display the state
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>170</y>
+      <w>440</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>bg=blue
+Package::turingMachine_Controller
+Class: TuringController(Controller)
+--
+-turingMachine: TuringMachine
+-tapeView: TapeView 
+-stateView: StateView
+--
+_+start(): void_
++addListener(listener: StateListener): void
++processInput(input: String): void
+-updateViews(): void
++getLocalizedString(key:String):String
++updateUIComponents():void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>110</x>
+      <y>950</y>
+      <w>520</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>UML Design by: Philogene Villanueva,Oghenerukevw Akpoguma
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1090</x>
+      <y>390</y>
+      <w>30</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>350</y>
+      <w>190</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>240</y>
+      <w>190</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1330</x>
+      <y>860</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>110</y>
+      <w>580</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>bg=red
+Package::turingMachine_Model
+Class: TuringMachine(Model)
+--
+-tape: Tape
+-currentState: State
+-user: User
+-server: Server
+-listeners: List&lt;TapeListener&gt;
+--
++initializeTuringMachine(): void
++executeTransition(): void
++createTask(task: Task): void
++deleteTask(taskId: String): void
++syncWithServer(): void
+--
+Responsibilities
+-- Responsible for Grid logic implementation
+--managing the tape, which is the input/output medium for the Turing Machine
+--provide methods to read symbols from the tape and write symbols to the tape
+--Controlling the movement of the tape head based on the Turing Machine's transitions
+--Keeping track of the current state
+--Executing state transitions
+--handling user authentication and authorization
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>400</y>
+      <w>30</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1330</x>
+      <y>730</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+</diagram>

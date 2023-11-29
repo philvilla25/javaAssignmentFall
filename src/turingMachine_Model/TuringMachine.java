@@ -44,17 +44,20 @@ public class TuringMachine {
                 out.println("SEND_CONFIG");
                 // Add code to send the configuration
                 break;
-            case 2:
+           /* case 2:
                 // Send a request to run the Turing Machine
                 out.println("RUN_MACHINE");
                 // Add code to handle running the Turing Machine
-                break;
+                break; */
+            case 2:
+                // default connection
+                break;   
             default:
                 System.out.println("Invalid operation type");
              }
 	        
             // Receive and process the response
-            String response = in.readLine();
+           // String response = in.readLine();
             //System.out.println("Received from server (" + operationType + "): " + response);
 	        
 	    } catch (UnknownHostException e) {
