@@ -146,7 +146,7 @@ public class turingMachine_User {
 		}
 	}
 
-	public void sendConfig() {
+	public void setConfig() {
 		String portInput = portText.getText();
 		String userInput = userText.getText();
 		String serverInput = serverText.getText();   

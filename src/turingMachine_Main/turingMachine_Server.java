@@ -26,10 +26,18 @@ public class turingMachine_Server {
     private JTextArea info;
     private JScrollPane sp;
     private int port;
-    //static int DEFAULT_PORT = 12345;
     private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
     private ExecutorService executorService;
     private volatile boolean serverRunning = false;
+    
+    static final String PROTOCOL_SEPARATOR = "#";
+    static final String PROTOCOL_END = "P0";
+    static final String PROTOCOL_SENDMODEL = "P1";
+    static final String PROTOCOL_RECVMODEL = "P2";
+    static String DEFAULT_USER = "User1";
+    static String DEFAULT_ADDR = "localhost";
+    static int DEFAULT_PORT = 12345;
+    
     public turingMachine_Server() {
         serverFrame = new JFrame();
         topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -155,28 +163,40 @@ public class turingMachine_Server {
 
             // Handle the client connection (implement your logic here)
             String request = in.readLine();
-            if ("GET_CONFIG".equals(request)) {
-                // Handle the request to get the configuration
-                String configuration = getConfigurationFromServer();
-                out.println(configuration);
-            } else if ("SEND_CONFIG".equals(request)) {
-                String configuration = in.readLine();
-                // Handle other types of requests
+            String[] parts = request.split(PROTOCOL_SEPARATOR);
+            String clientId = parts[0];
+            String protocolId = parts[1];
+            
+            // Check if there is additional data
+            if (parts.length > 2) {
+                String additionalData = parts[2];
+                // Process additional data as needed
             }
-           /* } else if ("RUN_MACHINE".equals(request)) {
-                // Handle run machine
-            	TuringView tm = new TuringView();
-            	tm.tmWindow();
-            } */
+            
+            switch (protocolId) {
+            case PROTOCOL_END:
+                // Handle ending execution
+            	stopConnection();
+                break;
+            case PROTOCOL_SENDMODEL:
+                // Handle sending game configuration to server
+            	receiveConfigFromClient();
+                break;
+            case PROTOCOL_RECVMODEL:
+            	sendConfigurationToClient();
+            	break;
+            }
 
             // Close the resources
             out.close();
             in.close();
             clientSocket.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
     private void stopConnection() {
         try {
             if (serverRunning) {
@@ -188,12 +208,13 @@ public class turingMachine_Server {
             e.printStackTrace();
         }
     }
-    private String getConfigurationFromServer() {
+    
+    private String sendConfigurationToClient() {
         // TODO: Implement this method
         return null;
     }
 
-    private String sendConfigurationToServer() {
+    private String receiveConfigFromClient() {
         // TODO: Implement this method
         return null;
     }

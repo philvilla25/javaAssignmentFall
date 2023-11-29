@@ -18,13 +18,20 @@ public class TuringMachine {
 	private PrintWriter out;
 	private BufferedReader in;
 	
+	
+	static final String PROTOCOL_SEPARATOR = "#";
+	static final String PROTOCOL_END = "P0";
+	static final String PROTOCOL_SENDMODEL = "P1";
+	static final String PROTOCOL_RECVMODEL = "P2";
+	private int clientId;
+	
     public TuringMachine(turingMachine_User turingMachine_Client) {
         this.turingMachine_Client = turingMachine_Client;
     }
 
-    public void startConnection(int operationType) { 
+    public void connectToServer() { 
 	    try {
-	        turingMachine_Client.sendConfig();
+	        turingMachine_Client.setConfig();
 	        String ip = turingMachine_Client.getServer();
 	        int port = turingMachine_Client.getPort();
 	        
@@ -32,34 +39,7 @@ public class TuringMachine {
 	        
 	        out = new PrintWriter(clientSocket.getOutputStream(), true);
 	        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-	        
-	        
-	        switch (operationType) {
-            case 0:
-                // Send a request to get the Turing Machine configuration
-                out.println("GET_CONFIG");
-                break;
-            case 1:
-                // Send a Turing Machine configuration to the server
-                out.println("SEND_CONFIG");
-                // Add code to send the configuration
-                break;
-           /* case 2:
-                // Send a request to run the Turing Machine
-                out.println("RUN_MACHINE");
-                // Add code to handle running the Turing Machine
-                break; */
-            case 2:
-                // default connection
-                break;   
-            default:
-                System.out.println("Invalid operation type");
-             }
-	        
-            // Receive and process the response
-           // String response = in.readLine();
-            //System.out.println("Received from server (" + operationType + "): " + response);
-	        
+	
 	    } catch (UnknownHostException e) {
 	        // Log or handle the UnknownHostException
 	        e.printStackTrace();
@@ -69,4 +49,29 @@ public class TuringMachine {
 	    }
 	}
 
+    
+    public void sendConfigToServer(String configurationData) {
+        // Send game configuration message to the server
+        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_SENDMODEL + PROTOCOL_SEPARATOR + configurationData);
+    }
+    
+    public void receiveConfigFromServer() {
+        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_RECVMODEL + PROTOCOL_SEPARATOR);
+    }
+    
+    public void endExecution() {
+        // Send end execution message to the server
+        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_END);
+    }
+    
+    public void closeConnection() {
+        try {
+            // Close the resources
+            out.close();
+            in.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

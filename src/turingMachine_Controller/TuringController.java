@@ -56,15 +56,15 @@ public class TuringController {
 	}
 	
 	public void handleConnectButtonClick() {
-	    turingMachine.startConnection(2); // 2  represents connection
+	   // turingMachine.startConnection(2); // 2  represents connection
 	}
 	
 	public void handleSendButtonClick() {
-		turingMachine.startConnection(1); // 1 represents the "SEND_CONFIG" operation
+		//turingMachine.startConnection(1); // 1 represents the "SEND_CONFIG" operation
 	}
 
 	public void handleReceiveButtonClick() {
-	    turingMachine.startConnection(0); // 0 represents the "GET_CONFIG" operation
+	   // turingMachine.startConnection(0); // 0 represents the "GET_CONFIG" operation
 	}
 
 	public void handleRunButtonClick() {
