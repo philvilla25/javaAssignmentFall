@@ -4,9 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,6 +37,10 @@ public class turingMachine_Server {
 	private JScrollPane sp;
 	private int port;
 	static int DEFAULT_PORT = 12345;
+	private PrintWriter out;
+	private BufferedReader in;
+	private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
+	
 
 	public turingMachine_Server() {
 		serverFrame = new JFrame();
@@ -85,7 +94,6 @@ public class turingMachine_Server {
 			 mainPanel.setLayout(new BorderLayout()); // Set layout manager for mainPanel
 	         mainPanel.add(sp, BorderLayout.CENTER); // Add JScrollPane to mainPanel
 
-		   
 			// Make the frame visible
 		    serverFrame.setLayout(new BorderLayout());
 		    serverFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
@@ -116,19 +124,52 @@ public class turingMachine_Server {
 	        
         if (isValidPort(port)) {
         	 ServerSocket serverSocket = new ServerSocket(port);
-        	 System.out.println("Start button");
-             System.out.println("Port= " + port);
-             
-             Socket clientSocket = serverSocket.accept();
-             System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
-          /* Now you can handle incoming connections and implement your server logic
+        	 logger.log(Level.INFO, "Server started on port {0}", port);
+        	 
+        	 System.out.println("Start button\n");
+        	 System.out.println("Port= " + port);
+        	 /*info.append("Start button\n");
+        	 info.append("Port= " + port); 
+        	 serverFrame.repaint();
+        	 serverFrame.revalidate();*/
+
              while (true) {
                  Socket clientSocket = serverSocket.accept();
+                 out = new PrintWriter(clientSocket.getOutputStream(), true);
+                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                 
+                 logger.log(Level.INFO, "Accepted connection from {0}", clientSocket.getInetAddress());
+                 info.append("Client connected from: " + clientSocket.getInetAddress() + "\n");
                  // Handle the client connection (implement your logic here)
-             }*/
+                 String request = in.readLine();
+                 if ("GET_CONFIG".equals(request)) {
+                	    // Handle the request to get the configuration
+                	    String configuration = getConfigurationFromServer();
+                	    out.println(configuration);
+                 } else if  ("SEND_CONFIG".equals(request)){
+                	 String configuration = in.readLine();
+                	    // Handle other types of requests
+                 }else if  ("RUN_MACHINE".equals(request)) {
+                	 ///handle run machine
+                 }
+                 // Create a new thread for each client
+             }
         }
-	  }catch (NumberFormatException | IOException ex) {
+	  }catch (IOException ex) {
+          logger.log(Level.SEVERE, "Error in server: {0}", ex.getMessage());
+          // Handle or rethrow the exception as needed
+	  }catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(serverFrame, this, "Error: " + ex.getMessage(), 0);
 	  }
+	}
+
+	private String getConfigurationFromServer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private String sendConfigurationToServer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

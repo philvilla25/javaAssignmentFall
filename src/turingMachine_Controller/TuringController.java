@@ -28,12 +28,49 @@ public class TuringController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				handleConnectButtonClick();
 			}
         });
+		
+		 // Add listener to send button
+	    turingMachine_Client.getSendButton().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            handleSendButtonClick();
+	        }
+	    });
+
+	    // Add listener to receive button
+	    turingMachine_Client.getReceiveButton().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            handleReceiveButtonClick();
+	        }
+	    });
+
+	    // Add listener to run button
+	    turingMachine_Client.getRunButton().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            handleRunButtonClick();
+	        }
+	    });
+		
 	}
 	
 	public void handleConnectButtonClick() {
-		turingMachine.startConnection();
+	    turingMachine.startConnection(2); // 2 represents the "RUN_MACHINE" operation
+	}
+	
+	public void handleSendButtonClick() {
+		turingMachine.startConnection(1); // 1 represents the "SEND_CONFIG" operation
+	}
+
+	public void handleReceiveButtonClick() {
+	    turingMachine.startConnection(0); // 0 represents the "GET_CONFIG" operation
+	}
+
+	public void handleRunButtonClick() {
+	    turingMachine.startConnection(2); // 2 represents the "RUN_MACHINE" operation
 	}
 }

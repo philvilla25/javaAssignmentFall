@@ -135,7 +135,6 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            String selectedProgram = (String) games.getSelectedItem();
-	            TuringMachine turingMachine = new TuringMachine(); 
 	            TapeView tapeView = new TapeView();
 	            StateView stateView = new StateView(); 
 	            
@@ -151,6 +150,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	            	server.serverWindow();
 	            } else if ("TM - User".equals(selectedProgram)) {
 	            	turingMachine_User user = new turingMachine_User();
+	            	TuringMachine turingMachine = new TuringMachine(user); 
 	                TuringController controller = new TuringController(turingMachine, user, tapeView, stateView);
 	            	user.userWindow();
 	            }

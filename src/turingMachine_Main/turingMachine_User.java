@@ -88,6 +88,20 @@ public class turingMachine_User {
 	public JButton getConnectButton() {
 		return connectButton;
 	}
+	
+	public JButton getSendButton() {
+		return sendButton;
+	}
+
+
+	public JButton getReceiveButton() {
+		return receiveButton;
+	}
+
+
+	public JButton getRunButton() {
+		return runButton;
+	}
 
 	public void userWindow() {
 		try {
