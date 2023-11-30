@@ -114,7 +114,7 @@ public class turingMachine_User {
 		try {
 			userFrame.setTitle(title);
 			userFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			userFrame.setSize(570, 400);
+			userFrame.setSize(579, 400);
 			userFrame.setResizable(false);
 			
 		    // Top Panel
