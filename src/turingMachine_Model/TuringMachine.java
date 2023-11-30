@@ -20,22 +20,23 @@ public class TuringMachine {
 	private PrintWriter out;
 	private BufferedReader in;
 	private int clientId;
-	
+	private boolean connection = false;
     public TuringMachine(turingMachine_User turingMachine_Client) {
         this.turingMachine_Client = turingMachine_Client;
     }
 
-    public void connectToServer() { 
+    public boolean connectToServer() { 
     	turingMachine_Client.setConfig();
 		   try {
+			   	String data;
 		        String ip = turingMachine_Client.getServer();
 		        int port = turingMachine_Client.getPort();
 		        
 		        clientSocket = new Socket(ip, port);
 		        
 		        out = new PrintWriter(clientSocket.getOutputStream(), true);
-		        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		
+		        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));	
+		        connection = true;
 		   	} catch (ConnectException e) {
 			    String message = "Connection refused. The server may not be running or unreachable.";
 			    turingMachine_Client.errorWindow(message); 
@@ -46,7 +47,7 @@ public class TuringMachine {
 		        // Log or handle the IOException
 		        e.printStackTrace();
 		    }	
-	   
+	   return connection;
 	}
 
     

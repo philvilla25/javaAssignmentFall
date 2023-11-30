@@ -141,6 +141,7 @@ public class turingMachine_Server {
             while (serverRunning) {
                 try {
                     Socket clientSocket = serverSocket.accept();
+                    ++clientCounter;
                     executorService.submit(() -> handleClientConnection(clientSocket));
                 } catch (SocketException e) {
                     // SocketException will be thrown when the server socket is closed
@@ -158,8 +159,8 @@ public class turingMachine_Server {
 
     private void handleClientConnection(Socket clientSocket) {
         try {
-            int currentClientNumber = ++clientCounter;
-            String clientHostName = "Client " + currentClientNumber;
+        	
+            String clientHostName = "Client " + clientCounter;
 
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
