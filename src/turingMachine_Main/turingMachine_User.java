@@ -24,7 +24,8 @@ public class turingMachine_User {
 	private JTextField userText, serverText, portText, tmText;
 	private JTextArea info;
 	private JScrollPane sp;
-	private int port, tm;
+	private int port;
+	private String tmModel;
 	private String user, server;
 
 	public turingMachine_User() {
@@ -59,12 +60,12 @@ public class turingMachine_User {
 		this.port = port;
 	}
 
-	public int getTm() {
-		return tm;
+	public String getTmModel() {
+		return tmModel;
 	}
 
-	public void setTm(int tm) {
-		this.tm = tm;
+	public void setTmModel(String tm) {
+		this.tmModel = tm;
 	}
 
 	public String getUser() {
@@ -100,7 +101,15 @@ public class turingMachine_User {
 	public JButton getRunButton() {
 		return runButton;
 	}
+	
+	public JTextArea getInfo() {
+		return info;
+	}
 
+	public JTextField getTmText() {
+		return tmText;
+	}
+	
 	public void userWindow() {
 		try {
 			userFrame.setTitle(title);
@@ -147,11 +156,10 @@ public class turingMachine_User {
 		}
 	}
 
-	public boolean setConfig() {
+	public void setConfig() {
 	    String portInput = portText.getText();
 	    String userInput = userText.getText();
 	    String serverInput = serverText.getText();
-	    String tmInput = tmText.getText();
 
 	    // Check if the input is not empty
 	    if (!portInput.isEmpty()) {
@@ -177,12 +185,14 @@ public class turingMachine_User {
 	        // Use the default value if the input is empty
 	        user = turingMachine_Config.DEFAULT_ADDR;
 	    }
-
+	}
+	
+	public boolean validateTm() {
+		String tmInput = tmText.getText();
 	    // Check if the input is not empty
 	    if (!tmInput.isEmpty()) {
 	        if (isValidModel(tmInput)) {
-	        	tmInput = tmInput.replace(" ", "");
-	        	tm = Integer.parseInt(tmInput, 2);
+	        	setTmModel(tmInput);
 	            return true;  // Return true if the TM model is valid
 	        } else {
 	            return false;  // Return false if the TM model is invalid
@@ -229,5 +239,8 @@ public class turingMachine_User {
         return true;
     }
 	
+    public void errorWindow(String message) {
+         JOptionPane.showMessageDialog(userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }
 

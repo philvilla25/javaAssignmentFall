@@ -15,7 +15,30 @@ public class turingMachine_Config {
 	static String DEFAULT_ADDR = "localhost";
 	static int DEFAULT_PORT = 12345;
 	
+	private int tmModel;
+	private int tape;
+	
+	
 	public turingMachine_Config() {}
 	
+	public int getTmModel() {
+		return tmModel;
+	}
+
+
+	public void setTmModel(int tmModel) {
+		this.tmModel = tmModel;
+	}
+
+
+	public int getTape() {
+		return tape;
+	}
+
+
+	public void setTape(int tape) {
+		this.tape = tape;
+	}
+
 	
 }

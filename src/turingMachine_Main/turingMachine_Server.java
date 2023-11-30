@@ -2,14 +2,13 @@ package turingMachine_Main;
 
 import javax.swing.*;
 
-import turingMachine_View.TuringView;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -26,19 +25,16 @@ public class turingMachine_Server {
     private JTextArea info;
     private JScrollPane sp;
     private int port;
+    private String tm;
 
-    private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
+	private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
     private ExecutorService executorService;
+    private ServerSocket serverSocket;
     private volatile boolean serverRunning = false;
     private int clientCounter = 0;
-   /* static final String PROTOCOL_SEPARATOR = "#";
-    static final String PROTOCOL_END = "P0";
-    static final String PROTOCOL_SENDMODEL = "P1";
-    static final String PROTOCOL_RECVMODEL = "P2";
-    static String DEFAULT_USER = "User1";
-    static String DEFAULT_ADDR = "localhost";
-    static int DEFAULT_PORT = 12345;*/
     
+    private PrintWriter out;
+    private BufferedReader in;
 
     public turingMachine_Server() {
         serverFrame = new JFrame();
@@ -82,6 +78,14 @@ public class turingMachine_Server {
         });
     }
 
+    public String getTm() {
+ 		return tm;
+ 	}
+
+ 	public void setTm(String tm) {
+ 		this.tm = tm;
+ 	}
+ 	
     public void serverWindow() {
         try {
             serverFrame.setTitle("Turing Machine Server");
@@ -129,15 +133,19 @@ public class turingMachine_Server {
 
         if (isValidPort(port)) {
             serverRunning = true;
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
             executorService = Executors.newFixedThreadPool(10);
             info.append("Server Started on port " + port+"...\n");
             logger.log(Level.INFO, "Server started on port {0}", port);
 
             while (serverRunning) {
-                Socket clientSocket = serverSocket.accept();
-                executorService.submit(() -> handleClientConnection(clientSocket));
-               
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    executorService.submit(() -> handleClientConnection(clientSocket));
+                } catch (SocketException e) {
+                    // SocketException will be thrown when the server socket is closed
+                    break;
+                }
             }
 
             serverSocket.close();
@@ -153,12 +161,13 @@ public class turingMachine_Server {
             int currentClientNumber = ++clientCounter;
             String clientHostName = "Client " + currentClientNumber;
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             logger.log(Level.INFO, "Accepted connection from {0}", clientSocket.getInetAddress());
             info.append(clientHostName + " connected from: " + clientSocket.getInetAddress() + "\n");
             
             String request = in.readLine();
+            String configData = null;
 
             String[] parts = request.split(turingMachine_Config.PROTOCOL_SEPARATOR);
             String clientId = parts[0];
@@ -166,8 +175,7 @@ public class turingMachine_Server {
             
             // Check if there is additional data
             if (parts.length > 2) {
-                String additionalData = parts[2];
-                // Process additional data as needed
+                configData = parts[2];
             }
             
             switch (protocolId) {
@@ -176,15 +184,16 @@ public class turingMachine_Server {
             	stopConnection();
                 break;
             case turingMachine_Config.PROTOCOL_SENDMODEL:
-                // Handle sending game configuration to server
-            	receiveConfigFromClient();
+                // Handle receiving game configuration from client
+            	receiveConfigFromClient(configData);
                 break;
             case turingMachine_Config.PROTOCOL_RECVMODEL:
-            	//sendConfigurationToClient();
+            	// Handle sending game configuration to server
+            	sendConfigurationToClient();
             	break;
             }
             
-            if ("GET_CONFIG".equals(request)) {
+            /*if ("GET_CONFIG".equals(request)) {
                 String configuration = getConfigurationFromServer();
                 out.println(configuration);
             } else if ("SEND_CONFIG".equals(request)) {
@@ -196,43 +205,46 @@ public class turingMachine_Server {
             out.close();
             in.close();
             clientSocket.close();
-            }      
+            }    */  
         } catch (IOException e) {
             e.printStackTrace();
         }
     
     }
    
-    
-    
-    private void stopConnection() {
-        try {
-            if (serverRunning) {
-                serverRunning = false;
-                executorService.shutdownNow();
-                logger.log(Level.INFO, "Server stopped.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      
+public void stopConnection() {
+     try {
+        if (serverRunning) {
+            serverRunning = false;
+            serverSocket.close();
+            executorService.shutdownNow();
+            logger.log(Level.INFO, "Server stopped.");
+            serverFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            info.append("Server stopped.\n");
+         }
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+}
+   
+private void sendConfigurationToClient() {
+	String config = getTm();
+    if (config != null) {
+        out.println(config);
+    } else {
+        // Handle the case where no configuration is available
+        out.println(""); // Send an empty string or a specific message
     }
-    
-private String getConfigurationFromServer() {
-    // TODO: Implement this method
-    return null;
 }
 
-private String sendConfigurationToServer() {
-    // TODO: Implement this method
-    return null;
-}
-
-    private String receiveConfigFromClient() {
-        // TODO: Implement this method
-        return null;
+private void receiveConfigFromClient(String configData) {
+    	setTm(configData);
+    	info.append("TM Model " + configData + " received \n");
+        return;
     }
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
     	turingMachine_Server server = new turingMachine_Server();
         server.serverWindow();
     }

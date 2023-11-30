@@ -52,24 +52,24 @@ public class TuringController {
 	            handleRunButtonClick();
 	        }
 	    });
-		
 	}
 	
 	public void handleConnectButtonClick() {
-	   // turingMachine.startConnection(2); // 2  represents connection
 		turingMachine.connectToServer();
 	}
 	
 	public void handleSendButtonClick() {
-		//turingMachine.startConnection(1); // 1 represents the "SEND_CONFIG" operation
+		turingMachine_Client.validateTm();
+		turingMachine.sendConfigToServer(turingMachine_Client.getTmModel());
 	}
 
 	public void handleReceiveButtonClick() {
-	   // turingMachine.startConnection(0); // 0 represents the "GET_CONFIG" operation
+		turingMachine.receiveConfigFromServer();
 	}
 
 	public void handleRunButtonClick() {
-		TuringView tm = new TuringView();
-    	tm.tmWindow();
+		turingMachine_Client.validateTm();
+		TuringView machine= new TuringView();
+    	machine.tmWindow(turingMachine_Client.getTmModel());
 	}
 }

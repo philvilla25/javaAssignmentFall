@@ -46,7 +46,7 @@ public class TuringView {
 			return runButton;
 		}
 
-		public void tmWindow() {
+		public void tmWindow(String tmModel) {
 			try {
 				tmFrame.setTitle(title);
 				tmFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,6 +61,7 @@ public class TuringView {
 				//button Panel 
 				 firstButtonPanel.add(tmLabel);
 				 firstButtonPanel.add(tmText);
+				 tmText.setText(tmModel);
 				 
 				 secondButtonPanel.add(tapeLabel);
 				 secondButtonPanel.add(tapeText);
