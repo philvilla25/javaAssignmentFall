@@ -26,10 +26,11 @@ public class turingMachine_Server {
     private JTextArea info;
     private JScrollPane sp;
     private int port;
+
     private static final Logger logger = Logger.getLogger(turingMachine_Server.class.getName());
     private ExecutorService executorService;
     private volatile boolean serverRunning = false;
-    
+    private int clientCounter = 0;
    /* static final String PROTOCOL_SEPARATOR = "#";
     static final String PROTOCOL_END = "P0";
     static final String PROTOCOL_SENDMODEL = "P1";
@@ -38,6 +39,7 @@ public class turingMachine_Server {
     static String DEFAULT_ADDR = "localhost";
     static int DEFAULT_PORT = 12345;*/
     
+
     public turingMachine_Server() {
         serverFrame = new JFrame();
         topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -56,7 +58,6 @@ public class turingMachine_Server {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Use SwingWorker to perform the server startup in the background
                 SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                     @Override
                     protected Void doInBackground() {
@@ -69,11 +70,10 @@ public class turingMachine_Server {
                     }
                 };
 
-                // Execute the SwingWorker
                 worker.execute();
             }
         });
-        
+
         endButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,12 +89,10 @@ public class turingMachine_Server {
             serverFrame.setSize(559, 370);
             serverFrame.setResizable(false);
 
-            // Top Panel
             ImageIcon banner = new ImageIcon(bannerName);
             JLabel bannerLabel = new JLabel(banner);
             topPanel.add(bannerLabel);
 
-            // button Panel
             buttonPanel.add(portLabel);
             buttonPanel.add(portText);
             buttonPanel.add(startButton);
@@ -103,11 +101,9 @@ public class turingMachine_Server {
             buttonPanel.add(finalizesLabel);
             buttonPanel.add(endButton);
 
-            // main Panel
             mainPanel.setLayout(new BorderLayout());
             mainPanel.add(sp, BorderLayout.CENTER);
 
-            // Make the frame visible
             serverFrame.setLayout(new BorderLayout());
             serverFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
             serverFrame.getContentPane().add(buttonPanel, BorderLayout.CENTER);
@@ -125,12 +121,9 @@ public class turingMachine_Server {
 
     public void startConnection() throws IOException {
         String portInput = portText.getText();
-        // Check if the input is not empty
         if (!portInput.isEmpty()) {
-            // Parse the input as an integer if it's not empty
             port = Integer.parseInt(portInput);
         } else {
-            // Use the default value if the input is empty
             port = turingMachine_Config.DEFAULT_PORT;
         }
 
@@ -138,31 +131,35 @@ public class turingMachine_Server {
             serverRunning = true;
             ServerSocket serverSocket = new ServerSocket(port);
             executorService = Executors.newFixedThreadPool(10);
-
+            info.setText("Server Started on port " + port+"...");
             logger.log(Level.INFO, "Server started on port {0}", port);
 
             while (serverRunning) {
                 Socket clientSocket = serverSocket.accept();
                 executorService.submit(() -> handleClientConnection(clientSocket));
+               
             }
 
-            // Close resources after the server stops
             serverSocket.close();
             executorService.shutdown();
             logger.log(Level.INFO, "Server stopped.");
         }
-    } 
+    }
+
+  
 
     private void handleClientConnection(Socket clientSocket) {
         try {
+            int currentClientNumber = ++clientCounter;
+            String clientHostName = "Client " + currentClientNumber;
+
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
             logger.log(Level.INFO, "Accepted connection from {0}", clientSocket.getInetAddress());
-            info.append("Client connected from: " + clientSocket.getInetAddress() + "\n");
-
-            // Handle the client connection (implement your logic here)
+            info.setText(clientHostName + " connected from: " + clientSocket.getInetAddress() + "\n");
+            
             String request = in.readLine();
+
             String[] parts = request.split(turingMachine_Config.PROTOCOL_SEPARATOR);
             String clientId = parts[0];
             String protocolId = parts[1];
@@ -183,19 +180,30 @@ public class turingMachine_Server {
             	receiveConfigFromClient();
                 break;
             case turingMachine_Config.PROTOCOL_RECVMODEL:
-            	sendConfigurationToClient();
+            	//sendConfigurationToClient();
             	break;
             }
+            
+            if ("GET_CONFIG".equals(request)) {
+                String configuration = getConfigurationFromServer();
+                out.println(configuration);
+            } else if ("SEND_CONFIG".equals(request)) {
+                String configuration = in.readLine();
+                // Handle other types of requests
+            } else if ("RUN_MACHINE".equals(request)) {
+                // Handle run machine
 
-            // Close the resources
             out.close();
             in.close();
             clientSocket.close();
-            
+            }      
         } catch (IOException e) {
             e.printStackTrace();
         }
+    
     }
+   
+    
     
     private void stopConnection() {
         try {
@@ -209,10 +217,15 @@ public class turingMachine_Server {
         }
     }
     
-    private String sendConfigurationToClient() {
-        // TODO: Implement this method
-        return null;
-    }
+private String getConfigurationFromServer() {
+    // TODO: Implement this method
+    return null;
+}
+
+private String sendConfigurationToServer() {
+    // TODO: Implement this method
+    return null;
+}
 
     private String receiveConfigFromClient() {
         // TODO: Implement this method
