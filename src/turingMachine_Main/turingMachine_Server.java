@@ -131,7 +131,7 @@ public class turingMachine_Server {
             serverRunning = true;
             ServerSocket serverSocket = new ServerSocket(port);
             executorService = Executors.newFixedThreadPool(10);
-            info.setText("Server Started on port " + port+"...");
+            info.append("Server Started on port " + port+"...\n");
             logger.log(Level.INFO, "Server started on port {0}", port);
 
             while (serverRunning) {
@@ -156,7 +156,7 @@ public class turingMachine_Server {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             logger.log(Level.INFO, "Accepted connection from {0}", clientSocket.getInetAddress());
-            info.setText(clientHostName + " connected from: " + clientSocket.getInetAddress() + "\n");
+            info.append(clientHostName + " connected from: " + clientSocket.getInetAddress() + "\n");
             
             String request = in.readLine();
 
