@@ -65,7 +65,7 @@ public class TuringController {
 	}
 	
 	public void handleSendButtonClick() {
-		turingMachine_Client.validateTm();
+		turingMachine.validateTm();
 		turingMachine.sendConfigToServer(turingMachine_Client.getTmModel());
 	}
 
@@ -74,8 +74,11 @@ public class TuringController {
 	}
 
 	public void handleRunButtonClick() {
-		turingMachine_Client.validateTm();
 		TuringView machine= new TuringView();
-    	machine.tmWindow(turingMachine_Client.getTmModel());
+		if(turingMachine.validateTm()) {	
+			
+	    	machine.tmWindow(turingMachine_Client.getTmModel());
+		}
+		
 	}
 }

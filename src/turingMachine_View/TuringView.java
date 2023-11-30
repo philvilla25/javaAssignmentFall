@@ -18,7 +18,7 @@ public class TuringView {
 		private JFrame tmFrame;
 		private String title = "Turing Machine";
 		private JPanel topPanel, firstButtonPanel, secondButtonPanel, mainPanel;
-		private String bannerName = "../resources/tm.png";
+		private String bannerName = "resources/tm.png";
 		private JButton runButton, clearButton;
 		private JLabel tmLabel, tapeLabel;
 		private JTextField tmText, tapeText;

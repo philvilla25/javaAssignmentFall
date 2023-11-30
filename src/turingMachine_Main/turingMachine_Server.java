@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class turingMachine_Server {
     private JFrame serverFrame;
     private JPanel topPanel, buttonPanel, mainPanel;
-    private String bannerName = "resources/tm-server.png";
+    private String bannerName = "../resources/tm-server.png";
     private JButton startButton, modelButton, endButton;
     private JLabel portLabel, finalizesLabel;
     private JTextField portText;
