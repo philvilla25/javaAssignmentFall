@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import turingMachine_Main.turingMachine_Config;
 import turingMachine_Main.turingMachine_User;
 
 public class TuringMachine {
@@ -17,12 +18,6 @@ public class TuringMachine {
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in;
-	
-	
-	static final String PROTOCOL_SEPARATOR = "#";
-	static final String PROTOCOL_END = "P0";
-	static final String PROTOCOL_SENDMODEL = "P1";
-	static final String PROTOCOL_RECVMODEL = "P2";
 	private int clientId;
 	
     public TuringMachine(turingMachine_User turingMachine_Client) {
@@ -52,16 +47,16 @@ public class TuringMachine {
     
     public void sendConfigToServer(String configurationData) {
         // Send game configuration message to the server
-        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_SENDMODEL + PROTOCOL_SEPARATOR + configurationData);
+        out.println( clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_SENDMODEL + turingMachine_Config.PROTOCOL_SEPARATOR + configurationData);
     }
     
     public void receiveConfigFromServer() {
-        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_RECVMODEL + PROTOCOL_SEPARATOR);
+        out.println( clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_RECVMODEL + turingMachine_Config.PROTOCOL_SEPARATOR);
     }
     
     public void endExecution() {
         // Send end execution message to the server
-        out.println( clientId + PROTOCOL_SEPARATOR + PROTOCOL_END);
+        out.println( clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_END);
     }
     
     public void closeConnection() {

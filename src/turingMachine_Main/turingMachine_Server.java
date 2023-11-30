@@ -30,13 +30,13 @@ public class turingMachine_Server {
     private ExecutorService executorService;
     private volatile boolean serverRunning = false;
     
-    static final String PROTOCOL_SEPARATOR = "#";
+   /* static final String PROTOCOL_SEPARATOR = "#";
     static final String PROTOCOL_END = "P0";
     static final String PROTOCOL_SENDMODEL = "P1";
     static final String PROTOCOL_RECVMODEL = "P2";
     static String DEFAULT_USER = "User1";
     static String DEFAULT_ADDR = "localhost";
-    static int DEFAULT_PORT = 12345;
+    static int DEFAULT_PORT = 12345;*/
     
     public turingMachine_Server() {
         serverFrame = new JFrame();
@@ -163,7 +163,7 @@ public class turingMachine_Server {
 
             // Handle the client connection (implement your logic here)
             String request = in.readLine();
-            String[] parts = request.split(PROTOCOL_SEPARATOR);
+            String[] parts = request.split(turingMachine_Config.PROTOCOL_SEPARATOR);
             String clientId = parts[0];
             String protocolId = parts[1];
             
@@ -174,15 +174,15 @@ public class turingMachine_Server {
             }
             
             switch (protocolId) {
-            case PROTOCOL_END:
+            case turingMachine_Config.PROTOCOL_END:
                 // Handle ending execution
             	stopConnection();
                 break;
-            case PROTOCOL_SENDMODEL:
+            case turingMachine_Config.PROTOCOL_SENDMODEL:
                 // Handle sending game configuration to server
             	receiveConfigFromClient();
                 break;
-            case PROTOCOL_RECVMODEL:
+            case turingMachine_Config.PROTOCOL_RECVMODEL:
             	sendConfigurationToClient();
             	break;
             }
