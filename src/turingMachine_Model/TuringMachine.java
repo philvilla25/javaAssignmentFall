@@ -73,7 +73,7 @@ public class TuringMachine {
 
     public boolean isValidModel(String model) {
         // Validate binary format
-        if (!isBinary(model)) {
+        if (!(model.matches("[01]+"))){
             System.out.println("Error: The Turing Machine model must be binary.");
             return false;
         }
@@ -95,26 +95,4 @@ public class TuringMachine {
         return true;
     }
     
-    private static boolean isBinary(String model) {
-        // Return true if the model is binary, false otherwise
-        return model.matches("[01]+");
-    }
-    
-    private static int countStates(String model) {
-        // Implement logic to count the number of states in the model
-        // You might need to analyze the structure of the model
-        // and count the occurrences of state representations
-        // Return the count of states
-        // For example, if your states are represented by 'A', 'B', 'C', etc.
-        // you could count the unique occurrences of these characters.
-        return 0;
-    }
-
-    private static boolean hasFiveUnitSequence(String model) {
-        // Implement logic to check if the model is defined with a five-unit sequence
-        // This might involve analyzing the structure of the model and checking for
-        // patterns or sequences of a specific length
-        // Return true if the model has the required sequence, false otherwise
-        return false;
-    }
 }
