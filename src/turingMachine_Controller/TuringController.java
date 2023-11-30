@@ -57,6 +57,7 @@ public class TuringController {
 	
 	public void handleConnectButtonClick() {
 	   // turingMachine.startConnection(2); // 2  represents connection
+		turingMachine.connectToServer();
 	}
 	
 	public void handleSendButtonClick() {
