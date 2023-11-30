@@ -71,7 +71,7 @@ public class TuringView {
 				 mainPanel.setLayout(new BorderLayout()); // Set layout manager for mainPanel
 		         mainPanel.add(sp, BorderLayout.CENTER); // Add JScrollPane to mainPanel
 
-				// Make the frame visible
+				 // Make the frame visible
 		         tmFrame.setLayout(new BoxLayout(tmFrame.getContentPane(), BoxLayout.Y_AXIS));
 		         tmFrame.add(topPanel);
 		         tmFrame.add(firstButtonPanel);

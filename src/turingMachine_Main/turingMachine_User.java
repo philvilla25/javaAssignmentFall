@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -146,47 +147,87 @@ public class turingMachine_User {
 		}
 	}
 
-	public void setConfig() {
-		String portInput = portText.getText();
-		String userInput = userText.getText();
-		String serverInput = serverText.getText();   
-        String tmInput = tmText.getText();
-		   
-        // Check if the input is not empty
-        if (!portInput.isEmpty()) {
-            // Parse the input as an integer if it's not empty
-            port = Integer.parseInt(portInput);
-        } else {
-            // Use the default value if the input is empty
-            port = turingMachine_Config.DEFAULT_PORT;
-        }
-        
-     
-        // Check if the input is not empty
-        if (!userInput.isEmpty()) {
-        	user = userInput;
-        }else {
-            // Use the default value if the input is empty
-        	user = turingMachine_Config.DEFAULT_USER;
-        }
-        
-       
-        // Check if the input is not empty
-        if (!serverInput.isEmpty()) {
-        	server = serverInput;
-        }else {
-            // Use the default value if the input is empty
-        	user = turingMachine_Config.DEFAULT_ADDR;
-        }
-     
-        // Check if the input is not empty
-        if (!tmInput.isEmpty()) {
-        	tm = Integer.parseInt(tmInput);
-        }else {
-            // Use the default value if the input is empty
-        	//user = DEFAULT_ADDR;
-        }
+	public boolean setConfig() {
+	    String portInput = portText.getText();
+	    String userInput = userText.getText();
+	    String serverInput = serverText.getText();
+	    String tmInput = tmText.getText();
+
+	    // Check if the input is not empty
+	    if (!portInput.isEmpty()) {
+	        // Parse the input as an integer if it's not empty
+	        port = Integer.parseInt(portInput);
+	    } else {
+	        // Use the default value if the input is empty
+	        port = turingMachine_Config.DEFAULT_PORT;
+	    }
+
+	    // Check if the input is not empty
+	    if (!userInput.isEmpty()) {
+	        user = userInput;
+	    } else {
+	        // Use the default value if the input is empty
+	        user = turingMachine_Config.DEFAULT_USER;
+	    }
+
+	    // Check if the input is not empty
+	    if (!serverInput.isEmpty()) {
+	        server = serverInput;
+	    } else {
+	        // Use the default value if the input is empty
+	        user = turingMachine_Config.DEFAULT_ADDR;
+	    }
+
+	    // Check if the input is not empty
+	    if (!tmInput.isEmpty()) {
+	        if (isValidModel(tmInput)) {
+	        	tmInput = tmInput.replace(" ", "");
+	        	tm = Integer.parseInt(tmInput, 2);
+	            return true;  // Return true if the TM model is valid
+	        } else {
+	            return false;  // Return false if the TM model is invalid
+	        }
+	    } else {
+	        String message = "Enter valid TM Model";
+	        JOptionPane.showMessageDialog(userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+	        return false;  // Return false if TM input is empty
+	    }
 	}
+
+    public boolean isValidModel(String model) {
+    	int modelCharCount = 0;
+    	String message;
+    	
+        // Validate binary format
+        if (!(model.matches("[01 ]+"))){
+        	message = "Error: The Turing Machine model must be binary.";
+            JOptionPane.showMessageDialog(userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Validate minimum two states
+        String[] parts = model.split(" ");
+        int numberOfParts = parts.length;
+        if (numberOfParts < 2) {
+            message = "Error: The Turing Machine must have at least two states.";
+            JOptionPane.showMessageDialog(userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Validate five-unit sequence
+        for (char c : model.toCharArray()) {
+            if (c != ' ') {
+            	modelCharCount++;
+            }
+        }
+        
+        if (!(modelCharCount % 5 == 0)) {
+        	 message = "Error: The Turing Machine model must be defined with a five-unit sequence.";
+            JOptionPane.showMessageDialog( userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 	
 }
 

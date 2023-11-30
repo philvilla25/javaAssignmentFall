@@ -25,23 +25,24 @@ public class TuringMachine {
     }
 
     public void connectToServer() { 
-	    try {
-	        turingMachine_Client.setConfig();
-	        String ip = turingMachine_Client.getServer();
-	        int port = turingMachine_Client.getPort();
-	        
-	        clientSocket = new Socket(ip, port);
-	        
-	        out = new PrintWriter(clientSocket.getOutputStream(), true);
-	        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-	
-	    } catch (UnknownHostException e) {
-	        // Log or handle the UnknownHostException
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        // Log or handle the IOException
-	        e.printStackTrace();
-	    }
+	   if (turingMachine_Client.setConfig()) {
+		   try {
+		        String ip = turingMachine_Client.getServer();
+		        int port = turingMachine_Client.getPort();
+		        
+		        clientSocket = new Socket(ip, port);
+		        
+		        out = new PrintWriter(clientSocket.getOutputStream(), true);
+		        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		
+		    } catch (UnknownHostException e) {
+		        // Log or handle the UnknownHostException
+		        e.printStackTrace();
+		    } catch (IOException e) {
+		        // Log or handle the IOException
+		        e.printStackTrace();
+		    }	
+	   }
 	}
 
     
@@ -69,30 +70,6 @@ public class TuringMachine {
             e.printStackTrace();
         }
     }
-    
-
-    public boolean isValidModel(String model) {
-        // Validate binary format
-        if (!(model.matches("[01]+"))){
-            System.out.println("Error: The Turing Machine model must be binary.");
-            return false;
-        }
-
-        // Validate minimum two states
-        if (countStates(model) < 2) {
-            System.out.println("Error: The Turing Machine must have at least two states.");
-            return false;
-        }
-
-        // Validate five-unit sequence
-        if (!hasFiveUnitSequence(model)) {
-            System.out.println("Error: The Turing Machine model must be defined with a five-unit sequence.");
-            return false;
-        }
-
-        // The model is valid
-        System.out.println("Turing Machine model is valid.");
-        return true;
-    }
+   
     
 }
