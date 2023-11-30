@@ -25,7 +25,7 @@ public class TuringController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				turingMachine_Client.setInfo("Connecting to server...." + "\n");
 				handleConnectButtonClick();			
 			}
         });
@@ -57,7 +57,10 @@ public class TuringController {
 	
 	public void handleConnectButtonClick() {
 		if(turingMachine.connectToServer()) {		
-				turingMachine_Client.getConnectButton().setEnabled(false);		
+				turingMachine_Client.getConnectButton().setEnabled(false);	
+				turingMachine_Client.setInfo("Connected to server" + "\n");
+		}else {
+			turingMachine_Client.setInfo("Failed to connect to server" + "\n");
 		}
 	}
 	

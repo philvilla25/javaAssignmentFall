@@ -28,7 +28,7 @@ public class TuringMachine {
     public boolean connectToServer() { 
     	turingMachine_Client.setConfig();
 		   try {
-			   	String data;
+			   	
 		        String ip = turingMachine_Client.getServer();
 		        int port = turingMachine_Client.getPort();
 		        

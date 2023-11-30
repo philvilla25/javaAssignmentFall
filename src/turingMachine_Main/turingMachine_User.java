@@ -51,6 +51,10 @@ public class turingMachine_User {
 		sp = new JScrollPane(info);
 	}
 	
+	public void setInfo(String inform) {
+		
+		this.info.append(inform);
+	}
 	
 	public int getPort() {
 		return port;
