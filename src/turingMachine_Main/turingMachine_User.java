@@ -109,6 +109,10 @@ public class turingMachine_User {
 		return runButton;
 	}
 	
+	public JButton getValidateButton() {
+		return validateButton;
+	}
+	
 	public JTextArea getInfo() {
 		return info;
 	}

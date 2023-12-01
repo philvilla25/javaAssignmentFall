@@ -53,6 +53,14 @@ public class TuringController {
 	            handleRunButtonClick();
 	        }
 	    });
+	    
+	    // Add listener to run button
+	    turingMachine_Client.getValidateButton().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	handleValidateButtonClick();
+	        }
+	    });
 	}
 	
 	public void handleConnectButtonClick() {
@@ -73,6 +81,14 @@ public class TuringController {
 		turingMachine.receiveConfigFromServer();
 	}
 
+	public void handleValidateButtonClick() {
+		if(turingMachine.validateTm()) {
+			turingMachine_Client.setInfo("TM validated");
+		}
+		else {
+			turingMachine_Client.setInfo("TM incorrect");
+		}
+	}
 	public void handleRunButtonClick() {
 		TuringView machine= new TuringView();
 		if(turingMachine.validateTm()) {	
