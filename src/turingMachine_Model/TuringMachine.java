@@ -66,25 +66,36 @@ public class TuringMachine {
     
     public void receiveConfigFromServer() {
         try {
-        	// send message to server requesting for game configuration
+            // Send message to server requesting game configuration
             out.println(clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_RECVMODEL + turingMachine_Config.PROTOCOL_SEPARATOR);
-            // receive game configuration
-			String configFromServer = in.readLine();
-			  if (configFromServer.isEmpty()) {
-		            turingMachine_Client.getInfo().append("No Turing Machine configuration in the server yet");
-		        } else {
-		            turingMachine_Client.getInfo().append("Received Turing Machine configuration: " + configFromServer);
-		            turingMachine_Client.setTmModel(configFromServer);
-		            turingMachine_Client.getTmText().setText(configFromServer);
-		        }
-		} catch (IOException e) {
-			e.printStackTrace();
-		}catch(NullPointerException e) {
-			String message = "Error: The Client must be connected to the sever";
-			turingMachine_Client.errorWindow(message);
-		}
-        
+
+            // Use BufferedReader to read from the server
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            // Check if data is ready to be read
+            if (in.ready()) {
+                // Read the line from the server
+                String configFromServer = in.readLine();
+
+                if (configFromServer.isEmpty()) {
+                    turingMachine_Client.getInfo().append("No Turing Machine configuration in the server yet");
+                } else {
+                    turingMachine_Client.getInfo().append("Received Turing Machine configuration: " + configFromServer);
+                    turingMachine_Client.setTmModel(configFromServer);
+                    turingMachine_Client.getTmText().setText(configFromServer);
+                }
+            } else {
+                // No data available, handle accordingly
+                turingMachine_Client.getInfo().append("No data available from the server");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            String message = "Error: The Client must be connected to the server";
+            turingMachine_Client.errorWindow(message);
+        }
     }
+
     
     public boolean validateTm() {
 		JTextField tmInput = turingMachine_Client.getTmText();
