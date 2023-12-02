@@ -281,7 +281,6 @@ public class TuringMachine {
 		 while (finalState != 0) {
 			 turingMachine_Client.getInfo().append("Step: " + step + " Tapepos: " + tapePos);
 			 displayTape(tapePos);
-		 	
 		}
 	}
 
