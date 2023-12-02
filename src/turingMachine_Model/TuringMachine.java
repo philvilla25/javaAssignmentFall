@@ -263,12 +263,22 @@ public class TuringMachine {
 		 }
 	}
 	
+	private TuringMachineTuple findTuple(int state, char symbol) {
+	    for (TuringMachineTuple tuple : tuples) {
+	        if (tuple.getState() == state && tuple.getInputSymbol() == symbol) {
+	            return tuple;
+	        }
+	    }
+	    // Handle the case where no matching tuple is found 
+	    return null;
+	}
+
 	public void startTuringMachine() {
 		 getTape();
 		 int step = 0;
 		 int tapeLength = tape.length;
 		 int tapePos = tapeLength / 2;
-		 int finalState = 0;
+		 int currentState = 0;
 		 
 		 String tmModel = turingMachine_Client.getTmModel();
 		 turingMachine_Client.getInfo().append("Card:" + tmModel + "\n");
@@ -278,9 +288,22 @@ public class TuringMachine {
 		 displayTape(tapePos);// write initial tape
 		 turingMachine_Client.getInfo().append("\n"); //new line;
 		 turingMachine_Client.getInfo().append("Game Started\n");
-		 while (finalState != 0) {
-			 turingMachine_Client.getInfo().append("Step: " + step + " Tapepos: " + tapePos);
-			 displayTape(tapePos);
+		 while (currentState != 0) {
+		        // Find the tuple for the current state and symbol under the tape head
+		        TuringMachineTuple currentTuple = findTuple(currentState, tape[tapePos]);
+
+		        // Apply the transition rules
+		        tape[tapePos] = currentTuple.getWriteSymbol();
+		        tapePos += currentTuple.getMoveDirection();
+
+		        // Update the current state
+		        currentState = currentTuple.getNextState();
+
+		        // Display the current step and tape
+		        turingMachine_Client.getInfo().append("Step: " + step + " Tapepos: " + tapePos);
+		        displayTape(tapePos);
+
+		        step++;
 		}
 	}
 
