@@ -141,6 +141,7 @@ public class turingMachine_Server {
             while (serverRunning) {
                 try {
                     Socket clientSocket = serverSocket.accept();
+                   
                     ++clientCounter;
                     executorService.submit(() -> handleClientConnection(clientSocket));
                 } catch (SocketException e) {
@@ -169,11 +170,10 @@ public class turingMachine_Server {
             
             String request = in.readLine();
             String configData = null;
-
+            System.out.println("Awa request" + request);
             String[] parts = request.split(turingMachine_Config.PROTOCOL_SEPARATOR);
-            String clientId = parts[0];
+            int clientId = clientCounter;
             String protocolId = parts[1];
-            
             // Check if there is additional data
             if (parts.length > 2) {
                 configData = parts[2];

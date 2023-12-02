@@ -78,7 +78,8 @@ public class TuringController {
 	public void handleConnectButtonClick() {
 		if(turingMachine.connectToServer()) {		
 				turingMachine_Client.getConnectButton().setEnabled(false);	
-				turingMachine_Client.setInfo("Connected to server" + "\n");
+				turingMachine_Client.setInfo("Connected to server" + "\n" + turingMachine_Client.getUserName());
+				turingMachine_Client.getUser();
 		}else {
 			turingMachine_Client.setInfo("Failed to connect to server" + "\n");
 		}
