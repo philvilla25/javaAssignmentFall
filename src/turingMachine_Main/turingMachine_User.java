@@ -121,6 +121,14 @@ public class turingMachine_User {
 		return tmText;
 	}
 	
+	public String getUserName() {
+		return user;
+	}
+	
+	public void setUserName(String user) {
+		this.user = user;
+	}
+	
 	public void userWindow() {
 		try {
 			userFrame.setTitle(title);
@@ -171,8 +179,10 @@ public class turingMachine_User {
 	    String portInput = portText.getText();
 	    String userInput = userText.getText();
 	    String serverInput = serverText.getText();
-
+	    System.out.println("Setconfig" + portInput + userInput + serverInput);
 	    // Check if the input is not empty
+	    //setUserName(userInput);
+	    
 	    if (!portInput.isEmpty()) {
 	        // Parse the input as an integer if it's not empty
 	        port = Integer.parseInt(portInput);
@@ -181,12 +191,12 @@ public class turingMachine_User {
 	        port = turingMachine_Config.DEFAULT_PORT;
 	    }
 
-	    // Check if the input is not empty
-	    if (!userInput.isEmpty()) {
-	        user = userInput;
+	     //Check if the input is not empty
+	    if (userText.getText().isEmpty()) {
+	        user = turingMachine_Config.DEFAULT_USER;
 	    } else {
 	        // Use the default value if the input is empty
-	        user = turingMachine_Config.DEFAULT_USER;
+	        user = userInput;
 	    }
 
 	    // Check if the input is not empty
@@ -194,7 +204,7 @@ public class turingMachine_User {
 	        server = serverInput;
 	    } else {
 	        // Use the default value if the input is empty
-	        user = turingMachine_Config.DEFAULT_ADDR;
+	        server = turingMachine_Config.DEFAULT_ADDR;
 	    }
 	}
 	

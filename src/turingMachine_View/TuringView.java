@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import turingMachine_Main.turingMachine_Config;
+
 public class TuringView {
 
 		private JFrame tmFrame;
@@ -39,6 +41,7 @@ public class TuringView {
 			tapeText = new JTextField(40);
 			info = new  JTextArea(18, 40);
 			sp = new JScrollPane(info);
+			
 		}
 		
 
@@ -52,7 +55,6 @@ public class TuringView {
 				tmFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				tmFrame.setSize(800, 500);
 				tmFrame.setResizable(false);
-				
 			    // Top Panel
 				 ImageIcon banner = new ImageIcon(bannerName);
 				 JLabel bannerLabel = new JLabel(banner);
@@ -65,6 +67,7 @@ public class TuringView {
 				 
 				 secondButtonPanel.add(tapeLabel);
 				 secondButtonPanel.add(tapeText);
+				 tapeText.setText(turingMachine_Config.DEFAULT_TAPE);
 				 secondButtonPanel.add(runButton);
 				 secondButtonPanel.add(clearButton);
 				 

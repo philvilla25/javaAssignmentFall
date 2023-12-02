@@ -24,7 +24,8 @@ public class TuringMachine {
 	private BufferedReader in;
 	private int clientId;
 	private boolean connection = false;
-    public TuringMachine(turingMachine_User turingMachine_Client) {
+   
+	public TuringMachine(turingMachine_User turingMachine_Client) {
         this.turingMachine_Client = turingMachine_Client;
     }
 
@@ -34,7 +35,7 @@ public class TuringMachine {
 			   	
 		        String ip = turingMachine_Client.getServer();
 		        int port = turingMachine_Client.getPort();
-		        
+		        String userName = turingMachine_Client.getUserName();		
 		        clientSocket = new Socket(ip, port);
 		        
 		        out = new PrintWriter(clientSocket.getOutputStream(), true);
