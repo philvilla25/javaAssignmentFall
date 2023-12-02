@@ -13,17 +13,20 @@ import javax.swing.JTextField;
 
 import turingMachine_Main.turingMachine_Config;
 import turingMachine_Main.turingMachine_User;
+import turingMachine_View.TuringView;
 
 public class TuringMachine {
-	//private Tape tape;
-	//private State currentState;
 	private turingMachine_User turingMachine_Client;
+	private TuringView view;
 	//private turingMachine_Server turingMachine_Server;
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in;
 	private int clientId;
 	private boolean connection = false;
+    private TuringMachineTuple[] tuples;
+	private char[] tape;
+	
     public TuringMachine(turingMachine_User turingMachine_Client) {
         this.turingMachine_Client = turingMachine_Client;
     }
@@ -44,11 +47,11 @@ public class TuringMachine {
 			    String message = "Connection refused. The server may not be running or unreachable.";
 			    turingMachine_Client.errorWindow(message); 
 		    } catch (UnknownHostException e) {
-		        // Log or handle the UnknownHostException
-		        e.printStackTrace();
+		    	String message = "Unknown host. Please check the server address.";
+		    	turingMachine_Client.errorWindow(message);
 		    } catch (IOException e) {
-		        // Log or handle the IOException
-		        e.printStackTrace();
+		    	String message = "IOException occurred while connecting to the server.";
+		        turingMachine_Client.errorWindow(message);
 		    }	
 	   return connection;
 	}
@@ -164,7 +167,126 @@ public class TuringMachine {
             e.printStackTrace();
         }
     }
+   
+    public static class TuringMachineTuple {
+        private int state;
+        private char inputSymbol;
+        private int nextState;
+        private char writeSymbol;
+        private int moveDirection;
+
+        // Constructor
+        public TuringMachineTuple(int state, char inputSymbol, int nextState, char writeSymbol, int moveDirection) {
+            this.state = state;
+            this.inputSymbol = inputSymbol;
+            this.nextState = nextState;
+            this.writeSymbol = writeSymbol;
+            this.moveDirection = moveDirection;
+        }
+
+        // Getters
+        public int getState() {
+            return state;
+        }
+
+        public char getInputSymbol() {
+            return inputSymbol;
+        }
+
+        public int getNextState() {
+            return nextState;
+        }
+
+        public char getWriteSymbol() {
+            return writeSymbol;
+        }
+
+        public int getMoveDirection() {
+            return moveDirection;
+        }
+    }
+
+	public void initializeTuples(String tmModel) {
+	    String[] tupleStrings = tmModel.split(" ");
+
+	    // Ensure that the number of characters in the model is a multiple of 5
+	    if (tupleStrings.length % 5 != 0) {
+	        // Handle error, invalid model
+	        return;
+	    }
+
+	    int numberOfTuples = tupleStrings.length / 5;
+
+	    // Initialize the array to hold the tuples
+	    tuples = new TuringMachineTuple[numberOfTuples];
+
+	    // Populate the array with tuples
+	    for (int i = 0; i < numberOfTuples; i++) {
+	        int startIndex = i * 5;
+	        int state = Integer.parseInt(tupleStrings[startIndex]);
+	        char inputSymbol = tupleStrings[startIndex + 1].charAt(0);
+	        int nextState = Integer.parseInt(tupleStrings[startIndex + 2]);
+	        char writeSymbol = tupleStrings[startIndex + 3].charAt(0);
+	        int moveDirection = Integer.parseInt(tupleStrings[startIndex + 4]);
+
+	        // Create a new TuringMachineTuple and store it in the array
+	        tuples[i] = new TuringMachineTuple(state, inputSymbol, nextState, writeSymbol, moveDirection);
+	        
+
+            // Display the extracted components
+            System.out.println("Tuple " + (i + 1) + ":");
+            System.out.println("State: " + state);
+            System.out.println("Input Symbol: " + inputSymbol);
+            System.out.println("Next State: " + nextState);
+            System.out.println("Write Symbol: " + writeSymbol);
+            System.out.println("Move Direction: " + moveDirection);
+            System.out.println();
+	    }
+	}
+	
+	public void getTape() {
+		if (view.getTapeText().getText()!= " ") {
+			tape = view.getTapeText().getText().toCharArray();
+		}else {
+			tape = "000000000000000000000000000000000000000000000000".toCharArray();
+		}	
+	}
+	
+	public void displayTape(int tapePos) {
+		 for (int i = 0; i < tape.length; i++) {
+			    char symbol = tape[i];
+			    if (i == tapePos) {
+			        turingMachine_Client.getInfo().append("[" + symbol + "]");
+			    } else {
+			        turingMachine_Client.getInfo().append(String.valueOf(symbol));
+			    }
+		 }
+	}
+	
+	public void startTuringMachine() {
+		 getTape();
+		 int step = 0;
+		 int tapeLength = tape.length;
+		 int tapePos = tapeLength / 2;
+		 int finalState = 0;
+		 
+		 String tmModel = turingMachine_Client.getTmModel();
+		 turingMachine_Client.getInfo().append("Card:" + tmModel + "\n");
+		 initializeTuples(tmModel);
+		 
+		 turingMachine_Client.getInfo().append("Initial tape (head position between brackets)\n");
+		 displayTape(tapePos);// write initial tape
+		 turingMachine_Client.getInfo().append("\n"); //new line;
+		 turingMachine_Client.getInfo().append("Game Started\n");
+		 while (finalState != 0) {
+			 turingMachine_Client.getInfo().append("Step: " + step + " Tapepos: " + tapePos);
+			 displayTape(tapePos);
+		 	
+		}
+	}
 
    
     
 }
+
+

@@ -42,6 +42,11 @@ public class TuringView {
 		}
 		
 
+		public JTextField getTapeText() {
+			return tapeText;
+		}
+
+
 		public JButton getRunButton() {
 			return runButton;
 		}

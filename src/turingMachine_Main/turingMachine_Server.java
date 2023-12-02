@@ -212,8 +212,7 @@ public class turingMachine_Server {
         }
     
     }
-   
-      
+       
 public void stopConnection() {
      try {
         if (serverRunning) {

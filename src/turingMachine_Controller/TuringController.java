@@ -61,8 +61,20 @@ public class TuringController {
 	        	handleValidateButtonClick();
 	        }
 	    });
+	    
+	    // Add listener to run button
+	    view.getRunButton().addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	handleRunTuringMachine();
+	        }
+	    });
 	}
 	
+	public void handleRunTuringMachine() {
+		turingMachine.startTuringMachine();	
+	}
+
 	public void handleConnectButtonClick() {
 		if(turingMachine.connectToServer()) {		
 				turingMachine_Client.getConnectButton().setEnabled(false);	
