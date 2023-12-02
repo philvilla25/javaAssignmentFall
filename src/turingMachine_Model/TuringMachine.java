@@ -288,7 +288,7 @@ public class TuringMachine {
 		 displayTape(tapePos);// write initial tape
 		 turingMachine_Client.getInfo().append("\n"); //new line;
 		 turingMachine_Client.getInfo().append("Game Started\n");
-		 while (currentState != 0) {
+		 while (currentState != 0) { // accurately check for final state
 		        // Find the tuple for the current state and symbol under the tape head
 		        TuringMachineTuple currentTuple = findTuple(currentState, tape[tapePos]);
 
