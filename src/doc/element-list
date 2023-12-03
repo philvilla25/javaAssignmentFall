@@ -1,5 +1,4 @@
-unnamed package
-gameOfLife_Controller
-gameOfLife_Model
-gameOfLife_View
-layoutPackage
+turingMachine_Controller
+turingMachine_Main
+turingMachine_Model
+turingMachine_View

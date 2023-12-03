@@ -1,5 +1,16 @@
-package turingMachine_Main;
+/*
+ * File name: turingMachine_User.java
+ * Name: Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * Course: CST 8221 – JAP, Lab Section: 302
+ * Assignment: A32 
+ * Professor: Daniel Cormier
+ * Date: 3rd December, 2024.
+ * Compiler: Eclipse IDE for Java Developers - Version: 2022-03 (4.23.0)
+ * Purpose: Class that handles Client GUI
+ */
 
+package turingMachine_Main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,8 +24,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * Class Name:  turingMachine_User
+ * Purpose: GUI for client window
+ */
 public class turingMachine_User {
 
+	// attributes
 	private JFrame userFrame;
 	private String title = "Turing Machine User";
 	private JPanel topPanel, buttonPanel, mainPanel;
@@ -28,6 +44,9 @@ public class turingMachine_User {
 	private String tmModel;
 	private String user, server;
 
+	/**
+	 * Default constructor
+	 */
 	public turingMachine_User() {
 		userFrame = new JFrame();
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -51,84 +70,169 @@ public class turingMachine_User {
 		sp = new JScrollPane(info);
 	}
 	
+	/**
+	 * Getter for End Button
+	 * @return the end button
+	 */
+	public JButton getEndButton() {
+		return endButton;
+	}
+
+	/**
+	 * Getter for user frame
+	 * @return user frame
+	 */
 	public JFrame getUserFrame() {
 		return userFrame;
 	}
+	
+	/**
+	 * Setter for info text area
+	 * @param inform text to put into the text area
+	 */
 	public void setInfo(String inform) {
-		
 		this.info.append(inform);
 	}
 	
+	/**
+	 * Getter for port number
+	 * @return port number
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * Setter for port number
+	 * @param port Port number
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
+	/**
+	 * Getter for tm model
+	 * @return tm model
+	 */
 	public String getTmModel() {
 		return tmModel;
 	}
 
+	/**
+	 * Setter for tm model
+	 * @param tm Tm model
+	 */
 	public void setTmModel(String tm) {
 		this.tmModel = tm;
 	}
 
+	/**
+	 * Getter for user 
+	 * @return user
+	 */
 	public String getUser() {
 		return user;
 	}
 
+	/**
+	 * Setter for user
+	 * @param user user name
+	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
 
+	/**
+	 * Getter for server
+	 * @return server name
+	 */
 	public String getServer() {
 		return server;
 	}
 
+	/**
+	 * Setter for server
+	 * @param server server name
+	 */
 	public void setServer(String server) {
 		this.server = server;
 	}
 	
+	/**
+	 * Getter for connect button
+	 * @return connect button
+	 */
 	public JButton getConnectButton() {
 		return connectButton;
 	}
 	
+	/**
+	 * Setter for send button
+	 * @return send button
+	 */
 	public JButton getSendButton() {
 		return sendButton;
 	}
 
-
+	/**
+	 * Getter for receive button
+	 * @return receive button
+	 */
 	public JButton getReceiveButton() {
 		return receiveButton;
 	}
 
-
+	/**
+	 * Getter for run button
+	 * @return run button
+	 */
 	public JButton getRunButton() {
 		return runButton;
 	}
 	
+	/**
+	 * Getter for validate button
+	 * @return validate button
+	 */
 	public JButton getValidateButton() {
 		return validateButton;
 	}
 	
+	/**
+	 * Getter for info text area
+	 * @return info text area
+	 */
 	public JTextArea getInfo() {
 		return info;
 	}
 
+	/**
+	 * Getter for tm text
+	 * @return tm text
+	 */
 	public JTextField getTmText() {
 		return tmText;
 	}
 	
+	/**
+	 * Getter for user name
+	 * @return user name
+	 */
 	public String getUserName() {
 		return user;
 	}
 	
+	/**
+	 * Setter for user name
+	 * @param user user name
+	 */
 	public void setUserName(String user) {
 		this.user = user;
 	}
 	
+	/**
+	 * Method Name: Client GUI Window
+	 */
 	public void userWindow() {
 		try {
 			userFrame.setTitle(title);
@@ -163,7 +267,7 @@ public class turingMachine_User {
 	         mainPanel.add(sp, BorderLayout.CENTER); // Add JScrollPane to mainPanel
 
 		   
-			// Make the frame visible
+			// add to frame
 		    userFrame.setLayout(new BorderLayout());
 		    userFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
 	        userFrame.getContentPane().add(buttonPanel, BorderLayout.CENTER);
@@ -175,13 +279,14 @@ public class turingMachine_User {
 		}
 	}
 
+	/**
+	 * Method Name:setConfig()
+	 */
 	public void setConfig() {
-	    String portInput = portText.getText();
-	    String userInput = userText.getText();
-	    String serverInput = serverText.getText();
+	    String portInput = portText.getText(); // get port input
+	    String userInput = userText.getText(); // get user input
+	    String serverInput = serverText.getText(); // get server input
 	    System.out.println("Setconfig" + portInput + userInput + serverInput);
-	    // Check if the input is not empty
-	    //setUserName(userInput);
 	    
 	    if (!portInput.isEmpty()) {
 	        // Parse the input as an integer if it's not empty
@@ -208,7 +313,10 @@ public class turingMachine_User {
 	    }
 	}
 	
-	
+	/**
+	 * Method Name:errorWindow(String message)
+	 * @param message Message to be displayed on the window
+	 */
     public void errorWindow(String message) {
          JOptionPane.showMessageDialog(userFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }

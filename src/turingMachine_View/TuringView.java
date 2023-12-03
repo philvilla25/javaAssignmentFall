@@ -1,3 +1,14 @@
+/*
+ * File name: TuringView.java
+ * Name: Akpoguma Oghenerukevwe and Philogene Villanueva
+ * Student Number: 041075624 and 041063813
+ * Course: CST 8221 – JAP, Lab Section: 302
+ * Assignment: A32 
+ * Professor: Daniel Cormier
+ * Date: 3rd December, 2024.
+ * Compiler: Eclipse IDE for Java Developers - Version: 2022-03 (4.23.0)
+ * Purpose: Class that acts as the view for the Turing Machine
+ */
 package turingMachine_View;
 
 import java.awt.BorderLayout;
@@ -19,8 +30,13 @@ import turingMachine_Main.turingMachine_Config;
 import turingMachine_Main.turingMachine_User;
 import turingMachine_Model.TuringMachine;
 
+/**
+ * Class Name: TuringView
+ * Purpose: Turing Machine View
+ */
 public class TuringView {
 
+		// instance variables
 		private JFrame tmFrame;
 		private String title = "Turing Machine";
 		private JPanel topPanel, firstButtonPanel, secondButtonPanel, mainPanel;
@@ -31,7 +47,12 @@ public class TuringView {
 		private JTextArea info;
 		private JScrollPane sp;
 		private turingMachine_User turingMachine;
-		TuringView view;
+		private TuringView view;
+		
+		/**
+		 * Constructor 
+		 * @param turingMachine Turing Machine Client View
+		 */
 		public TuringView(turingMachine_User turingMachine) {
 			tmFrame = new JFrame();
 			topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -50,24 +71,49 @@ public class TuringView {
 		}
 		
 
+		/**
+		 * Getter for Info text area
+		 * @return Info text area
+		 */
+		public JTextArea getInfo() {
+			return info;
+		}
+
+		/**
+		 * Setter for Info text area
+		 * @param info text area
+		 */
+		public void setInfo(JTextArea info) {
+			this.info = info;
+		}
+
+		/**
+		 * Getter for tape text
+		 * @return tape text
+		 */
 		public JTextField getTapeText() {
 			return tapeText;
 		}
 
-
+		/**
+		 * Getter for run button
+		 * @return run button
+		 */
 		public JButton getRunButton() {
 			return runButton;
 		}
 
- 
-		
-		
+		/**
+		 * Method Name: tmWindow(String tmModel)
+		 * @param tmModel String TM Model
+		 */
 		public void tmWindow(String tmModel) {
 			try {
 				tmFrame.setTitle(title);
 				tmFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				tmFrame.setSize(800, 500);
 				tmFrame.setResizable(false);
+				
 			    // Top Panel
 				 ImageIcon banner = new ImageIcon(bannerName);
 				 JLabel bannerLabel = new JLabel(banner);
@@ -85,8 +131,8 @@ public class TuringView {
 				 secondButtonPanel.add(clearButton);
 				 
 				 //main Panel
-				 mainPanel.setLayout(new BorderLayout()); // Set layout manager for mainPanel
-		         mainPanel.add(sp, BorderLayout.CENTER); // Add JScrollPane to mainPanel
+				 mainPanel.setLayout(new BorderLayout()); 
+		         mainPanel.add(sp, BorderLayout.CENTER); 
 
 				 // Make the frame visible
 		         tmFrame.setLayout(new BoxLayout(tmFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -98,35 +144,24 @@ public class TuringView {
 		        
 		         TuringMachine turMachine = new TuringMachine(this.turingMachine);
 		         
+		         //add action listener
 		         runButton.addActionListener(new ActionListener(){
-		        
 		             @Override
 		             public void actionPerformed(ActionEvent e) {
 		                 // Handle the runButton click event
-		            	
 		            	 if(turMachine.validateTm()) {	
-		         			
 		            		 turMachine.startTuringMachine(TuringView.this);	
-		         		}
-		            	 else {
+		         		}else {
 		            		 System.out.println("Turing Machine is NULL");
 		            	 }
-		            	 
-		                 // Perform actions based on the button click, you can customize this part
-		                
 		             }
 
 					
-		         });
-				
+		         });	
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 
-		private void addRunButtonListener(ActionListener actionListener) {
-			// TODO Auto-generated method stub
-			
-		}
 }

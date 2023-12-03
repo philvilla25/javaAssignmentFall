@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"gameOfLife_Controller"},{"l":"gameOfLife_Model"},{"l":"gameOfLife_View"},{"l":"layoutPackage"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"turingMachine_Controller"},{"l":"turingMachine_Main"},{"l":"turingMachine_Model"},{"l":"turingMachine_View"}];updateSearchResults();
