@@ -72,6 +72,15 @@ public class TuringView {
 		
 
 		/**
+		 * Getter for TM Model text field
+		 * @return TM Model text field
+		 */
+		public JTextField getTmText() {
+			return tmText;
+		}
+
+
+		/**
 		 * Getter for Info text area
 		 * @return Info text area
 		 */
@@ -154,14 +163,23 @@ public class TuringView {
 		         		}else {
 		            		 System.out.println("Turing Machine is NULL");
 		            	 }
-		             }
-
-					
-		         });	
+		             }	
+		         });
+		         
+		         //add action listener
+		         clearButton.addActionListener(new ActionListener(){
+		             @Override
+		             public void actionPerformed(ActionEvent e) {
+		            	  info.setText("");  // Clear the text area
+		             }	
+		         });
+		         
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
+
+	
 
 }

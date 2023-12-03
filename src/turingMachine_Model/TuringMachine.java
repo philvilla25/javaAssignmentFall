@@ -378,7 +378,7 @@ public class TuringMachine {
 	    int tapePos = tapeLength / 2; // start at the middle of the tape 
 	    int currentState = 0;
 
-	    String tmModel = turingMachine_Client.getTmModel(); // get TM Model
+	    String tmModel = view.getTmText().getText(); // get TM Model
 	    view.getInfo().append("Card:" + tmModel + "\n");
 	    initializeTuples(tmModel); // initialize tuples
 
@@ -420,6 +420,7 @@ public class TuringMachine {
 	    }
 	    view.getInfo().append("Final Tape Config is: \n" );
 	    displayTape(tapePos, view); // display final tape
+	    view.getInfo().append("\n" );
 	}
 
 
