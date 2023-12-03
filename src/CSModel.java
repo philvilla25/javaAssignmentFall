@@ -134,7 +134,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            String selectedProgram = (String) games.getSelectedItem();
-	            TuringView view = new TuringView();
+	          
 	            
 	            // Call the proper program when selected
 	            if ("Cellular Automata".equals(selectedProgram)) {
@@ -148,8 +148,10 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 	            	server.serverWindow();
 	            } else if ("TM - User".equals(selectedProgram)) {
 	            	turingMachine_User user = new turingMachine_User();
+	            	 TuringView view = new TuringView(user);
 	            	TuringMachine turingMachine = new TuringMachine(user); 
 	                TuringController controller = new TuringController(turingMachine, user, view);
+	                
 	            	user.userWindow();
 	            }
 	            // Update UI components

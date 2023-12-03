@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import turingMachine_Main.turingMachine_Config;
+import turingMachine_Main.turingMachine_User;
 import turingMachine_Model.TuringMachine;
 
 public class TuringView {
@@ -29,8 +30,9 @@ public class TuringView {
 		private JTextField tmText, tapeText;
 		private JTextArea info;
 		private JScrollPane sp;
-		private TuringMachine turingMachine;
-		public TuringView() {
+		private turingMachine_User turingMachine;
+		TuringView view;
+		public TuringView(turingMachine_User turingMachine) {
 			tmFrame = new JFrame();
 			topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 			firstButtonPanel = new JPanel();
@@ -44,7 +46,7 @@ public class TuringView {
 			tapeText = new JTextField(40);
 			info = new  JTextArea(18, 40);
 			sp = new JScrollPane(info);
-			
+			this.turingMachine = turingMachine;
 		}
 		
 
@@ -93,15 +95,25 @@ public class TuringView {
 		         tmFrame.add(secondButtonPanel);
 		         tmFrame.add(mainPanel);
 		         tmFrame.setVisible(true);
+		        
+		         TuringMachine turMachine = new TuringMachine(this.turingMachine);
 		         
 		         runButton.addActionListener(new ActionListener(){
 		        
 		             @Override
 		             public void actionPerformed(ActionEvent e) {
 		                 // Handle the runButton click event
-		            	 turingMachine.startTuringMachine();	
+		            	
+		            	 if(turMachine.validateTm()) {	
+		         			
+		            		 turMachine.startTuringMachine(TuringView.this);	
+		         		}
+		            	 else {
+		            		 System.out.println("Turing Machine is NULL");
+		            	 }
+		            	 
 		                 // Perform actions based on the button click, you can customize this part
-		                 System.out.println("Run button clicked with TM model: ");
+		                
 		             }
 
 					

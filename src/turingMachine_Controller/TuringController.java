@@ -12,7 +12,7 @@ public class TuringController {
 	private turingMachine_User turingMachine_Client;
 	private TuringView view ;
 	
-	public TuringController(TuringMachine turingMachine, turingMachine_User turingMachine_Client,TuringView view) {
+	public TuringController(TuringMachine turingMachine, turingMachine_User turingMachine_Client, TuringView view) {
         this.turingMachine = turingMachine;
         this.turingMachine_Client = turingMachine_Client;
         this.view = view;
@@ -66,14 +66,14 @@ public class TuringController {
 	    view.getRunButton().addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	handleRunTuringMachine();
+	        	//handleRunTuringMachine();
 	        }
 	    });
 	}
 	
-	public void handleRunTuringMachine() {
-		turingMachine.startTuringMachine();	
-	}
+//	public void handleRunTuringMachine() {
+//		turingMachine.startTuringMachine();	
+//	}
 
 	public void handleConnectButtonClick() {
 		if(turingMachine.connectToServer()) {		
@@ -103,7 +103,7 @@ public class TuringController {
 		}
 	}
 	public void handleRunButtonClick() {
-		TuringView machine= new TuringView();
+		TuringView machine= new TuringView(turingMachine_Client);
 		if(turingMachine.validateTm()) {	
 			
 	    	machine.tmWindow(turingMachine_Client.getTmModel());

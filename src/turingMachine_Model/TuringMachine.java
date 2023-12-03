@@ -17,7 +17,7 @@ import turingMachine_View.TuringView;
 
 public class TuringMachine {
 	private turingMachine_User turingMachine_Client;
-	private TuringView view;
+	//private TuringView view;
 	//private turingMachine_Server turingMachine_Server;
 	private Socket clientSocket;
 	private PrintWriter out;
@@ -244,7 +244,7 @@ public class TuringMachine {
 	    }
 	}
 	
-	public void getTape() {
+	public void getTape(TuringView view) {
 		if (view.getTapeText().getText()!= " ") {
 			tape = view.getTapeText().getText().toCharArray();
 		}else {
@@ -273,8 +273,8 @@ public class TuringMachine {
 	    return null;
 	}
 
-	public void startTuringMachine() {
-		 getTape();
+	public void startTuringMachine(TuringView view) {
+		 getTape(view);
 		 int step = 0;
 		 int tapeLength = tape.length;
 		 int tapePos = tapeLength / 2;
