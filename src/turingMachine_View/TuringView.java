@@ -2,6 +2,8 @@ package turingMachine_View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -14,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import turingMachine_Main.turingMachine_Config;
+import turingMachine_Model.TuringMachine;
 
 public class TuringView {
 
@@ -26,7 +29,7 @@ public class TuringView {
 		private JTextField tmText, tapeText;
 		private JTextArea info;
 		private JScrollPane sp;
-
+		private TuringMachine turingMachine;
 		public TuringView() {
 			tmFrame = new JFrame();
 			topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -54,6 +57,9 @@ public class TuringView {
 			return runButton;
 		}
 
+ 
+		
+		
 		public void tmWindow(String tmModel) {
 			try {
 				tmFrame.setTitle(title);
@@ -87,9 +93,28 @@ public class TuringView {
 		         tmFrame.add(secondButtonPanel);
 		         tmFrame.add(mainPanel);
 		         tmFrame.setVisible(true);
+		         
+		         runButton.addActionListener(new ActionListener(){
+		        
+		             @Override
+		             public void actionPerformed(ActionEvent e) {
+		                 // Handle the runButton click event
+		            	 turingMachine.startTuringMachine();	
+		                 // Perform actions based on the button click, you can customize this part
+		                 System.out.println("Run button clicked with TM model: ");
+		             }
+
+					
+		         });
 				
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+		}
+
+
+		private void addRunButtonListener(ActionListener actionListener) {
+			// TODO Auto-generated method stub
+			
 		}
 }
