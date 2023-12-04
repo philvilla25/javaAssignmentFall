@@ -33,6 +33,12 @@ SET MAINCLASSSRC4=src/Game.java
 SET MAINCLASSSRC5=gameOfLife_Model/GameModel.java
 SET MAINCLASSSRC6=gameOfLife_COntroller/GameController.java
 SET MAINCLASSSRC7=gameOflife_View/GameView.java
+SET MAINCLASSSRC8=turingMachine_Controller/TuringController.java
+SET MAINCLASSSRC9=turingMachine_Main/turingMachine_Config.java
+SET MAINCLASSSRC10=turingMachine_Main/turingMachine_Server.java
+SET MAINCLASSSRC11=turingMachine_Main/turingMachine_User.java
+SET MAINCLASSSRC12=turingMachine_Model/TuringMachine.java
+SET MAINCLASSSRC13=turingMachine_View/TuringView.java
 SET MAINCLASSBIN=CSModel
 SET RESOURCES=resources
 
@@ -78,7 +84,7 @@ copy "%RESOURCES%\*.xml"  "%BINDIR%\%RESOURCES%"
 
 ECHO "1. Compiling ......................"
 ::javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
-javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %MAINCLASSSRC4% %MAINCLASSSRC5% %MAINCLASSSRC6% %MAINCLASSSRC7% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%" %MAINCLASSSRC1% %MAINCLASSSRC2% %MAINCLASSSRC3% %MAINCLASSSRC4% %MAINCLASSSRC5% %MAINCLASSSRC6% %MAINCLASSSRC7% %MAINCLASSSRC8% %MAINCLASSSRC9% %MAINCLASSSRC10% %MAINCLASSSRC11% %MAINCLASSSRC12% %MAINCLASSSRC13% -d %BINDIR% 2> %BINERR%
 
 
 :: ECHO "Running (outside JAR) ........................."
