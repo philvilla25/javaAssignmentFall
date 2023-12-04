@@ -126,7 +126,7 @@ public class turingMachine_Server {
             serverFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             serverFrame.setSize(559, 370);
             serverFrame.setResizable(false);
-
+            serverFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             ImageIcon banner = new ImageIcon(bannerName);
             JLabel bannerLabel = new JLabel(banner);
             topPanel.add(bannerLabel);
@@ -188,6 +188,7 @@ public class turingMachine_Server {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     ++clientCounter; // increment client counter
+                    info.append("Number of Clients " + clientCounter + "\n");
                     executorService.submit(() -> handleClientConnection(clientSocket)); //handle client connection
                 } catch (SocketException e) {
                     // SocketException will be thrown when the server socket is closed

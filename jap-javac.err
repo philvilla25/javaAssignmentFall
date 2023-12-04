@@ -1,3 +1,4 @@
-error: file not found: gameOfLife_Model\GameModel.java
-Usage: javac <options> <source files>
-use --help for a list of possible options
+src\GridClass.java:20: warning: [serial] serializable class GridClass has no definition of serialVersionUID
+public class GridClass extends JFrame implements ActionListener, ItemListener{
+       ^
+1 warning
