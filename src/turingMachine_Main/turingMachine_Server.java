@@ -52,7 +52,7 @@ public class turingMachine_Server {
     private ArrayList<Integer> connectedClients = new ArrayList<Integer>();
     private PrintWriter out;
     private BufferedReader in;
-
+   
     /**
      * Default constructor for initializing attributes
      */
@@ -268,7 +268,7 @@ public class turingMachine_Server {
 
             // Check if there is additional data in the request
             String configData = (parts.length > 2) ? parts[2] : null;
-            
+        
             // Process the request based on the protocol ID
             switch (protocolId) {
                 case turingMachine_Config.PROTOCOL_END:

@@ -1,0 +1,5 @@
+error: file not found: src\Lab.java
+Usage: javac <options> <source files>
+use --help for a list of possible options
+warning: [path] Invalid filename: /SOFT/copy/dev/java/javafx/lib/*
+warning: [path] Invalid filename: /SOFT/COPY/db/derby/lib/*

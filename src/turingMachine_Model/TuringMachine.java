@@ -125,20 +125,30 @@ public class TuringMachine {
 
             // Check if data is ready to be read
             if (in.ready()) {
-                // Read the line from the server
+                // Read the line from the server (blocking operation)
                 String configFromServer = in.readLine();
 
-                if (configFromServer.isEmpty()) { // check if config is empty
-                    turingMachine_Client.getInfo().append("No Turing Machine configuration in the server yet");
+                if (configFromServer != null) {
+                    if (configFromServer.isEmpty()) {
+                        turingMachine_Client.getInfo().append("No Turing Machine configuration in the server yet \n");
+                    } else {
+                        turingMachine_Client.getInfo().append("Received Turing Machine configuration: " + configFromServer);
+                        turingMachine_Client.setTmModel(configFromServer);
+                        turingMachine_Client.getTmText().setText(configFromServer);
+                    }
                 } else {
-                    turingMachine_Client.getInfo().append("Received Turing Machine configuration: " + configFromServer);
-                    turingMachine_Client.setTmModel(configFromServer);
-                    turingMachine_Client.getTmText().setText(configFromServer);
+                    // No data available, handle accordingly
+                    turingMachine_Client.getInfo().append("No data available from the server \n");
                 }
             } else {
-                // No data available, handle accordingly
-                turingMachine_Client.getInfo().append("No data available from the server");
+                // No data ready, handle accordingly
+                turingMachine_Client.getInfo().append("No data ready in the server stream \n");
             }
+
+//            // Close the input stream and the socket to solve blocking problem
+//            in.close();
+//            clientSocket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -146,6 +156,9 @@ public class TuringMachine {
             turingMachine_Client.errorWindow(message);
         }
     }
+
+
+
 
     /**
      * Method Name: validateTm()
