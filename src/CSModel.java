@@ -258,7 +258,7 @@ public class CSModel extends JFrame implements ActionListener, ItemListener {
 
 	        // Construct the file name for the XML resource based on the selected language
 	        String xmlFileName = "strings_" + language + ".xml";
-
+	        System.out.println("xmlFileName" + xmlFileName);
 	        // Try to open the XML resource file as an input stream
 	        InputStream inputStream = classLoader.getResourceAsStream(xmlFileName);
 

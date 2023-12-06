@@ -19,10 +19,9 @@ import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import turingMachine_Main.turingMachine_Config;
 import turingMachine_Main.turingMachine_User;
 import turingMachine_View.TuringView;
@@ -39,11 +38,10 @@ public class TuringMachine {
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in;
-	private int clientId;
+	private int clientId = 0;
 	private boolean connection = false;
     private TuringMachineTuple[] tuples;
 	private char[] tape;
-	
 	/**
 	 * Parameterized Constructor 
 	 * @param turingMachine_Client Client Window
@@ -56,32 +54,49 @@ public class TuringMachine {
 	 * Method Name: connectToServer()
 	 * @return true if connected properly, false if not
 	 */
-    public boolean connectToServer() { 
-    	turingMachine_Client.setConfig();
-		   try {
-			   	
-		        String ip = turingMachine_Client.getServer(); // get server from gui
-		        int port = turingMachine_Client.getPort(); // get port from gui
-		        
-		        clientSocket = new Socket(ip, port); // start client socket
-		        
-		        out = new PrintWriter(clientSocket.getOutputStream(), true);
-		        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));	
-		        connection = true;
-		        
-		        // handle exceptions
-		   	} catch (ConnectException e) {
-			    String message = "Connection refused. The server may not be running or unreachable.";
-			    turingMachine_Client.errorWindow(message); 
-		    } catch (UnknownHostException e) {
-		    	String message = "Unknown host. Please check the server address.";
-		    	turingMachine_Client.errorWindow(message);
-		    } catch (IOException e) {
-		    	String message = "IOException occurred while connecting to the server.";
-		        turingMachine_Client.errorWindow(message);
-		    }	
-	   return connection;
+	public boolean connectToServer() { 
+	    // Set client configuration from the GUI
+	    turingMachine_Client.setConfig();
+	    
+	    try {
+	        // Retrieve server IP and port from the GUI
+	        String ip = turingMachine_Client.getServer(); // get server from gui
+	        int port = turingMachine_Client.getPort(); // get port from gui
+	        
+	        // Establish a client socket connection to the server
+	        clientSocket = new Socket(ip, port); // start client socket
+	        
+	        // Initialize PrintWriter for sending data to the server
+	        out = new PrintWriter(clientSocket.getOutputStream(), true);
+	        
+	        // Initialize BufferedReader for receiving data from the server
+	        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));	
+	        
+	        // Set connection status to true upon successful connection
+	        connection = true;
+	        
+	        // Increment clientId for the connected client
+	        clientId++;
+	       
+	        // Handle exceptions
+	    } catch (ConnectException e) {
+	        // Handle connection refusal exception
+	        String message = "Connection refused. The server may not be running or unreachable.";
+	        turingMachine_Client.errorWindow(message); 
+	    } catch (UnknownHostException e) {
+	        // Handle unknown host exception
+	        String message = "Unknown host. Please check the server address.";
+	        turingMachine_Client.errorWindow(message);
+	    } catch (IOException e) {
+	        // Handle IOException during connection
+	        String message = "IOException occurred while connecting to the server.";
+	        turingMachine_Client.errorWindow(message);
+	    }	
+	    
+	    // Return the connection status
+	    return connection;
 	}
+
 
     /**
      * Method Name: sendConfigToServer(String tmModel)
@@ -200,7 +215,8 @@ public class TuringMachine {
      */
     public void endExecution() {
         // Send end execution message to the server
-        out.println(clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_END);
+        //out.println(turingMachine_Client.getUserName() + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_END);
+        stopClientConnection();
     }
     
     /**
@@ -208,8 +224,8 @@ public class TuringMachine {
      */
     public void stopClientConnection() {
         // Send end execution message to the server
-        out.println(clientId + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_END);
-
+        out.println(turingMachine_Client.getUserName() + turingMachine_Config.PROTOCOL_SEPARATOR + turingMachine_Config.PROTOCOL_END);
+        turingMachine_Client.getInfo().append("Disconnected from server! \n");
         // Close the resources
         try {
             out.close();
